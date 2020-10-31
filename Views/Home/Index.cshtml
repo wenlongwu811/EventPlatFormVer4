@@ -1,8 +1,30 @@
-﻿@{
+﻿@model EventPlatFormVer4.Models.Person
+@{
     ViewData["Title"] = "Home Page";
 }
-
+  
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="Create">
+                <!-- //TODO此处设置的是初始登录页面，需要修改的，这个时候点击的还是Create而不是登录-->
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Name" class="control-label"></label>
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Pwd" class="control-label"></label>
+                    <input asp-for="Pwd" class="form-control" />
+                    <span asp-validation-for="Pwd" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <!--我删了这一部分后，还需要修改，这里只是可以登陆界面
+    <input type="submit" value="Create/登录" class="btn btn-primary" />-->
+                    <a href="/People/Create">登录</a>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
