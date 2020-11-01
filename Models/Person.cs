@@ -18,10 +18,11 @@ namespace EventPlatFormVer4.Models
         public uint ID { get; set; }
         public uint RoleID { get; set; }//角色TD:0/1/2
 
-        [Display(Name = "姓名")]
-        [Required(ErrorMessage ="姓名必填")]
+        [Display(Name = "账号")]
+        [Required(ErrorMessage ="账号必填")]
         public string Name { get; set; }//账号
 
+        //TODO 这些都有格式要求，后续补上
         [Display(Name="邮箱地址")]
         [Required(ErrorMessage = "邮箱必填")]
         public string Email { get; set; }
@@ -39,6 +40,7 @@ namespace EventPlatFormVer4.Models
         {
             Random rm = new Random();
             ID = (uint)rm.Next(100);
+
             //Todo 用来测试的临时数据100,这个hashtable是一次性的，每次程序重新运行都会更新一次。
 
             /*Hashtable hashtable = new Hashtable();

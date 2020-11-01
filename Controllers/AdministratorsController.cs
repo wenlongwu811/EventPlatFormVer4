@@ -44,6 +44,45 @@ namespace EventPlatFormVer4.Controllers
             return View(administrator);
         }
 
+        //Get:Administrator/Alter:修改已审核的
+        public async Task<IActionResult> Alter()
+        {
+
+            return View(await _context.Events.Where(m => m.State !=0).ToListAsync());
+
+        }
+
+        //GET:Administrators/Verify:待审核
+        public async Task<IActionResult> Verify()
+        {
+            return View( await _context.Events.Where(m => m.State == 0).ToListAsync());
+
+            //return View(await _context.Events.Where<m=>m.state=0>)
+        }
+
+        //:Administrators/Accept：接受
+        public async Task<IActionResult> Accept(uint id, [Bind("State")] Event events)
+        {
+            var query = _context.Events.Where(m => m.Id == id);
+            query.First().State = 1;
+            await _context.SaveChangesAsync();
+            return View(await _context.Events.Where(m => m.State == 0).ToListAsync());
+        }
+
+        //Get:Administrator/Ban:禁止
+        public async Task<IActionResult>Ban(uint id ,[Bind("State")] Event events)
+        {
+            var query = _context.Events.Where(m => m.Id == id);
+            query.First().State = 2;
+            await _context.SaveChangesAsync();
+            return View(await _context.Events.Where(m => m.State == 0).ToListAsync());
+        }
+
+        private bool EventExists(uint id)
+        {
+            return _context.Events.Any(e => e.Id == id);
+        }
+
         // GET: Administrators/Create
         public IActionResult Create()
         {

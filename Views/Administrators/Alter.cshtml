@@ -1,14 +1,11 @@
 ﻿@model IEnumerable<EventPlatFormVer4.Models.Event>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Alter";
 }
 
-<h1>活动列表</h1>
+<h1>已审核活动列表</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
 <table class="table">
     <thead>
         <tr>
@@ -37,12 +34,16 @@
                 @Html.DisplayNameFor(model => model.Detail)
             </th>
             <th>
-                @Html.DisplayNameFor(model=> model.State)
-            <th></th>
+                @Html.DisplayNameFor(model => model.State)
+            </th>
+            <th>
+                @Html.DisplayName("审核")
+            </th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+        @foreach (var item in Model)
+        {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Name)
@@ -69,14 +70,27 @@
                 @Html.DisplayFor(modelItem => item.Detail)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.State)
-                </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                @if (item.State == 1)
+                {
+                    @Html.DisplayName("通过")
+                }
+                else if (item.State == 2)
+                {
+                    @Html.DisplayName("未通过")
+                }
             </td>
+            <td>
+                @if (item.State == 1)
+                {
+                    <a asp-action="Ban" asp-route-id="@item.Id">Ban</a>
+                }
+                else if (item.State == 2)
+                {
+                    <a asp-action="Accept" asp-route-id="@item.Id">Accept</a>
+                }
         </tr>
-}
+        }
     </tbody>
 </table>
+
+
