@@ -82,11 +82,11 @@
             <td>
                 @if (item.State == 1)
                 {
-                    <a asp-action="Ban" asp-route-id="@item.Id">Ban</a>
+                    <a asp-action="Ban2" asp-route-id="@item.Id">Ban</a>
                 }
                 else if (item.State == 2)
                 {
-                    <a asp-action="Accept" asp-route-id="@item.Id">Accept</a>
+                    <a asp-action="Accept2" asp-route-id="@item.Id">Accept</a>
                 }
         </tr>
         }

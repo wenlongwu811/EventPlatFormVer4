@@ -69,6 +69,24 @@ namespace EventPlatFormVer4.Controllers
             return View(await _context.Events.Where(m => m.State == 0).ToListAsync());
         }
 
+        //:Administrators/Accept2：接受
+        public async Task<IActionResult> Accept2(uint id, [Bind("State")] Event events)
+        {
+            var query = _context.Events.Where(m => m.Id == id);
+            query.First().State = 1;
+            await _context.SaveChangesAsync();
+            return View(await _context.Events.Where(m => m.State != 0).ToListAsync());
+        }
+
+        //Get:Administrator/Ban2:禁止
+        public async Task<IActionResult> Ban2(uint id, [Bind("State")] Event events)
+        {
+            var query = _context.Events.Where(m => m.Id == id);
+            query.First().State = 2;
+            await _context.SaveChangesAsync();
+            return View(await _context.Events.Where(m => m.State != 0).ToListAsync());
+        }
+
         //Get:Administrator/Ban:禁止
         public async Task<IActionResult>Ban(uint id ,[Bind("State")] Event events)
         {
