@@ -34,6 +34,7 @@ namespace EventPlatFormVer4.Models
             RoleID = 0;
 
             //Todo  要修改
+            //一定要成功！
             Random rm = new Random();
             Id = (uint)rm.Next(100);
         }
