@@ -36,6 +36,8 @@ namespace EventPlatFormVer4.Models
             Random rm = new Random();
             //Todo  id要唯一
             //啦啦啦测试一下
+            //再来一次
+            //再来两次
             Id = (uint)rm.Next(100);
             RoleID = 1;
         }
