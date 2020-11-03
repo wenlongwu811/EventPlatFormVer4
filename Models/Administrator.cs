@@ -11,7 +11,7 @@ namespace EventPlatFormVer4.Models
         [Key]
         public uint Id { get; set; }//管理员ID
         public uint RoleID { get; set; }//角色TD:0/1/2
-        //wwl
+        //wwlwwl
 
         [Display(Name = "姓名")]
         [Required(ErrorMessage = "姓名必填")]
