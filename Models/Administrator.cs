@@ -35,6 +35,7 @@ namespace EventPlatFormVer4.Models
 
             //Todo  要修改
             //一定要成功！
+            //可以的
             Random rm = new Random();
             Id = (uint)rm.Next(100);
         }
