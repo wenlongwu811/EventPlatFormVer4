@@ -17,7 +17,7 @@ namespace EventPlatFormVer4.Models
 
         [Display(Name = "活动名称")]
         [Required(ErrorMessage = "此项必填")]
-        public string Name { get; set; }
+        public string Name { get; set; }//活
 
         [Display(Name = "活动等级")]
         [Required(ErrorMessage = "此项必填")]
@@ -59,8 +59,8 @@ namespace EventPlatFormVer4.Models
         {
             //Todo 待修改id;
             Random random = new Random();
-            Id =(uint)random.Next(100);
-            State = 0;//刚创建
+            //Id =(uint)random.Next(100);
+            //State = 0;//刚创建de
         }
 
     }
