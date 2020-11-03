@@ -15,6 +15,8 @@ namespace EventPlatFormVer4.Models
         public uint SponsorId { get; set; }
         [ForeignKey("SponsorId")]
 
+        public List<Participant> Participants { get; set; }
+
         [Display(Name = "活动名称")]
         [Required(ErrorMessage = "此项必填")]
         public string Name { get; set; }
@@ -43,7 +45,7 @@ namespace EventPlatFormVer4.Models
         [Required(ErrorMessage = "此项必填")]
         public DateTime SignUpEndTime { get; set; } // 报名结束时间
 
-        [Display(Name = "举办地址名称")]
+        [Display(Name = "举办地址")]
         [Required(ErrorMessage = "此项必填")]
         public string Address { get; set; } // 活动举办地址
 
