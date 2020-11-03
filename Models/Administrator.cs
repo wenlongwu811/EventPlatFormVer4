@@ -37,5 +37,7 @@ namespace EventPlatFormVer4.Models
             Random rm = new Random();
             Id = (uint)rm.Next(100);
         }
+
+        int i = 1;
     }
 }

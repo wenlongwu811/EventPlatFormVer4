@@ -149,5 +149,6 @@ namespace EventPlatFormVer4.Controllers
         {
             return _context.Participatants.Any(e => e.Id == id);
         }
+
     }
 }

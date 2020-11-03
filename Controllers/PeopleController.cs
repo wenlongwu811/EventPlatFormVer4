@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 //using EventPlatFormVer4.Data;
 using EventPlatFormVer4.Models;
+using MySql.Data.MySqlClient;
+using Microsoft.Data.SqlClient;
 
 namespace EventPlatFormVer4.Controllers
 {
@@ -150,5 +152,38 @@ namespace EventPlatFormVer4.Controllers
         {
             return _context.Persons.Any(e => e.ID == id);
         }
+        // GET: People/Verify：可报名
+
+        public async Task<IActionResult> Verify()
+        {
+            return View(await _context.Events.Where(m => m.State == 1).ToListAsync());
+
+            //return View(await _context.Events.Where<m=>m.state=0>)
+        }
+
+        // GET: People/Apply:报名
+        public async Task<IActionResult> Apply(uint eid, [Bind("ParticipatantState")] Event events)
+        {
+            var query = _context.Events.Where(m => m.Id == eid);
+            //向Events_Participatants表中添加一条数据
+            await _context.SaveChangesAsync();
+            return View(await _context.Events.Where(m => m.State == 1).ToListAsync());
+        }
+        // GET: People/Withdraw:退赛
+        public async Task<IActionResult> Withdraw(uint pid, [Bind("ParticipatantState")] Event_Participatant event_participatant)
+        {
+            var query = _context.Events_Participatant.Where(m => m.Pid == pid);
+            query.First().ParticipatantState = 3;
+            await _context.SaveChangesAsync();
+            return View(await _context.Events_Participatant.Where(m => (m.ParticipatantState == 0|| m.ParticipatantState == 1)).ToListAsync());
+        }
+
+        // GET: People/Check:查成绩
+        public async Task<IActionResult> Check(uint pid, [Bind("Grade")] Event events)
+        {
+            return View(await _context.Events_Participatant.Where(m => m.Pid == pid).ToListAsync());
+        }
+
+
     }
 }

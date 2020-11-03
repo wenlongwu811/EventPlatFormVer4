@@ -1,0 +1,54 @@
+﻿@model IEnumerable<EventPlatFormVer4.Models.ParticipatantEvent>
+
+@{
+    ViewData["Title"] = "Withdraw";
+}
+
+<h1>已审核活动列表</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Eid)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Text)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ParticipatantState)
+            </th>
+            <th>
+                @Html.DisplayName("处理")
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Eid)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Text)
+            </td>
+            <td>
+                @if (item.ParticipatantState == 0)
+                {
+                    @Html.DisplayName("待审核")
+                }
+                else if (item.ParticipatantState == 1)
+                {
+                    @Html.DisplayName("已通过")
+                }
+            </td>
+            <td>
+                      <a asp-action="Withdraw" asp-route-id="@item.Id">Withdraw</a>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
+
+
