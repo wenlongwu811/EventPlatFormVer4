@@ -62,5 +62,6 @@ namespace EventPlatFormVer4.Models
             Id =(uint)random.Next(100);
             State = 0;//刚创建
         }
+
     }
 }

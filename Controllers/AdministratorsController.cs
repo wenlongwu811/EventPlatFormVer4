@@ -44,7 +44,7 @@ namespace EventPlatFormVer4.Controllers
             return View(administrator);
         }
 
-        //Get:Administrator/Alter:修改已审核的
+        //Get:Administrator/Alter:修改已审核
         public async Task<IActionResult> Alter()
         {
 
@@ -60,7 +60,7 @@ namespace EventPlatFormVer4.Controllers
             //return View(await _context.Events.Where<m=>m.state=0>)
         }
 
-        //:Administrators/Accept：接受
+        //:Administrators/Accept：接受未审核
         public async Task<IActionResult> Accept(uint id, [Bind("State")] Event events)
         {
             var query = _context.Events.Where(m => m.Id == id);
@@ -69,7 +69,7 @@ namespace EventPlatFormVer4.Controllers
             return View(await _context.Events.Where(m => m.State == 0).ToListAsync());
         }
 
-        //:Administrators/Accept2：接受
+        //:Administrators/Accept2：接受审核
         public async Task<IActionResult> Accept2(uint id, [Bind("State")] Event events)
         {
             var query = _context.Events.Where(m => m.Id == id);
@@ -78,7 +78,7 @@ namespace EventPlatFormVer4.Controllers
             return View(await _context.Events.Where(m => m.State != 0).ToListAsync());
         }
 
-        //Get:Administrator/Ban2:禁止
+        //Get:Administrator/Ban2:禁止已审核
         public async Task<IActionResult> Ban2(uint id, [Bind("State")] Event events)
         {
             var query = _context.Events.Where(m => m.Id == id);
@@ -87,7 +87,7 @@ namespace EventPlatFormVer4.Controllers
             return View(await _context.Events.Where(m => m.State != 0).ToListAsync());
         }
 
-        //Get:Administrator/Ban:禁止
+        //Get:Administrator/Ban:禁止未审核
         public async Task<IActionResult>Ban(uint id ,[Bind("State")] Event events)
         {
             var query = _context.Events.Where(m => m.Id == id);
@@ -101,7 +101,7 @@ namespace EventPlatFormVer4.Controllers
             return _context.Events.Any(e => e.Id == id);
         }
 
-        // GET: Administrators/Create
+        // GET: Administrators/Create:创建管理者
         public IActionResult Create()
         {
             return View();

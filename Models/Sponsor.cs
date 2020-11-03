@@ -11,6 +11,7 @@ namespace EventPlatFormVer4.Models
         public uint Id { get; set; }
         public uint RoleID { get; set; }//角色TD:0/1/2
 
+        public List<Event> events { get; set; }
         [Display(Name = "请输入认证机构")]
         public string Certificate { get; set; } // 机构认证, （院级，校级，省级；武大办，华科办，北大办……）
         
@@ -33,9 +34,11 @@ namespace EventPlatFormVer4.Models
         public Sponsor()
         {
             Random rm = new Random();
-            //Todo  要修改
+            //Todo  id要唯一
             Id = (uint)rm.Next(100);
             RoleID = 1;
         }
+
+
     }
 }
