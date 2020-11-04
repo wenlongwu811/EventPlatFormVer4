@@ -38,6 +38,7 @@ namespace EventPlatFormVer4.Models
             //啦啦啦测试一下
             //再来一次
             //再来两次
+            //命令行测试
             Id = (uint)rm.Next(100);
             RoleID = 1;
         }

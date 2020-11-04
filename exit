@@ -1,0 +1,183 @@
+[33mcommit 51cca5b0069f56fcd8eca2cf3ca81478b0fabdf4[m[33m ([m[1;36mHEAD -> [m[1;32mygx[m[33m, [m[1;31mupstream/master[m[33m)[m
+Merge: fb4c1c8 8edf049
+Author: ygx <67882584+30Taps@users.noreply.github.com>
+Date:   Tue Nov 3 22:10:26 2020 +0800
+
+    Merge pull request #12 from wenlongwu811/ygx
+    
+    Update Participatant.cs
+
+[33mcommit 8edf049d54d16f494a62ded51f7580f8e1eaf571[m[33m ([m[1;31morigin/ygx[m[33m)[m
+Author: ygx <1241749920@qq.com>
+Date:   Tue Nov 3 22:09:24 2020 +0800
+
+    Update Participatant.cs
+    
+    test2
+
+[33mcommit fb4c1c8a515b12f1f857d86c3d2cc2f5d83a5814[m[33m ([m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmaster[m[33m)[m
+Merge: fe6c74a a0c1725
+Author: ygx <67882584+30Taps@users.noreply.github.com>
+Date:   Tue Nov 3 22:08:48 2020 +0800
+
+    Merge pull request #11 from wenlongwu811/ygx
+    
+    Update Participatant.cs
+
+[33mcommit a0c1725341e47976cdc8efff6686a3b168cf6315[m
+Author: ygx <1241749920@qq.com>
+Date:   Tue Nov 3 22:08:00 2020 +0800
+
+    Update Participatant.cs
+    
+    修改了备注
+
+[33mcommit fe6c74a6dc15917b8a3201a1611501c1d3b187bb[m
+Merge: 1cbf5be 3c854d6
+Author: wenlongwu811 <55539855+wenlongwu811@users.noreply.github.com>
+Date:   Tue Nov 3 22:02:04 2020 +0800
+
+    Merge pull request #9 from wenlongwu811/wwl
+    
+    Update Administrator.cs
+
+[33mcommit 3c854d6e93ca89f1943bda8ea0d0ac53a040c5ae[m
+Author: wenlongwu811 <55539855+wenlongwu811@users.noreply.github.com>
+Date:   Tue Nov 3 22:01:11 2020 +0800
+
+    Update Administrator.cs
+    
+    这次一定行
+
+[33mcommit 1cbf5be7d600f8fb8a66a74a57d5627d45ec1d05[m
+Merge: 0071664 de1478c
+Author: wenlongwu811 <55539855+wenlongwu811@users.noreply.github.com>
+Date:   Tue Nov 3 21:51:30 2020 +0800
+
+    Merge pull request #8 from wenlongwu811/syk
+    
+    2nd pull request
+
+[33mcommit de1478c2e7c0ba0d314996d331ce5fe349eb8703[m[33m ([m[1;31morigin/syk[m[33m)[m
+Author: Sun Yuankai <ekey666@gmail.com>
+Date:   Tue Nov 3 21:50:19 2020 +0800
+
+    2nd pull request
+
+[33mcommit 00716648f216085f966233913134e7854a873de8[m
+Merge: 408f117 1d9c70c
+Author: FremontLi <1031864301@qq.com>
+Date:   Tue Nov 3 21:48:47 2020 +0800
+
+    Merge pull request #7 from wenlongwu811/lzm
+    
+    Update Sponsor.cs
+
+[33mcommit 1d9c70cd65feea0c22ce48599a1cba7a43ff5d83[m[33m ([m[1;31morigin/lzm[m[33m)[m
+Author: FremontLi <1031864301@qq.com>
+Date:   Tue Nov 3 21:46:55 2020 +0800
+
+    Update Sponsor.cs
+    
+    小测试
+
+[33mcommit 408f117d122c7b14430a477ec67870d0093d00a6[m
+Merge: 6be4166 532bdcb
+Author: wenlongwu811 <55539855+wenlongwu811@users.noreply.github.com>
+Date:   Tue Nov 3 21:35:28 2020 +0800
+
+    Merge pull request #5 from wenlongwu811/syk
+    
+    Syk
+
+[33mcommit 532bdcbe72185f987d40181bbbf19b0cb0e3226f[m
+Author: Sun Yuankai <ekey666@gmail.com>
+Date:   Tue Nov 3 21:30:07 2020 +0800
+
+    测试push
+
+[33mcommit 484cdda161bd021b253a2a336a799cc5b5b40ac2[m
+Author: Sun Yuankai <ekey666@gmail.com>
+Date:   Tue Nov 3 21:02:03 2020 +0800
+
+    添加syk分支
+
+[33mcommit 6be416654e3a2a7907465cb0e5c5598046db6836[m
+Merge: fb2af6d 2998379
+Author: wenlongwu811 <55539855+wenlongwu811@users.noreply.github.com>
+Date:   Tue Nov 3 20:58:47 2020 +0800
+
+    Merge pull request #3 from wenlongwu811/lzm
+    
+    Update Sponsor.cs
+
+[33mcommit 2998379b42e4aebb1d53bcde3b9fb07837fabc67[m
+Author: FremontLi <1031864301@qq.com>
+Date:   Tue Nov 3 20:56:33 2020 +0800
+
+    Update Sponsor.cs
+
+[33mcommit fb2af6d50a0870bafce0c7c07ff88655e40d5b1a[m
+Author: wenlongwu811 <55539855+wenlongwu811@users.noreply.github.com>
+Date:   Tue Nov 3 19:58:53 2020 +0800
+
+    初版
+
+[33mcommit ee5f8fde9d80662ca8eda83a453ac5f359001729[m
+Author: wenlongwu811 <55539855+wenlongwu811@users.noreply.github.com>
+Date:   Mon Nov 2 08:28:36 2020 +0800
+
+    初版
+
+[33mcommit 920e73b84cc92d04bc8a60368eee328718dab335[m
+Merge: f47c600 4921d97
+Author: wenlongwu811 <55539855+wenlongwu811@users.noreply.github.com>
+Date:   Mon Nov 2 08:05:51 2020 +0800
+
+    Merge branch 'master' of https://github.com/wenlongwu811/EventPlatFormVer4
+
+[33mcommit f47c6004744b548d140bc3e624f5b04e4ea20252[m
+Author: wenlongwu811 <55539855+wenlongwu811@users.noreply.github.com>
+Date:   Mon Nov 2 08:05:05 2020 +0800
+
+    初版
+
+[33mcommit 4921d97a4c153dbfc8f2a6b81b383c92b91a5031[m
+Merge: 42a61a5 fe21ee0
+Author: wenlongwu811 <55539855+wenlongwu811@users.noreply.github.com>
+Date:   Sun Nov 1 23:50:41 2020 +0800
+
+    Merge pull request #1 from 30Taps/master
+    
+    persons
+
+[33mcommit fe21ee04f26568c9b71d8f0d48f6a40ca28ebffa[m
+Merge: b7f1207 42a61a5
+Author: 30Taps <1241749920@qq.com>
+Date:   Sun Nov 1 22:58:16 2020 +0800
+
+    学生操作
+
+[33mcommit b7f1207296e7be20fd4575c3581ead3dfcc51260[m
+Author: 30Taps <1241749920@qq.com>
+Date:   Sun Nov 1 19:14:08 2020 +0800
+
+    ??
+
+[33mcommit 42a61a55e1ff724c8d7259e9f43d353b8d9c9188[m
+Author: wenlongwu811 <55539855+wenlongwu811@users.noreply.github.com>
+Date:   Sat Oct 31 19:38:46 2020 +0800
+
+    初版
+
+[33mcommit 639bdb714bfcef70109905e25cbfd72f9eff4625[m
+Author: wwl <2018302110061@whu.edu.cn>
+Date:   Thu Oct 22 22:24:29 2020 +0800
+
+    添加项目文件。
+
+[33mcommit 680087d14f509962923dec4041393e9fb8454bea[m
+Author: wwl <2018302110061@whu.edu.cn>
+Date:   Thu Oct 22 22:24:26 2020 +0800
+
+    添加 .gitignore 和 .gitattributes。
