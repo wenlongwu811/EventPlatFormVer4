@@ -27,7 +27,7 @@ namespace EventPlatFormVer4.Controllers
         }
 
         // GET: Administrators/Details/5
-        public async Task<IActionResult> Details(uint? id)
+        public async Task<IActionResult> Details(string? id)
         {
             if (id == null)
             {
@@ -144,7 +144,7 @@ namespace EventPlatFormVer4.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(uint id, [Bind("Id,RoleID,Name,Email,Phone,Pwd")] Administrator administrator)
+        public async Task<IActionResult> Edit(string id, [Bind("Id,RoleID,Name,Email,Phone,Pwd")] Administrator administrator)
         {
             if (id != administrator.Id)
             {
@@ -175,7 +175,7 @@ namespace EventPlatFormVer4.Controllers
         }
 
         // GET: Administrators/Delete/5
-        public async Task<IActionResult> Delete(uint? id)
+        public async Task<IActionResult> Delete(string? id)
         {
             if (id == null)
             {
@@ -203,7 +203,7 @@ namespace EventPlatFormVer4.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool AdministratorExists(uint id)
+        private bool AdministratorExists(string id)
         {
             return _context.Administrators.Any(e => e.Id == id);
         }

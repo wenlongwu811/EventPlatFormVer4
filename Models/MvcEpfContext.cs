@@ -8,7 +8,7 @@ namespace EventPlatFormVer4.Models
         public MvcEpfContext(DbContextOptions<MvcEpfContext> options)
             : base(options)
         {
-            //this.Database.EnsureCreated();
+            this.Database.EnsureCreated();
         }
 
         public DbSet<Participatant> Participatants { get; set; }

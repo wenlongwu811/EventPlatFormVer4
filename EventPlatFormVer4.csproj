@@ -5,6 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Data\**" />
+    <Content Remove="Data\**" />
+    <EmbeddedResource Remove="Data\**" />
+    <None Remove="Data\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Remove="Migrations\20201021074623_migrations3.cs" />
     <Compile Remove="Migrations\20201021074623_migrations3.Designer.cs" />
     <Compile Remove="Migrations\20201021075101_migrations3.cs" />
@@ -23,10 +30,6 @@
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.4" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="3.2.3" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Data\" />
   </ItemGroup>
 
 </Project>

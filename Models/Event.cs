@@ -15,7 +15,7 @@ namespace EventPlatFormVer4.Models
         public uint SponsorId { get; set; }
         [ForeignKey("SponsorId")]
 
-        public List<Participant> Participants { get; set; }
+        public List<Participatant> Participants { get; set; }
 
         [Display(Name = "活动名称")]
         [Required(ErrorMessage = "此项必填")]
