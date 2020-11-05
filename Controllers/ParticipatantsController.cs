@@ -26,7 +26,7 @@ namespace EventPlatFormVer4.Controllers
         }
 
         // GET: Participatants/Details/5
-        public async Task<IActionResult> Details(uint? id)
+        public async Task<IActionResult> Details(string? id)
         {
             if (id == null)
             {
@@ -34,7 +34,7 @@ namespace EventPlatFormVer4.Controllers
             }
 
             var participatant = await _context.Participatants
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .FirstOrDefaultAsync(m => m.ID == id);
             if (participatant == null)
             {
                 return NotFound();
@@ -54,7 +54,7 @@ namespace EventPlatFormVer4.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,RoleID,Name,Email,Phone,Pwd")] Participatant participatant)
+        public async Task<IActionResult> Create([Bind("Id,RoleID,Name,Email,Phone,Pwd")] Participant participatant)
         {
             if (ModelState.IsValid)
             {
@@ -66,7 +66,7 @@ namespace EventPlatFormVer4.Controllers
         }
 
         // GET: Participatants/Edit/5
-        public async Task<IActionResult> Edit(uint? id)
+        public async Task<IActionResult> Edit(string? id)
         {
             if (id == null)
             {
@@ -86,9 +86,9 @@ namespace EventPlatFormVer4.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(uint id, [Bind("Id,RoleID,Name,Email,Phone,Pwd")] Participatant participatant)
+        public async Task<IActionResult> Edit(string id, [Bind("Id,RoleID,Name,Email,Phone,Pwd")] Participant participatant)
         {
-            if (id != participatant.Id)
+            if (id != participatant.ID)
             {
                 return NotFound();
             }
@@ -102,7 +102,7 @@ namespace EventPlatFormVer4.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ParticipatantExists(participatant.Id))
+                    if (!ParticipatantExists(participatant.ID))
                     {
                         return NotFound();
                     }
@@ -117,7 +117,7 @@ namespace EventPlatFormVer4.Controllers
         }
 
         // GET: Participatants/Delete/5
-        public async Task<IActionResult> Delete(uint? id)
+        public async Task<IActionResult> Delete(string? id)
         {
             if (id == null)
             {
@@ -125,7 +125,7 @@ namespace EventPlatFormVer4.Controllers
             }
 
             var participatant = await _context.Participatants
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .FirstOrDefaultAsync(m => m.ID == id);
             if (participatant == null)
             {
                 return NotFound();
@@ -137,7 +137,7 @@ namespace EventPlatFormVer4.Controllers
         // POST: Participatants/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(uint id)
+        public async Task<IActionResult> DeleteConfirmed(string id)
         {
             var participatant = await _context.Participatants.FindAsync(id);
             _context.Participatants.Remove(participatant);
@@ -145,9 +145,9 @@ namespace EventPlatFormVer4.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ParticipatantExists(uint id)
+        private bool ParticipatantExists(string id)
         {
-            return _context.Participatants.Any(e => e.Id == id);
+            return _context.Participatants.Any(e => e.ID == id);
         }
     }
 }

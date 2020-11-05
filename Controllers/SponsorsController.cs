@@ -26,7 +26,7 @@ namespace EventPlatFormVer4.Controllers
         }
 
         // GET: Sponsors/Details/5
-        public async Task<IActionResult> Details(uint? id)
+        public async Task<IActionResult> Details(string? id)
         {
             if (id == null)
             {
@@ -66,7 +66,7 @@ namespace EventPlatFormVer4.Controllers
         }
 
         // GET: Sponsors/Edit/5
-        public async Task<IActionResult> Edit(uint? id)
+        public async Task<IActionResult> Edit(string? id)
         {
             if (id == null)
             {
@@ -86,7 +86,7 @@ namespace EventPlatFormVer4.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(uint id, [Bind("Id,RoleID,Name,Email,Phone,Pwd,Certificate")] Sponsor sponsor)
+        public async Task<IActionResult> Edit(string id, [Bind("Id,RoleID,Name,Email,Phone,Pwd,Certificate")] Sponsor sponsor)
         {
             if (id != sponsor.Id)
             {
@@ -117,7 +117,7 @@ namespace EventPlatFormVer4.Controllers
         }
 
         // GET: Sponsors/Delete/5
-        public async Task<IActionResult> Delete(uint? id)
+        public async Task<IActionResult> Delete(string? id)
         {
             if (id == null)
             {
@@ -137,7 +137,7 @@ namespace EventPlatFormVer4.Controllers
         // POST: Sponsors/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(uint id)
+        public async Task<IActionResult> DeleteConfirmed(string id)
         {
             var sponsor = await _context.Sponsors.FindAsync(id);
             _context.Sponsors.Remove(sponsor);
@@ -145,7 +145,7 @@ namespace EventPlatFormVer4.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool SponsorExists(uint id)
+        private bool SponsorExists(string id)
         {
             return _context.Sponsors.Any(e => e.Id == id);
         }
