@@ -14,7 +14,7 @@ namespace EventPlatFormVer4.Models
     {
         [Key]
         public string Id { get; set; }//唯一标识的Id
-        public uint RoleID { get; set; }//赞助者角色Id为1
+        public string RoleID { get; set; }//赞助者角色Id为1
 
         [ForeignKey("EventId")]
         public List<Event> SponEvents { get; set; }//赞助的活动列表
@@ -41,7 +41,7 @@ namespace EventPlatFormVer4.Models
         public Sponsor()
         {
             Id = Guid.NewGuid().ToString();//Id唯一性
-            RoleID = 1;
+            RoleID = "1";
             SponEvents = new List<Event>();
         }
         public Sponsor(List<Event> events) : this()
