@@ -13,16 +13,28 @@ namespace EventPlatFormVer4.Models
         public uint RoleID { get; set; }//角色iD:0/1/2
 
         [Required]
+<<<<<<< Updated upstream
         [RegularExpression(@"[0-9]{13}",ErrorMessage ="13位数字")]
         public string Name { get; set; }
 
 
         [RegularExpression(@"^\w+@[A-Za-z_]+?\.[a-zA-Z]{2,3}$",ErrorMessage ="请输入正确的格式")]
+=======
+        [RegularExpression(@"[0-9]{13}", ErrorMessage = "13位数字")]
+        public string Name { get; set; }
+
+
+        [RegularExpression(@"^\w+@[A-Za-z_]+?\.[a-zA-Z]{2,3}$", ErrorMessage = "请输入正确的格式")]
+>>>>>>> Stashed changes
         [Required]
         public string Email { get; set; }
 
 
+<<<<<<< Updated upstream
         [RegularExpression(@"[A-Za-z0-9]{6,}",ErrorMessage ="至少6位数字字母组合")]
+=======
+        [RegularExpression(@"[A-Za-z0-9]{6,}", ErrorMessage = "至少6位数字字母组合")]
+>>>>>>> Stashed changes
         [Required]
         public string Pwd { get; set; }
 
@@ -32,7 +44,11 @@ namespace EventPlatFormVer4.Models
             RoleID = 0;
         }
 
+<<<<<<< Updated upstream
         public Administrator(string name,string email,string pwd):this()
+=======
+        public Administrator(string name, string email, string pwd) : this()
+>>>>>>> Stashed changes
         {
             Name = name; Email = email; Pwd = pwd;
         }
@@ -54,4 +70,8 @@ namespace EventPlatFormVer4.Models
 
     }
 }
+<<<<<<< Updated upstream
 //谢邀！
+=======
+//谢！
+>>>>>>> Stashed changes
