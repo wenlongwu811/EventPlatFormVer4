@@ -54,7 +54,7 @@ namespace EventPlatFormVer4.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,RoleID,Name,Email,Phone,Pwd")] Participatant participatant)
+        public async Task<IActionResult> Create([Bind("Id,RoleID,Name,Email,Phone,Pwd")] Participant participatant)
         {
             if (ModelState.IsValid)
             {
@@ -86,7 +86,7 @@ namespace EventPlatFormVer4.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(uint id, [Bind("Id,RoleID,Name,Email,Phone,Pwd")] Participatant participatant)
+        public async Task<IActionResult> Edit(uint id, [Bind("Id,RoleID,Name,Email,Phone,Pwd")] Participant participatant)
         {
             if (id != participatant.Id)
             {
