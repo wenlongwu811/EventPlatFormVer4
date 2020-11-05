@@ -8,6 +8,9 @@ namespace EventPlatFormVer4.Service
 {
     public class ParticipantService
     {
-
+        public static bool Apply()
+        {
+            return true;//pull test
+        }
     }
 }
