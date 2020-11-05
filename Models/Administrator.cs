@@ -10,7 +10,7 @@ namespace EventPlatFormVer4.Models
     {
         [Key]
         public string Id { get; set; }
-        public uint RoleID { get; set; }//角色iD:0/1/2
+        public string RoleID { get; set; }//角色iD:0/1/2
 
         [Required]
         [RegularExpression(@"[0-9]{13}", ErrorMessage = "13位数字")]
@@ -29,7 +29,8 @@ namespace EventPlatFormVer4.Models
         public Administrator()
         {
             Id = Guid.NewGuid().ToString();
-            RoleID = 0;
+            RoleID = "0";
+
         }
 
         public Administrator(string name, string email, string pwd) : this()

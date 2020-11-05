@@ -26,7 +26,7 @@ namespace EventPlatFormVer4.Controllers
         }
 
         // GET: Events/Details/5
-        public async Task<IActionResult> Details(uint? id)
+        public async Task<IActionResult> Details(string? id)
         {
             if (id == null)
             {
@@ -66,7 +66,7 @@ namespace EventPlatFormVer4.Controllers
         }
 
         // GET: Events/Edit/5
-        public async Task<IActionResult> Edit(uint? id)
+        public async Task<IActionResult> Edit(string? id)
         {
             if (id == null)
             {
@@ -86,7 +86,7 @@ namespace EventPlatFormVer4.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(uint id, [Bind("Id,Name,Rank,EventStartTime,EventEndTime,SignUpStartTime,SignUpEndTime,Address,Detail")] Event @event)
+        public async Task<IActionResult> Edit(string id, [Bind("Id,Name,Rank,EventStartTime,EventEndTime,SignUpStartTime,SignUpEndTime,Address,Detail")] Event @event)
         {
             if (id != @event.Id)
             {
@@ -117,7 +117,7 @@ namespace EventPlatFormVer4.Controllers
         }
 
         // GET: Events/Delete/5
-        public async Task<IActionResult> Delete(uint? id)
+        public async Task<IActionResult> Delete(string? id)
         {
             if (id == null)
             {
@@ -137,7 +137,7 @@ namespace EventPlatFormVer4.Controllers
         // POST: Events/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(uint id)
+        public async Task<IActionResult> DeleteConfirmed(string id)
         {
             var @event = await _context.Events.FindAsync(id);
             _context.Events.Remove(@event);
@@ -145,7 +145,7 @@ namespace EventPlatFormVer4.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool EventExists(uint id)
+        private bool EventExists(string id)
         {
             return _context.Events.Any(e => e.Id == id);
         }
