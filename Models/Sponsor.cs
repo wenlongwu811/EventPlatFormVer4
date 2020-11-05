@@ -40,6 +40,7 @@ namespace EventPlatFormVer4.Models
 
         public Sponsor()
         {
+
             Id = Guid.NewGuid().ToString();//Id唯一性
             RoleID = "1";
             SponEvents = new List<Event>();
@@ -67,6 +68,7 @@ namespace EventPlatFormVer4.Models
         public override string ToString()//提取赞助者信息
         {
             return "姓名：" + Name + "\n" + "邮箱地址：" + Email + "\n" + "电话号码：" + Phone + "\n";
+
         }
     }
 }
