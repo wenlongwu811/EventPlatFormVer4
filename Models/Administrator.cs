@@ -9,34 +9,49 @@ namespace EventPlatFormVer4.Models
     public class Administrator
     {
         [Key]
-        public uint Id { get; set; }//管理员ID
-        public uint RoleID { get; set; }//角色TD:0/1/2
+        public string Id { get; set; }
+        public uint RoleID { get; set; }//角色iD:0/1/2
+
+        [Required]
+        [RegularExpression(@"[0-9]{13}", ErrorMessage = "13位数字")]
+        public string Name { get; set; }
 
 
-        [Display(Name = "姓名")]
-        [Required(ErrorMessage = "姓名必填")]
-        public string Name { get; set; }//账号
-
-        [Display(Name = "邮箱地址")]
-        [Required(ErrorMessage = "邮箱必填")]
+        [RegularExpression(@"^\w+@[A-Za-z_]+?\.[a-zA-Z]{2,3}$", ErrorMessage = "请输入正确的格式")]
+        [Required]
         public string Email { get; set; }
 
-        [Display(Name = "联系方式")]
-        [Required(ErrorMessage = "电话必填")]
-        public string Phone { get; set; }
 
-        [Display(Name = "密码")]
-        [Required(ErrorMessage = "密码必填")]
-        public string Pwd { get; set; }//密码
+        [RegularExpression(@"[A-Za-z0-9]{6,}", ErrorMessage = "至少6位数字字母组合")]
+        [Required]
+        public string Pwd { get; set; }
 
         public Administrator()
         {
+            Id = Guid.NewGuid().ToString();
             RoleID = 0;
-
-            //Todo  要修改
-            //一定要成功！
-            Random rm = new Random();
-            Id = (uint)rm.Next(100);
         }
+
+        public Administrator(string name, string email, string pwd) : this()
+        {
+            Name = name; Email = email; Pwd = pwd;
+        }
+
+        public override bool Equals(object obj)
+        {
+            return obj is Administrator administrator &&
+                   Id == administrator.Id &&
+                   RoleID == administrator.RoleID &&
+                   Name == administrator.Name &&
+                   Email == administrator.Email &&
+                   Pwd == administrator.Pwd;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Id, RoleID, Name, Email, Pwd);
+        }
+
     }
 }
+//谢邀！
