@@ -3,19 +3,22 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace EventPlatFormVer4.Models
 {
-    public class Event
+    public class Event : IComparable<Event>
     {
         [Key]
         public string Id { get; set; }
 
         public string SponsorId { get; set; }
         [ForeignKey("SponsorId")]
+        public Sponsor Sponsor { get; set; }
+        public string SponsorName { get => (Sponsor != null) ? Sponsor.Name : ""; }
 
-        public List<Participant> Participants { get; set; }
+        public List<Participant> Participants { get; set; } //参与人员表
 
         [Display(Name = "活动名称")]
         [Required(ErrorMessage = "此项必填")]
@@ -24,6 +27,8 @@ namespace EventPlatFormVer4.Models
         [Display(Name = "活动等级")]
         [Required(ErrorMessage = "此项必填")]
         public string Rank { get; set; } // 活动性质，
+
+        public DateTime CreateTime { get; set; } // 活动提交申请时间
 
         [Display(Name = "活动开始时间")]
         [DataType(DataType.Date)]
@@ -54,13 +59,60 @@ namespace EventPlatFormVer4.Models
 
         //TODO: 确认Detail的类，如果需要上传文件的话应该改成什么类呢？会在后续改成提交文档
         public string Detail { get; set; } // 活动其他细节（报名条件，活动标准，活动具体内容和流程）
-        //public Sponsor Sponsor { get; set; } // 主办方
-        //public List<Participatant> Participants { get; set; } //参与人员表
 
         public Event()
         {
-            
+            Id = Guid.NewGuid().ToString(); // to generate a new id
+            Participants = new List<Participant>();
+            CreateTime = DateTime.Now;
         }
 
+        public Event(Sponsor sponsor,List<Participant> participants) : this()
+        {
+            this.Sponsor = sponsor;
+            this.CreateTime = DateTime.Now;
+            if (participants != null) Participants = participants;
+        }
+
+        public void AddParticipant(Participant participant)
+        {
+            if(Participants.Contains(participant))
+                throw new ApplicationException($"添加错误：参与者已存在！");
+            Participants.Add(participant);
+        }
+
+        public void RemoveParticipant(Participant participant)
+        {
+            Participants.Remove(participant);
+        }
+
+        public override string ToString()
+        {
+            StringBuilder strBuilder = new StringBuilder();
+            strBuilder.Append($"Id:{Id}, name:{Name}, sponsor:{Sponsor},createTime:{CreateTime}");
+            Participants.ForEach(participant => strBuilder.Append("\n\t" + participant));
+            return strBuilder.ToString();
+        }
+
+        public override bool Equals(object obj)
+        {
+            var e = obj as Event;
+            return e != null &&
+                Id == e.Id;
+        }
+
+        public override int GetHashCode()
+        {
+            var hashCode = -294571041;
+            hashCode = hashCode * -1561131293 + Id.GetHashCode();
+            hashCode = hashCode * -1561131293 + EqualityComparer<string>.Default.GetHashCode(SponsorName);
+            hashCode = hashCode * -1561131293 + CreateTime.GetHashCode();
+            return hashCode;
+        }
+        int IComparable<Event>.CompareTo(Event other)
+        {
+            if (other == null) return 1;
+            return this.Id.CompareTo(other.Id);
+        }
     }
 }
