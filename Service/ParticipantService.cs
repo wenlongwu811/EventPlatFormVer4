@@ -6,7 +6,7 @@ using EventPlatFormVer4.Models;
 
 namespace EventPlatFormVer4.Service
 {
-    public class Participant
+    public class ParticipantService
     {
 
     }
