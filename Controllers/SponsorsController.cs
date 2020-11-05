@@ -66,7 +66,7 @@ namespace EventPlatFormVer4.Controllers
         }
 
         // GET: Sponsors/Edit/5
-        public async Task<IActionResult> Edit(uint? id)
+        public async Task<IActionResult> Edit(string? id)
         {
             if (id == null)
             {
@@ -137,7 +137,7 @@ namespace EventPlatFormVer4.Controllers
         // POST: Sponsors/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(uint id)
+        public async Task<IActionResult> DeleteConfirmed(string id)
         {
             var sponsor = await _context.Sponsors.FindAsync(id);
             _context.Sponsors.Remove(sponsor);

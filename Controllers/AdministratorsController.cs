@@ -27,7 +27,7 @@ namespace EventPlatFormVer4.Controllers
         }
 
         // GET: Administrators/Details/5
-        public async Task<IActionResult> Details(uint? id)
+        public async Task<IActionResult> Details(string? id)
         {
             if (id == null)
             {
@@ -61,7 +61,7 @@ namespace EventPlatFormVer4.Controllers
         }
 
         //:Administrators/Accept：接受未审核
-        public async Task<IActionResult> Accept(uint id, [Bind("State")] Event events)
+        public async Task<IActionResult> Accept(string id, [Bind("State")] Event events)
         {
             var query = _context.Events.Where(m => m.Id == id);
             query.First().State = 1;
@@ -70,7 +70,7 @@ namespace EventPlatFormVer4.Controllers
         }
 
         //:Administrators/Accept2：接受审核
-        public async Task<IActionResult> Accept2(uint id, [Bind("State")] Event events)
+        public async Task<IActionResult> Accept2(string id, [Bind("State")] Event events)
         {
             var query = _context.Events.Where(m => m.Id == id);
             query.First().State = 1;
@@ -79,7 +79,7 @@ namespace EventPlatFormVer4.Controllers
         }
 
         //Get:Administrator/Ban2:禁止已审核
-        public async Task<IActionResult> Ban2(uint id, [Bind("State")] Event events)
+        public async Task<IActionResult> Ban2(string id, [Bind("State")] Event events)
         {
             var query = _context.Events.Where(m => m.Id == id);
             query.First().State = 2;
@@ -88,7 +88,7 @@ namespace EventPlatFormVer4.Controllers
         }
 
         //Get:Administrator/Ban:禁止未审核
-        public async Task<IActionResult>Ban(uint id ,[Bind("State")] Event events)
+        public async Task<IActionResult>Ban(string id ,[Bind("State")] Event events)
         {
             var query = _context.Events.Where(m => m.Id == id);
             query.First().State = 2;
@@ -96,7 +96,7 @@ namespace EventPlatFormVer4.Controllers
             return View(await _context.Events.Where(m => m.State == 0).ToListAsync());
         }
 
-        private bool EventExists(uint id)
+        private bool EventExists(string id)
         {
             return _context.Events.Any(e => e.Id == id);
         }
@@ -124,7 +124,7 @@ namespace EventPlatFormVer4.Controllers
         }
 
         // GET: Administrators/Edit/5
-        public async Task<IActionResult> Edit(uint? id)
+        public async Task<IActionResult> Edit(string? id)
         {
             if (id == null)
             {
@@ -144,7 +144,7 @@ namespace EventPlatFormVer4.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(uint id, [Bind("Id,RoleID,Name,Email,Phone,Pwd")] Administrator administrator)
+        public async Task<IActionResult> Edit(string id, [Bind("Id,RoleID,Name,Email,Phone,Pwd")] Administrator administrator)
         {
             if (id != administrator.Id)
             {
@@ -175,7 +175,7 @@ namespace EventPlatFormVer4.Controllers
         }
 
         // GET: Administrators/Delete/5
-        public async Task<IActionResult> Delete(uint? id)
+        public async Task<IActionResult> Delete(string? id)
         {
             if (id == null)
             {
@@ -195,7 +195,7 @@ namespace EventPlatFormVer4.Controllers
         // POST: Administrators/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(uint id)
+        public async Task<IActionResult> DeleteConfirmed(string id)
         {
             var administrator = await _context.Administrators.FindAsync(id);
             _context.Administrators.Remove(administrator);
@@ -203,7 +203,7 @@ namespace EventPlatFormVer4.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool AdministratorExists(uint id)
+        private bool AdministratorExists(string id)
         {
             return _context.Administrators.Any(e => e.Id == id);
         }
