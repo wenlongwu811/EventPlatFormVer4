@@ -10,22 +10,22 @@ using EventPlatFormVer4.Models;
 
 namespace EventPlatFormVer4.Controllers
 {
-    public class ParticipatantsController : Controller
+    public class ParticipantsController : Controller
     {
         private readonly MvcEpfContext _context;
 
-        public ParticipatantsController(MvcEpfContext context)
+        public ParticipantsController(MvcEpfContext context)
         {
             _context = context;
         }
 
-        // GET: Participatants
+        // GET: participants
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Participatants.ToListAsync());
+            return View(await _context.Participants.ToListAsync());
         }
 
-        // GET: Participatants/Details/5
+        // GET: participants/Details/5
         public async Task<IActionResult> Details(string? id)
         {
             if (id == null)
@@ -33,39 +33,39 @@ namespace EventPlatFormVer4.Controllers
                 return NotFound();
             }
 
-            var participatant = await _context.Participatants
+            var participant = await _context.Participants
                 .FirstOrDefaultAsync(m => m.ID == id);
-            if (participatant == null)
+            if (participant == null)
             {
                 return NotFound();
             }
 
-            return View(participatant);
+            return View(participant);
         }
 
-        // GET: Participatants/Create
+        // GET: participants/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Participatants/Create
+        // POST: participants/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,RoleID,Name,Email,Phone,Pwd")] Participant participatant)
+        public async Task<IActionResult> Create([Bind("Id,RoleID,Name,Email,PhoneNum,Passwd")] Participant participant)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(participatant);
+                _context.Add(participant);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(participatant);
+            return View(participant);
         }
 
-        // GET: Participatants/Edit/5
+        // GET: participants/Edit/5
         public async Task<IActionResult> Edit(string? id)
         {
             if (id == null)
@@ -73,22 +73,22 @@ namespace EventPlatFormVer4.Controllers
                 return NotFound();
             }
 
-            var participatant = await _context.Participatants.FindAsync(id);
-            if (participatant == null)
+            var participant = await _context.participants.FindAsync(id);
+            if (participant == null)
             {
                 return NotFound();
             }
-            return View(participatant);
+            return View(participant);
         }
 
-        // POST: Participatants/Edit/5
+        // POST: participants/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("Id,RoleID,Name,Email,Phone,Pwd")] Participant participatant)
+        public async Task<IActionResult> Edit(string id, [Bind("Id,RoleID,Name,Email,Phone,Pwd")] Participant participant)
         {
-            if (id != participatant.ID)
+            if (id != participant.ID)
             {
                 return NotFound();
             }
@@ -97,12 +97,12 @@ namespace EventPlatFormVer4.Controllers
             {
                 try
                 {
-                    _context.Update(participatant);
+                    _context.Update(participant);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ParticipatantExists(participatant.ID))
+                    if (!participantExists(participant.ID))
                     {
                         return NotFound();
                     }
@@ -113,10 +113,10 @@ namespace EventPlatFormVer4.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(participatant);
+            return View(participant);
         }
 
-        // GET: Participatants/Delete/5
+        // GET: participants/Delete/5
         public async Task<IActionResult> Delete(string? id)
         {
             if (id == null)
@@ -124,30 +124,30 @@ namespace EventPlatFormVer4.Controllers
                 return NotFound();
             }
 
-            var participatant = await _context.Participatants
+            var participant = await _context.participants
                 .FirstOrDefaultAsync(m => m.ID == id);
-            if (participatant == null)
+            if (participant == null)
             {
                 return NotFound();
             }
 
-            return View(participatant);
+            return View(participant);
         }
 
-        // POST: Participatants/Delete/5
+        // POST: participants/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(string id)
         {
-            var participatant = await _context.Participatants.FindAsync(id);
-            _context.Participatants.Remove(participatant);
+            var participant = await _context.participants.FindAsync(id);
+            _context.participants.Remove(participant);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ParticipatantExists(string id)
+        private bool participantExists(string id)
         {
-            return _context.Participatants.Any(e => e.ID == id);
+            return _context.participants.Any(e => e.ID == id);
         }
     }
 }
