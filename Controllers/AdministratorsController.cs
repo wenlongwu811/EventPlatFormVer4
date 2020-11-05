@@ -7,12 +7,14 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 //using EventPlatFormVer4.Data;
 using EventPlatFormVer4.Models;
+using EventPlatFormVer4.Service;
 
 namespace EventPlatFormVer4.Controllers
 {
     public class AdministratorsController : Controller
     {
         private readonly MvcEpfContext _context;
+        public AdministratorService administratorService;
 
         public AdministratorsController(MvcEpfContext context)
         {
@@ -33,9 +35,7 @@ namespace EventPlatFormVer4.Controllers
             {
                 return NotFound();
             }
-
-            var administrator = await _context.Administrators
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var administrator = administratorService.Find(id);
             if (administrator == null)
             {
                 return NotFound();
@@ -61,7 +61,7 @@ namespace EventPlatFormVer4.Controllers
         }
 
         //:Administrators/Accept：接受未审核
-        public async Task<IActionResult> Accept(uint id, [Bind("State")] Event events)
+        public async Task<IActionResult> Accept(string id, [Bind("State")] Event events)
         {
             var query = _context.Events.Where(m => m.Id == id);
             query.First().State = 1;
@@ -70,7 +70,7 @@ namespace EventPlatFormVer4.Controllers
         }
 
         //:Administrators/Accept2：接受审核
-        public async Task<IActionResult> Accept2(uint id, [Bind("State")] Event events)
+        public async Task<IActionResult> Accept2(string id, [Bind("State")] Event events)
         {
             var query = _context.Events.Where(m => m.Id == id);
             query.First().State = 1;
@@ -79,7 +79,7 @@ namespace EventPlatFormVer4.Controllers
         }
 
         //Get:Administrator/Ban2:禁止已审核
-        public async Task<IActionResult> Ban2(uint id, [Bind("State")] Event events)
+        public async Task<IActionResult> Ban2(string id, [Bind("State")] Event events)
         {
             var query = _context.Events.Where(m => m.Id == id);
             query.First().State = 2;
@@ -88,7 +88,7 @@ namespace EventPlatFormVer4.Controllers
         }
 
         //Get:Administrator/Ban:禁止未审核
-        public async Task<IActionResult>Ban(uint id ,[Bind("State")] Event events)
+        public async Task<IActionResult>Ban(string id ,[Bind("State")] Event events)
         {
             var query = _context.Events.Where(m => m.Id == id);
             query.First().State = 2;
@@ -96,7 +96,7 @@ namespace EventPlatFormVer4.Controllers
             return View(await _context.Events.Where(m => m.State == 0).ToListAsync());
         }
 
-        private bool EventExists(uint id)
+        private bool EventExists(string id)
         {
             return _context.Events.Any(e => e.Id == id);
         }

@@ -10,7 +10,7 @@ namespace EventPlatFormVer4.Models
     public class Event
     {
         [Key]
-        public uint Id { get; set; }
+        public string Id { get; set; }
 
         public uint SponsorId { get; set; }
         [ForeignKey("SponsorId")]
@@ -59,10 +59,7 @@ namespace EventPlatFormVer4.Models
 
         public Event()
         {
-            //Todo 待修改id;
-            Random random = new Random();
-            Id =(uint)random.Next(100);
-            State = 0;//刚创建
+            
         }
 
     }

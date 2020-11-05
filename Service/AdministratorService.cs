@@ -16,7 +16,7 @@ namespace EventPlatFormVer4.Service
             _context = context;
         }
 
-        public static void Add(Administrator administrator)
+        public void Add(Administrator administrator)
         {
             try
             {
@@ -27,47 +27,87 @@ namespace EventPlatFormVer4.Service
                 }
                 
             }
-            catch (Exception)
+            catch (Exception e)
             {
-
-                throw;
+                throw new ApplicationException("添加失败");
             }
         }
         
-        public static void Delete(string id)
+        public void Delete(string id)
         {
-
+            using (var db = _context)
+            {
+                var administrator = db.Administrators.Where(item => item.Id == id);
+                db.Administrators.RemoveRange(administrator);
+                db.SaveChanges();
+            }
         }
 
-        public static void Find(string id)
+        public Administrator Find(string id)
         {
-
+            using (var db = _context)
+            {
+                var adminitrator = db.Administrators.Where(item => item.Id == id);
+                return (Administrator)adminitrator;//TODO添加显式转换
+            }
         }
 
-         public static void Update(Administrator administrator)
+         public void Update(Administrator administrator)
         {
-
+            using (var db = _context)
+            {
+                db.Update(administrator);
+                db.SaveChanges();
+            }
         }
 
-        public static void Accept()
+        public void Accept(string id)
         {
-
+            using (var db = _context)
+            {
+                Event @event =(Event) db.Events.Where(item => item.Id == id);
+                @event.State = 1;
+                db.Events.Update(@event);
+                db.SaveChanges();
+            }
         }
 
-        public static void Deny()
+        public void Deny(string id)
         {
-
+            using (var db = _context)
+            {
+                Event @event = (Event)db.Events.Where(item => item.Id == id);
+                @event.State = 2;
+                db.Events.Update(@event);
+                db.SaveChanges();
+            }
         }
 
-        public static void Verify()
+        public Event Verify(string id)
         {
-
+            using (var db = _context)
+            {
+                Event @event = (Event)db.Events.Where(item => item.Id == id);
+                return @event;
+            }
         }
 
-        public static void Alter()
+        public Event Alter(string id)
         {
-
+            using (var db = _context)
+            {
+                Event @event = (Event)db.Events.Where(item => item.Id == id);
+                return @event;
+            }
         }
 
+        public List<Event> GetEvents(int state)
+        {
+            using (var db = _context)
+            {
+                var query = db.Events.Where(item => item.State == state);
+                return query.ToList();
+            }
+        }
     }
 }
