@@ -10,7 +10,7 @@ namespace EventPlatFormVer4.Service
     {
         public static bool Apply()
         {
-            return false;//pull test
+            return false;//this is a push test
         }
     }
 }
