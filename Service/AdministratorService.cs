@@ -20,19 +20,19 @@ namespace EventPlatFormVer4.Service
         {
             try
             {
-                using (var db =_context)
+                using (var db = _context)
                 {
                     db.Administrators.Add(administrator);
                     db.SaveChanges();
                 }
-                
+
             }
             catch (Exception e)
             {
                 throw new ApplicationException("添加失败");
             }
         }
-        
+
         public void Delete(string id)
         {
             using (var db = _context)
@@ -52,7 +52,7 @@ namespace EventPlatFormVer4.Service
             }
         }
 
-         public void Update(Administrator administrator)
+        public void Update(Administrator administrator)
         {
             using (var db = _context)
             {
@@ -65,7 +65,7 @@ namespace EventPlatFormVer4.Service
         {
             using (var db = _context)
             {
-                Event @event =(Event) db.Events.Where(item => item.Id == id);
+                Event @event = (Event)db.Events.Where(item => item.Id == id);
                 @event.State = 1;
                 db.Events.Update(@event);
                 db.SaveChanges();
