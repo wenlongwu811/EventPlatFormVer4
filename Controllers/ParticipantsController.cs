@@ -73,7 +73,7 @@ namespace EventPlatFormVer4.Controllers
                 return NotFound();
             }
 
-            var participant = await _context.participants.FindAsync(id);
+            var participant = await _context.Participants.FindAsync(id);
             if (participant == null)
             {
                 return NotFound();
@@ -124,7 +124,7 @@ namespace EventPlatFormVer4.Controllers
                 return NotFound();
             }
 
-            var participant = await _context.participants
+            var participant = await _context.Participants
                 .FirstOrDefaultAsync(m => m.ID == id);
             if (participant == null)
             {
@@ -139,15 +139,15 @@ namespace EventPlatFormVer4.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(string id)
         {
-            var participant = await _context.participants.FindAsync(id);
-            _context.participants.Remove(participant);
+            var participant = await _context.Participants.FindAsync(id);
+            _context.Participants.Remove(participant);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool participantExists(string id)
         {
-            return _context.participants.Any(e => e.ID == id);
+            return _context.Participants.Any(e => e.ID == id);
         }
     }
 }
