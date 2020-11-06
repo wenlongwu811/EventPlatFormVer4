@@ -15,7 +15,7 @@ namespace EventPlatFormVer4.Models
         //不显示
         [Key]
         public string ID { get; set; }//唯一ID
-        public uint RoleID { get; set; }//参赛者角色=2
+        public string RoleID { get; set; }//参赛者角色=2
         
         //登录用
         public string Name { get; set; }//账号;个人信息展示
@@ -35,7 +35,7 @@ namespace EventPlatFormVer4.Models
         public Participant()
         {
             ID = Guid.NewGuid().ToString();//ID唯一性
-            RoleID = 2;
+            RoleID = "2";
             PartiEvent = new List<Event>();
         }
         public Participant(List<Event> events) : this()
