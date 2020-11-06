@@ -123,12 +123,12 @@ namespace EventPlatFormVer4.Service
         }
 
         // -----------登记participant成绩
-        public void Check(string id)//修改participant的Grade属性
+        public void Check(Participant participant,string grade)//修改participant的Grade属性
         {
             using (var db = _context)
             {
-                Event @event = (Event)db.Events.Where(item => item.Id == id);
-                @event.Grade = 0;//TODO：如何实现自动输入
+                Event @event = (Event)db.Events.Where(item => item.Id == participant.ID);
+                @event.Grade = grade;
                 db.Events.Update(@event);
                 db.SaveChanges();
             }
