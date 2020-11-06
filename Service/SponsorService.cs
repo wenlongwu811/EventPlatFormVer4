@@ -74,7 +74,7 @@ namespace EventPlatFormVer4.Service
         public void Cancel(string id)
         {
             using (var db = _context)
-            {
+            { 
                 Event @event = (Event)db.Events.Where(item => item.Id == id);
                 @event.State = 4;
                 db.Events.Update(@event);
