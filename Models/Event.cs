@@ -55,7 +55,9 @@ namespace EventPlatFormVer4.Models
         public string Address { get; set; } // 活动举办地址
 
         [Display(Name = "状态")]
-        public int State { get; set; } //状态0/1/2/3表示待提交/审核中/审核失败/审核成功
+        public int State { get; set; } //赛事申请状态，0/1/2/3表示待审核/审核成功/审核失败/取消
+        public int PartiState { get; set; } //参与者报名状态，0/1/2/3表示待审核/审核成功/审核失败/取消
+        public int Grade { get; set; } //participant参加活动的分数
 
         //TODO: 确认Detail的类，如果需要上传文件的话应该改成什么类呢？会在后续改成提交文档
         public string Detail { get; set; } // 活动其他细节（报名条件，活动标准，活动具体内容和流程）

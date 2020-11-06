@@ -58,53 +58,53 @@ namespace EventPlatFormVer4.Service
             }
         }
 
-        // -----------申请举办event,只要申请了，活动就写入到数据库，event的State1=0为待审核
+        // -----------申请举办event,只要申请了，活动就写入到数据库，event的State=0为待审核
         public void Apply(string id)
         {
             using (var db = _context)
             {
-                Event @event = (Event)db.Events.Insert;
-                @event.State = 0;//Todo，改为State1
+                Event @event = (Event)db.Events.Insert;//TODO：不知道语句怎么写
+                @event.State = 0;
                 db.Events.Update(@event);
                 db.SaveChanges();
             }
         }
 
-        // -----------取消event,event的State1修改为2，（State1=1为管理员审核通过）
+        // -----------取消event,event的State修改为2，（State=1为管理员审核通过）
         public void Cancel(string id)
         {
             using (var db = _context)
             {
                 Event @event = (Event)db.Events.Where(item => item.Id == id);
-                @event.State = 2;//Todo，改为State1
+                @event.State = 2;
                 db.Events.Update(@event);
                 db.SaveChanges();
             }
         }
 
         // -----------审核participant报名
-        public void Accept(string id)//同意,将event的State2修改为1
+        public void Accept(string id)//同意未审核,将event的PartiState修改为1
         {
             using (var db = _context)
             {
                 Event @event = (Event)db.Events.Where(item => item.Id == id);
-                @event.State = 1;//Todo，改为State2
+                @event.PartiState = 1;
                 db.Events.Update(@event);
                 db.SaveChanges();
             }
         }
-        public void Deny(string id)//拒绝，将event的State2修改为2
+        public void Deny(string id)//拒绝未审核，将event的PartiState修改为2
         {
             using (var db = _context)
             {
                 Event @event = (Event)db.Events.Where(item => item.Id == id);
-                @event.State = 2;//Todo，改为State2
+                @event.PartiState = 2;
                 db.Events.Update(@event);
                 db.SaveChanges();
             }
         }
         
-        public Event Verify(string id)//检查，将所以未审核的全部展示出来
+        public Event Verify(string id)//检查，将所有未审核的participant展示出来
         {
             using (var db = _context)
             {
@@ -113,7 +113,7 @@ namespace EventPlatFormVer4.Service
             }
         }
 
-        public Event Alter(string id)//修改participant申请表的State2
+        public Event Alter(string id)//修改已审核participant申请表的PartiState
         {
             using (var db = _context)
             {
@@ -123,7 +123,16 @@ namespace EventPlatFormVer4.Service
         }
 
         // -----------登记participant成绩
-
+        public void Check(string id)//修改participant的Grade属性
+        {
+            using (var db = _context)
+            {
+                Event @event = (Event)db.Events.Where(item => item.Id == id);
+                @event.Grade = 0;//TODO：如何实现手动输入
+                db.Events.Update(@event);
+                db.SaveChanges();
+            }
+        }
 
         // -----------显示自己已经申请的event列表
         public List<Event> ApplyEvents(int state)

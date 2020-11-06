@@ -27,7 +27,7 @@ namespace EventPlatFormVer4.Controllers
         }
 
         // GET: Administrators/Details/5
-        public async Task<IActionResult> Details(string? id)
+        public async Task<IActionResult> Details(string id)
         {
             if (id == null)
             {
