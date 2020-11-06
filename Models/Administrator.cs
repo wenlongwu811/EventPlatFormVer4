@@ -30,7 +30,6 @@ namespace EventPlatFormVer4.Models
         {
             Id = Guid.NewGuid().ToString();
             RoleID = "0";
-
         }
 
         public Administrator(string name, string email, string pwd) : this()
@@ -55,4 +54,3 @@ namespace EventPlatFormVer4.Models
 
     }
 }
-//谢邀！

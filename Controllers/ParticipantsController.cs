@@ -1,4 +1,4 @@
-﻿     using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -25,7 +25,6 @@ namespace EventPlatFormVer4.Controllers
             return View(await _context.Participants.ToListAsync());
         }
 
-        // GET: participants/Details/5
         public async Task<IActionResult> Details(string? id)
         {
             if (id == null)
@@ -65,7 +64,6 @@ namespace EventPlatFormVer4.Controllers
             return View(participant);
         }
 
-        // GET: participants/Edit/5
         public async Task<IActionResult> Edit(string? id)
         {
             if (id == null)
@@ -87,6 +85,7 @@ namespace EventPlatFormVer4.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(string id, [Bind("Id,RoleID,Name,Email,Phone,Pwd")] Participant participant)
+
         {
             if (id != participant.ID)
             {
@@ -116,7 +115,6 @@ namespace EventPlatFormVer4.Controllers
             return View(participant);
         }
 
-        // GET: participants/Delete/5
         public async Task<IActionResult> Delete(string? id)
         {
             if (id == null)
@@ -146,6 +144,7 @@ namespace EventPlatFormVer4.Controllers
         }
 
         private bool participantExists(string id)
+
         {
             return _context.Participants.Any(e => e.ID == id);
         }
