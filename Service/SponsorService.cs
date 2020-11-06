@@ -59,24 +59,24 @@ namespace EventPlatFormVer4.Service
         }
 
         // -----------申请举办event,只要申请了，活动就写入到数据库，event的State=0为待审核
-        public void Apply(string id)
+        public void Apply(Event @event)
         {
             using (var db = _context)
             {
-                Event @event = (Event)db.Events.Insert;//TODO：不知道语句怎么写
+                db.Events.Add(@event);
                 @event.State = 0;
                 db.Events.Update(@event);
                 db.SaveChanges();
             }
         }
 
-        // -----------申请取消event，需要
+        // -----------向Administor申请取消event
         public void Cancel(string id)
         {
             using (var db = _context)
             {
                 Event @event = (Event)db.Events.Where(item => item.Id == id);
-                @event.Apply_Change_State = 1;//申请修改State标识，向Administor申请取消event,默认值为0
+                @event.Apply_Change_State = true;//申请修改State标识，默认值为0
                 db.Events.Update(@event);
                 db.SaveChanges();
             }
@@ -128,13 +128,13 @@ namespace EventPlatFormVer4.Service
             using (var db = _context)
             {
                 Event @event = (Event)db.Events.Where(item => item.Id == id);
-                @event.Grade = 0;//TODO：如何实现手动输入
+                @event.Grade = 0;//TODO：如何实现自动输入
                 db.Events.Update(@event);
                 db.SaveChanges();
             }
         }
 
-        // -----------显示自己已经申请的event列表
+        // -----------显示自己已经申请的event列表,待定，可删
         public List<Event> ApplyEvents(int state)
         {
             using (var db = _context)
