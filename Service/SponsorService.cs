@@ -63,7 +63,7 @@ namespace EventPlatFormVer4.Service
         {
             using (var db = _context)
             {
-                Event @event = (Event)db.Events.Insert;//TODO：不知道语句怎么写
+                Event @event = (Event)db.Events.Find(id);//TODO：不知道语句怎么写
                 @event.State = 0;
                 db.Events.Update(@event);
                 db.SaveChanges();
@@ -74,7 +74,7 @@ namespace EventPlatFormVer4.Service
         public void Cancel(string id)
         {
             using (var db = _context)
-            {
+            { 
                 Event @event = (Event)db.Events.Where(item => item.Id == id);
                 @event.State = 2;
                 db.Events.Update(@event);
