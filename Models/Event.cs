@@ -55,8 +55,8 @@ namespace EventPlatFormVer4.Models
         public string Address { get; set; } // 活动举办地址
 
         [Display(Name = "状态")]
-        public int State { get; set; } //赛事申请状态，0/1/2/3表示待审核/审核成功/审核失败/取消
-        public bool Apply_Change_State { get; set; } //申请修改State标识，false/true表示默认/申请修改
+        public int State { get; set; } //赛事申请状态，0/1/2/3/4表示待审核/审核成功/审核失败/取消/申请取消
+        //public bool Apply_Change_State { get; set; } //申请修改State标识，false/true表示默认/申请修改
         public int PartiState { get; set; } //参与者报名状态，0/1/2/3表示待审核/审核成功/审核失败/取消
         //public int Apply_Change_PartiState { get; set; } //申请修改PartiState标识，0/1表示默认/申请修改
 
