@@ -70,13 +70,13 @@ namespace EventPlatFormVer4.Service
             }
         }
 
-        // -----------取消event,event的State修改为2，（State=1为管理员审核通过）
+        // -----------申请取消event，需要
         public void Cancel(string id)
         {
             using (var db = _context)
             {
                 Event @event = (Event)db.Events.Where(item => item.Id == id);
-                @event.State = 2;
+                @event.Apply_Change_State = 1;//申请修改State标识，向Administor申请取消event,默认值为0
                 db.Events.Update(@event);
                 db.SaveChanges();
             }
