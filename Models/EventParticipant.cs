@@ -21,7 +21,7 @@ namespace EventPlatFormVer4.Models
         [ForeignKey("EventId")]
         public string EventName { get => Event != null ? Event.Name : "" ; }
         // TODO: decide the State number
-        public int State { get; set; }
+        public int State { get; set; }//赛事报名状态，0/1/2/3表示待审核/报名成功/报名失败/取消
 
         public EventParticipant() {
             Id = Guid.NewGuid().ToString();

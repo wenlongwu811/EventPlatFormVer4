@@ -55,19 +55,19 @@ namespace EventPlatFormVer4.Service
             }
         }
         //报名，将对应的event添加到自己的List里面，并将PartiState改为0
-        public void Apply(Event _event,string id)
+        public void Apply(EventParticipant EP,string id)
         {
             using (var db = _context)
             {
-                var @event = (Event)db.Events.Where(item => item.Id == _event.Id);
+                var eventParticipant = (EventParticipant)db.EventParticipants.Where(item => item.Id == EP.Id);
                 var participant = (Participant)db.Participants.Where(item => item.ID == id);
-                @event.PartiState = 0;
-                participant.PartiEvent.Add(@event);
+                EP.State = 0;
+                participant.PartiEvent.Add(eventParticipant);
                 db.SaveChanges();
             }
         }
         //查找已参加的比赛
-        public List<Event> FindEvent(string id)
+        public List<EventParticipant> FindEvent(string id)
         {
             using (var db=_context)
             {
@@ -76,13 +76,13 @@ namespace EventPlatFormVer4.Service
             }
         }
         //退赛，将List中已经报名成功的event的PartiState改为3
-        public void ExitEvent(Event @event,string id)
+        public void ExitEvent(EventParticipant EP,string id)
         {
             using (var db=_context)
             {
                 var participant = (Participant)db.Participants.Where(item => item.ID == id);
-                var _event = (Event)participant.PartiEvent.Where(item => (item.Id == @event.Id)&&(item.PartiState==1));
-                _event.PartiState = 3;
+                var eventParticipant = (EventParticipant)participant.EventParticipants.Where(item => (item.Id == EP.Id)&&(item.PartiState==1));
+                eventParticipant.State = 3;
             }
         }
 
