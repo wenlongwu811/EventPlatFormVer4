@@ -48,13 +48,8 @@ namespace EventPlatFormVer4.Service
         {
             using (var db = _context)
             {
-<<<<<<< Updated upstream
                 var adminitrator =await db.Administrators.Where(item => item.Id == id).FirstOrDefaultAsync();
                 return adminitrator;//TODO添加显式转换
-=======
-                var adminitrator =db.Administrators.Where(item => item.Id == id);
-                return (Administrator)adminitrator;//TODO添加显式转换
->>>>>>> Stashed changes
             }
         }
 
