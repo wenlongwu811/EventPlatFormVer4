@@ -7,12 +7,14 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 //using EventPlatFormVer4.Data;
 using EventPlatFormVer4.Models;
+using EventPlatFormVer4.Service;
 
 namespace EventPlatFormVer4.Controllers
 {
     public class SponsorsController : Controller
     {
         private readonly MvcEpfContext _context;
+        public SponsorService sponserv;
 
         public SponsorsController(MvcEpfContext context)
         {
@@ -33,8 +35,8 @@ namespace EventPlatFormVer4.Controllers
                 return NotFound();
             }
 
-            var sponsor = await _context.Sponsors
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var sponsor = await sponserv.Find(id);//Todo：同步异步问题待解决，await用不了
+
             if (sponsor == null)
             {
                 return NotFound();
@@ -124,8 +126,12 @@ namespace EventPlatFormVer4.Controllers
                 return NotFound();
             }
 
+            /*
             var sponsor = await _context.Sponsors
                 .FirstOrDefaultAsync(m => m.Id == id);
+            */
+            var sponsor =  sponserv.Delete(id);//Todo：同步异步问题待解决，await用不了
+
             if (sponsor == null)
             {
                 return NotFound();

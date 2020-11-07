@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;
 using EventPlatFormVer4.Models;
@@ -43,7 +45,7 @@ namespace EventPlatFormVer4.Service
             }
         }
 
-        public Administrator Find(string id)
+        public async Task<Administrator> FindAsync(string id)
         {
             using (var db = _context)
             {
