@@ -17,14 +17,34 @@ namespace EventPlatFormVer4.Service
         {
             _context = context;
         }
+        public static List<Participant> ToList()//遍历数据库
+        {
+            using(var db = _context)
+            {
+                var query = db.Participants.ToList();
+                return query;
+            }
+        }
         //增加参赛者
         public void Add(Participant participant)
         {
-                using (var db = _context)
+            using (var db = _context)
+            {
+                List<Participant> participants =ParticipantService.ToList();
+                foreach(Participant _participant in participants)
+                {
+                    if (participant.Equals(_participant)) throw new ApplicationException("用户已存在，添加失败");
+                }
+                try
                 {
                     db.Participants.Add(participant);
                     db.SaveChanges();
                 }
+                catch (Exception e)
+                {
+                    throw new ApplicationException("用户已存在，添加失败");
+                }
+            }
         }
         //删除参赛者
         public void Delete(string id)
@@ -54,15 +74,16 @@ namespace EventPlatFormVer4.Service
                 return (Participant)participant;
             }
         }
-        //报名，将对应的event添加到自己的List里面，并将PartiState改为0
+        //报名，将对应的event添加到自己的List里面，并将EP的State改为0
         public void Apply(EventParticipant EP,string id)
         {
             using (var db = _context)
             {
-                var eventParticipant = (EventParticipant)db.EventParticipants.Where(item => item.Id == EP.Id);
+                var @event = (EventParticipant)db.Events.Where(item => item.Id == EP.Id);
                 var participant = (Participant)db.Participants.Where(item => item.ID == id);
-                EP.State = 0;
-                participant.PartiEvent.Add(eventParticipant);
+                @event.Participant = participant;
+                @event.State = 0;
+                participant.PartiEvent.Add(@event);
                 db.SaveChanges();
             }
         }
@@ -81,7 +102,7 @@ namespace EventPlatFormVer4.Service
             using (var db=_context)
             {
                 var participant = (Participant)db.Participants.Where(item => item.ID == id);
-                var eventParticipant = (EventParticipant)participant.EventParticipants.Where(item => (item.Id == EP.Id)&&(item.PartiState==1));
+                var eventParticipant = (EventParticipant)db.EventParticipants.Where(item => (item.EventId == EP.Id)&&(item.ParticipantId==id)&&(item.State==1));
                 eventParticipant.State = 3;
             }
         }
