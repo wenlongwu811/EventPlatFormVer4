@@ -13,7 +13,7 @@ namespace EventPlatFormVer4.Service
     /**
      * The service class to manage events
      */
-    class EventService
+    public class EventService
     {
         public EventService(MvcEpfContext context) // context 配置
         {
