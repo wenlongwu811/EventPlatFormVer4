@@ -59,8 +59,17 @@ namespace EventPlatFormVer4.Service
         }
 
         // -----------申请举办event,只要申请了，活动就写入到数据库，event的State=0为待审核
-        public void Apply(Event @event)
+        public void Apply(Event _event, string id)//TODO：需要处理多次申请同名活动产生不同的id问题
         {
+            using (var db = _context)
+            {
+                var @event = (Event)db.Events.Where(item => item.Id == _event.Id);
+                var sponsor = (Sponsor)db.Sponsors.Where(item => item.Id == id);
+                @event.State = 0;//待审核
+                sponsor.SponEvents.Add(@event);
+                db.SaveChanges();
+            }
+            /*
             using (var db = _context)
             {
                 db.Events.Add(@event);
@@ -68,68 +77,81 @@ namespace EventPlatFormVer4.Service
                 db.Events.Update(@event);
                 db.SaveChanges();
             }
+            */
         }
 
         // -----------向Administor申请取消event,将event的State修改为4
-        public void Cancel(string id)
+        public void Cancel(Event @event,string id)
         {
             using (var db = _context)
             { 
+                var sponsor = (Sponsor)db.Sponsors.Where(item => item.Id == id);
+                var _event = (Event)sponsor.SponEvents.Where(item => (item.Id == @event.Id) && (item.State == 1));
+                _event.State = 4; //将报名成功的event的PartiState改为4，等待管理员审核
+                db.Events.Update(@event);
+                db.SaveChanges();
+                /*
                 Event @event = (Event)db.Events.Where(item => item.Id == id);
                 @event.State = 4;
                 db.Events.Update(@event);
                 db.SaveChanges();
+                */
             }
         }
 
         // -----------审核participant报名
-        public void Accept(string id)//同意未审核,将event的PartiState修改为1
+        public void Accept(EventParticipant EP,string id)//同意未审核,将event的PartiState修改为1
         {
             using (var db = _context)
             {
-                Event @event = (Event)db.Events.Where(item => item.Id == id);
-                @event.PartiState = 1;
-                db.Events.Update(@event);
+                //Event @event = (Event)db.Events.Where(item => item.Id == id);
+                EventParticipant eventParticipant = (EventParticipant)db.EventParticipants.Where(item => item.Id == EP.Id);
+                eventParticipant.State = 1;
+                db.EventParticipants.Update(eventParticipant);
                 db.SaveChanges();
             }
         }
-        public void Deny(string id)//拒绝未审核，将event的PartiState修改为2
+        public void Deny(EventParticipant EP, string id)//拒绝未审核，将event的PartiState修改为2
         {
             using (var db = _context)
             {
-                Event @event = (Event)db.Events.Where(item => item.Id == id);
-                @event.PartiState = 2;
-                db.Events.Update(@event);
+                //Event @event = (Event)db.Events.Where(item => item.Id == id);
+                EventParticipant eventParticipant = (EventParticipant)db.EventParticipants.Where(item => item.Id == EP.Id);
+                eventParticipant.State = 2;
+                db.EventParticipants.Update(eventParticipant);
                 db.SaveChanges();
             }
         }
         
-        public Event Verify(string id)//检查，将所有未审核的participant展示出来
+        public EventParticipant Verify(EventParticipant EP, string id)//检查，将所有未审核的participant展示出来
         {
             using (var db = _context)
             {
-                Event @event = (Event)db.Events.Where(item => item.Id == id);
-                return @event;
+                //Event @event = (Event)db.Events.Where(item => item.Id == id);
+                EventParticipant eventParticipant = db.EventParticipants.Where(item => item.Id == EP.Id).FirstOrDefault();
+                return eventParticipant;
             }
         }
 
-        public Event Alter(string id)//修改已审核participant申请表的PartiState
+        public EventParticipant Alter(EventParticipant EP, string id)//修改已审核participant申请表的PartiState
         {
             using (var db = _context)
             {
-                Event @event = (Event)db.Events.Where(item => item.Id == id);
-                return @event;
+                //Event @event = (Event)db.Events.Where(item => item.Id == id);
+                EventParticipant eventParticipant = (EventParticipant)db.EventParticipants.Where(item => item.Id == EP.Id);
+                return eventParticipant;
             }
         }
 
         // -----------登记participant成绩
-        public void Check(Participant participant,string grade)//修改participant的Grade属性
+        public void Check(EventParticipant EP, string id, string grade)//修改EP表的Grade属性
         {
             using (var db = _context)
             {
-                Event @event = (Event)db.Events.Where(item => item.Id == participant.ID);
-                @event.Grade = grade;
-                db.Events.Update(@event);
+                //Event @event = (Event)db.Events.Where(item => item.Id == participant.ID);
+                EventParticipant eventParticipant = (EventParticipant)db.EventParticipants.Where(item => item.Id == EP.Id);
+                eventParticipant.Grade = grade;
+                db.EventParticipants.Update(eventParticipant);
                 db.SaveChanges();
             }
         }
