@@ -15,6 +15,7 @@ namespace EventPlatFormVer4.Models
         public DbSet<Sponsor> Sponsors { get; set; }
         public DbSet<Event> Events { get; set; }
         public DbSet<Administrator> Administrators { get; set; }
+        public DbSet<EventParticipant> EventParticipants { get; set; }
 
     }
 }

@@ -28,7 +28,7 @@ namespace EventPlatFormVer4.Models
         public string PhoneNum { get; set; }//电话号码
 
         [ForeignKey("EventID")]
-        public List<Event> PartiEvent { get;set; }//参加的活动
+        public List<EventParticipant> PartiEvent { get;set; }//参加的活动
 
 
 
@@ -36,11 +36,11 @@ namespace EventPlatFormVer4.Models
         {
             ID = Guid.NewGuid().ToString();//ID唯一性
             RoleID = "2";
-            PartiEvent = new List<Event>();
+            PartiEvent = new List<EventParticipant>();
         }
-        public Participant(List<Event> events) : this()
+        public Participant(List<EventParticipant> eventParticipant) : this()
         {
-            if (events != null) PartiEvent = events;
+            if (eventParticipant != null) PartiEvent = eventParticipant;
         }
 
         public override bool Equals(object obj)
