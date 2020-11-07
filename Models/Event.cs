@@ -18,7 +18,7 @@ namespace EventPlatFormVer4.Models
         public Sponsor Sponsor { get; set; }
         public string SponsorName { get => (Sponsor != null) ? Sponsor.Name : ""; }
 
-        public List<Participant> Participants { get; set; } //参与人员表
+        public List<EventParticipant> EventParticipants { get; set; } //参与人员表
 
         [Display(Name = "活动名称")]
         [Required(ErrorMessage = "此项必填")]
@@ -65,34 +65,34 @@ namespace EventPlatFormVer4.Models
         public Event()
         {
             Id = Guid.NewGuid().ToString(); // to generate a new id
-            Participants = new List<Participant>();
+            EventParticipants = new List<EventParticipant>();
             CreateTime = DateTime.Now;
         }
 
-        public Event(Sponsor sponsor,List<Participant> participants) : this()
+        public Event(Sponsor sponsor,List<EventParticipant> eventParticipants) : this()
         {
             this.Sponsor = sponsor;
             this.CreateTime = DateTime.Now;
-            if (participants != null) Participants = participants;
+            if (eventParticipants != null) EventParticipants = eventParticipants;
         }
 
-        public void AddParticipant(Participant participant)
+        public void AddParticipant(EventParticipant eventParticipant)
         {
-            if(Participants.Contains(participant))
+            if(EventParticipants.Contains(eventParticipant))
                 throw new ApplicationException($"添加错误：参与者已存在！");
-            Participants.Add(participant);
+            EventParticipants.Add(eventParticipant);
         }
 
-        public void RemoveParticipant(Participant participant)
+        public void RemoveParticipant(EventParticipant eventParticipant)
         {
-            Participants.Remove(participant);
+            EventParticipants.Remove(eventParticipant);
         }
 
         public override string ToString()
         {
             StringBuilder strBuilder = new StringBuilder();
             strBuilder.Append($"Id:{Id}, name:{Name}, sponsor:{Sponsor},createTime:{CreateTime}");
-            Participants.ForEach(participant => strBuilder.Append("\n\t" + participant));
+            EventParticipants.ForEach(participant => strBuilder.Append("\n\t" + participant));
             return strBuilder.ToString();
         }
 
