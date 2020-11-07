@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -76,6 +76,7 @@ namespace EventPlatFormVer4.Service
                 return participant;
             }
         }
+
         //报名，将对应的event添加到自己的List里面，并将EP的State改为0
         public async Task Apply(EventParticipant EP,string id)
         {
@@ -105,6 +106,7 @@ namespace EventPlatFormVer4.Service
             {
                 var participant = (Participant)db.Participants.Where(item => item.ID == id);
                 var eventParticipant = (EventParticipant)db.EventParticipants.Where(item => (item.EventId == EP.Id)&&(item.ParticipantId==id)&&(item.State==1));
+
                 eventParticipant.State = 3;
                 await db.SaveChangesAsync();
             }

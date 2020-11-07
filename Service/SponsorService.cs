@@ -122,7 +122,6 @@ namespace EventPlatFormVer4.Service
                 db.SaveChanges();
             }
         }
-        
         public EventParticipant Verify(EventParticipant EP, string id)//检查，将所有未审核的participant展示出来
         {
             using (var db = _context)
