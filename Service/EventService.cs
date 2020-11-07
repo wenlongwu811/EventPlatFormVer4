@@ -59,7 +59,7 @@ namespace EventPlatFormVer4.Service
             {
                 using (var db = _context)
                 {
-                    var @event = db.Events.Include("Participants").Where(e => e.Id == id).FirstOrDefault();
+                    var @event = db.Events.Include("EventParticipants").Where(e => e.Id == id).FirstOrDefault();
                     db.Events.Remove(@event);
                     db.SaveChanges();
                 }
