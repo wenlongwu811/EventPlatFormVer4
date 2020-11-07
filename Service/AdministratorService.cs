@@ -5,7 +5,6 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;
 using EventPlatFormVer4.Models;
-using Microsoft.EntityFrameworkCore;
 using SQLitePCL;
 
 namespace EventPlatFormVer4.Service
@@ -18,14 +17,14 @@ namespace EventPlatFormVer4.Service
             _context = context;
         }
 
-        public void Add(Administrator administrator)
+        public async Task Add(Administrator administrator)
         {
             try
             {
                 using (var db = _context)
                 {
                     db.Administrators.Add(administrator);
-                    db.SaveChanges();
+                   await db.SaveChangesAsync();
                 }
 
             }
@@ -35,11 +34,11 @@ namespace EventPlatFormVer4.Service
             }
         }
 
-        public void Delete(string id)
+        public async Task Delete(string id)
         {
             using (var db = _context)
             {
-                var administrator = db.Administrators.Where(item => item.Id == id);
+                var administrator =await db.Administrators.Where(item => item.Id == id).FirstOrDefaultAsync();
                 db.Administrators.RemoveRange(administrator);
                 db.SaveChanges();
             }
@@ -49,66 +48,72 @@ namespace EventPlatFormVer4.Service
         {
             using (var db = _context)
             {
-                var adminitrator = db.Administrators.Where(item => item.Id == id);
+<<<<<<< Updated upstream
+                var adminitrator =await db.Administrators.Where(item => item.Id == id).FirstOrDefaultAsync();
+                return adminitrator;//TODO添加显式转换
+=======
+                var adminitrator =db.Administrators.Where(item => item.Id == id);
                 return (Administrator)adminitrator;//TODO添加显式转换
+>>>>>>> Stashed changes
             }
         }
 
-        public void Update(Administrator administrator)
+        public async Task Update(Administrator administrator)
         {
             using (var db = _context)
             {
                 db.Update(administrator);
-                db.SaveChanges();
+               await db.SaveChangesAsync();
             }
         }
 
-        public void Accept(string id)
+        public async Task Accept(string id)
         {
             using (var db = _context)
             {
-                Event @event = (Event)db.Events.Where(item => item.Id == id);
+                Event @event =await db.Events.Where(item => item.Id == id).FirstOrDefaultAsync();
                 @event.State = 1;
                 db.Events.Update(@event);
                 db.SaveChanges();
             }
         }
 
-        public void Deny(string id)
+        public async Task Deny(string id)
         {
             using (var db = _context)
             {
-                Event @event = (Event)db.Events.Where(item => item.Id == id);
+                Event @event = await db.Events.Where(item => item.Id == id).FirstOrDefaultAsync();
                 @event.State = 2;
                 db.Events.Update(@event);
                 db.SaveChanges();
             }
         }
 
-        public Event Verify(string id)
+        public async Task<Event> Verify(string id)//只有一个信息的方法
         {
             using (var db = _context)
             {
-                Event @event = (Event)db.Events.Where(item => item.Id == id);
+                Event @event =await db.Events.Where(item => item.Id == id).FirstOrDefaultAsync();
                 return @event;
             }
         }
 
-        public Event Alter(string id)
+        public async Task<List<Event>> GetEvents()
         {
             using (var db = _context)
             {
-                Event @event = (Event)db.Events.Where(item => item.Id == id);
-                return @event;
-            }
-        }
-
-        public List<Event> GetEvents(int state)
-        {
-            using (var db = _context)
-            {
-                var query = db.Events.Where(item => item.State == state);
+                var query = await db.Events.ToListAsync();
                 return query.ToList();
+            }
+        }
+        
+        //todo 这里我应该调用Event里面的Get方法，自己临时写了一个；
+         public async Task<Event> EventInformation(string id)
+        {
+            using (var db = _context)
+            {
+                var @event = await db.Events.Where(item => item.Id == id).FirstOrDefaultAsync();
+                return @event;
             }
         }
     }

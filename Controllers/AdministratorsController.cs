@@ -13,8 +13,16 @@ namespace EventPlatFormVer4.Controllers
 {
     public class AdministratorsController : Controller
     {
+<<<<<<< Updated upstream
 
         public AdministratorService administratorService;
+=======
+        /// <summary>
+        /// 开始使用administratorService
+        /// </summary>
+        private AdministratorService administratorService;
+
+>>>>>>> Stashed changes
         private readonly MvcEpfContext _context;
 
         public AdministratorsController(MvcEpfContext context)
@@ -39,13 +47,27 @@ namespace EventPlatFormVer4.Controllers
             return View(await administratorService.GetEvents());
         }
         // GET: Administrators/Details/5
+<<<<<<< Updated upstream
         public async Task<IActionResult> Details(string id)
+=======
+        /// <summary>
+        /// 没有使用异步方法  
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task<IActionResult> Details(string? id)
+>>>>>>> Stashed changes
         {
             if (id == null)
             {
                 return NotFound();
             }
+<<<<<<< Updated upstream
             var administrator = await administratorService.FindAsync(id);
+=======
+
+            var administrator = administratorService.Find(id);
+>>>>>>> Stashed changes
             if (administrator == null)
             {
                 return NotFound();
@@ -56,18 +78,12 @@ namespace EventPlatFormVer4.Controllers
 
         //Get:Administrator/Alter:修改已审核
         /// <summary>
-        /// 进入要修改的页面
+        /// 进入某一个活动
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public async Task<IActionResult> Alter(string id)
-        {
-            
-            return View(await administratorService.EventInformation(id));
-
-        }
-
-        //GET:Administrators/Verify:待审核
+    
+        //GET:Administrators/Verify:审核
         public async Task<IActionResult> Verify(string id)
         {
            return View(await administratorService.EventInformation(id));
@@ -94,8 +110,6 @@ namespace EventPlatFormVer4.Controllers
         }
 
         // POST: Administrators/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,RoleID,Name,Email,Phone,Pwd")] Administrator administrator)
