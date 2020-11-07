@@ -6,20 +6,87 @@ using EventPlatFormVer4.Models;
 using System.Data;
 using System.Data.Common;
 using MySql.Data.MySqlClient;
+using Microsoft.AspNetCore.Razor.Language;
 
 namespace EventPlatFormVer4.Service
 {
     public class ParticipantService
     {
-        //报名，将PartiState改成0
-        public static void Apply()
+        private static MvcEpfContext _context;
+        public ParticipantService(MvcEpfContext context)
         {
-            MySqlConnection connection = new MySqlConnection();
-            connection.Open();
-            string applySql = "SELECT * FROM events WHERE State=1";
-            MySqlDataAdapter dataAdapter = new MySqlDataAdapter(applySql,connection);
-            DataSet eventList = new DataSet();
-            dataAdapter.Fill(eventList);
+            _context = context;
         }
+        //增加参赛者
+        public void Add(Participant participant)
+        {
+                using (var db = _context)
+                {
+                    db.Participants.Add(participant);
+                    db.SaveChanges();
+                }
+        }
+        //删除参赛者
+        public void Delete(string id)
+        {
+            using (var db = _context)
+            {
+                var participant = db.Participants.Where(item => item.ID == id);
+                db.Participants.RemoveRange(participant);
+                db.SaveChanges();
+            }
+        }
+        //更新参赛者信息
+        public void Update(Participant participant)
+        {
+            using (var db = _context)
+            {
+                db.Update(participant);
+                db.SaveChanges();
+            }
+        }
+        //查找参赛者
+        public Participant Find(string id)
+        {
+            using (var db = _context)
+            {
+                var participant = db.Participants.Where(item => item.ID == id);
+                return (Participant)participant;
+            }
+        }
+        //报名，将对应的event添加到自己的List里面，并将PartiState改为0
+        public void Apply(Event _event,string id)
+        {
+            using (var db = _context)
+            {
+                var @event = (Event)db.Events.Where(item => item.Id == _event.Id);
+                var participant = (Participant)db.Participants.Where(item => item.ID == id);
+                @event.PartiState = 0;
+                participant.PartiEvent.Add(@event);
+                db.SaveChanges();
+            }
+        }
+        //查找已参加的比赛
+        public List<Event> FindEvent(string id)
+        {
+            using (var db=_context)
+            {
+                var participant = (Participant)db.Participants.Where(item => item.ID == id);
+                return participant.PartiEvent;
+            }
+        }
+        //退赛，将List中已经报名成功的event的PartiState改为3
+        public void ExitEvent(Event @event,string id)
+        {
+            using (var db=_context)
+            {
+                var participant = (Participant)db.Participants.Where(item => item.ID == id);
+                var _event = (Event)participant.PartiEvent.Where(item => (item.Id == @event.Id)&&(item.PartiState==1));
+                _event.PartiState = 3;
+            }
+        }
+
+
+
     }
 }
