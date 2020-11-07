@@ -1,4 +1,4 @@
-﻿@model IEnumerable<EventPlatFormVer4.Models.Participatant>
+﻿@model IEnumerable<EventPlatFormVer4.Models.Participant>
 
 @{
     ViewData["Title"] = "Index";
@@ -22,10 +22,10 @@
                 @Html.DisplayNameFor(model => model.Email)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Phone)
+                @Html.DisplayNameFor(model => model.PhoneNum)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Pwd)
+                @Html.DisplayNameFor(model => model.PassWd)
             </th>
             <th></th>
         </tr>
@@ -43,15 +43,15 @@
                 @Html.DisplayFor(modelItem => item.Email)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Phone)
+                @Html.DisplayFor(modelItem => item.PhoneNum)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Pwd)
+                @Html.DisplayFor(modelItem => item.PassWd)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
             </td>
         </tr>
 }

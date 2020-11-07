@@ -7,11 +7,14 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 //using EventPlatFormVer4.Data;
 using EventPlatFormVer4.Models;
+using EventPlatFormVer4.Service;
 
 namespace EventPlatFormVer4.Controllers
 {
     public class AdministratorsController : Controller
     {
+
+        public AdministratorService administratorService;
         private readonly MvcEpfContext _context;
 
         public AdministratorsController(MvcEpfContext context)
@@ -20,22 +23,29 @@ namespace EventPlatFormVer4.Controllers
         }
 
         // GET: Administrators
+        //todo 
         public async Task<IActionResult> Index()
         {
             //return "You are an Administrator!";
             return View(await _context.Administrators.ToListAsync());
         }
-
+        /// <summary>
+        /// 管理员首页面
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task<IActionResult> Info()
+        {
+            return View(await administratorService.GetEvents());
+        }
         // GET: Administrators/Details/5
-        public async Task<IActionResult> Details(string? id)
+        public async Task<IActionResult> Details(string id)
         {
             if (id == null)
             {
                 return NotFound();
             }
-
-            var administrator = await _context.Administrators
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var administrator = await administratorService.FindAsync(id);
             if (administrator == null)
             {
                 return NotFound();
@@ -45,60 +55,36 @@ namespace EventPlatFormVer4.Controllers
         }
 
         //Get:Administrator/Alter:修改已审核
-        public async Task<IActionResult> Alter()
+        /// <summary>
+        /// 进入要修改的页面
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task<IActionResult> Alter(string id)
         {
-
-            return View(await _context.Events.Where(m => m.State !=0).ToListAsync());
+            
+            return View(await administratorService.EventInformation(id));
 
         }
 
         //GET:Administrators/Verify:待审核
-        public async Task<IActionResult> Verify()
+        public async Task<IActionResult> Verify(string id)
         {
-            return View( await _context.Events.Where(m => m.State == 0).ToListAsync());
-
-            //return View(await _context.Events.Where<m=>m.state=0>)
+           return View(await administratorService.EventInformation(id));
         }
 
         //:Administrators/Accept：接受未审核
         public async Task<IActionResult> Accept(string id, [Bind("State")] Event events)
         {
-            var query = _context.Events.Where(m => m.Id == id);
-            query.First().State = 1;
-            await _context.SaveChangesAsync();
-            return View(await _context.Events.Where(m => m.State == 0).ToListAsync());
-        }
-
-        //:Administrators/Accept2：接受审核
-        public async Task<IActionResult> Accept2(string id, [Bind("State")] Event events)
-        {
-            var query = _context.Events.Where(m => m.Id == id);
-            query.First().State = 1;
-            await _context.SaveChangesAsync();
-            return View(await _context.Events.Where(m => m.State != 0).ToListAsync());
-        }
-
-        //Get:Administrator/Ban2:禁止已审核
-        public async Task<IActionResult> Ban2(string id, [Bind("State")] Event events)
-        {
-            var query = _context.Events.Where(m => m.Id == id);
-            query.First().State = 2;
-            await _context.SaveChangesAsync();
-            return View(await _context.Events.Where(m => m.State != 0).ToListAsync());
+            await administratorService.Accept(id);
+           return View(await administratorService.EventInformation(id));
         }
 
         //Get:Administrator/Ban:禁止未审核
         public async Task<IActionResult>Ban(string id ,[Bind("State")] Event events)
         {
-            var query = _context.Events.Where(m => m.Id == id);
-            query.First().State = 2;
-            await _context.SaveChangesAsync();
-            return View(await _context.Events.Where(m => m.State == 0).ToListAsync());
-        }
-
-        private bool EventExists(string id)
-        {
-            return _context.Events.Any(e => e.Id == id);
+            await administratorService.Accept(id);
+            return View(await administratorService.EventInformation(id));
         }
 
         // GET: Administrators/Create:创建管理者
@@ -116,8 +102,7 @@ namespace EventPlatFormVer4.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(administrator);
-                await _context.SaveChangesAsync();
+                await administratorService.Add(administrator);
                 return RedirectToAction(nameof(Index));
             }
             return View(administrator);
@@ -153,22 +138,8 @@ namespace EventPlatFormVer4.Controllers
 
             if (ModelState.IsValid)
             {
-                try
-                {
-                    _context.Update(administrator);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!AdministratorExists(administrator.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
+               
+                await administratorService.Update(administrator);
                 return RedirectToAction(nameof(Index));
             }
             return View(administrator);
@@ -182,8 +153,7 @@ namespace EventPlatFormVer4.Controllers
                 return NotFound();
             }
 
-            var administrator = await _context.Administrators
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var administrator = await administratorService.FindAsync(id);
             if (administrator == null)
             {
                 return NotFound();
@@ -197,15 +167,9 @@ namespace EventPlatFormVer4.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(string id)
         {
-            var administrator = await _context.Administrators.FindAsync(id);
-            _context.Administrators.Remove(administrator);
-            await _context.SaveChangesAsync();
+            await administratorService.Delete(id);
             return RedirectToAction(nameof(Index));
-        }
-
-        private bool AdministratorExists(string id)
-        {
-            return _context.Administrators.Any(e => e.Id == id);
         }
     }
 }
+//wwl
