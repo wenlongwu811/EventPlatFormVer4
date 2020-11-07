@@ -5,7 +5,6 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;
 using EventPlatFormVer4.Models;
-using Microsoft.EntityFrameworkCore;
 using SQLitePCL;
 
 namespace EventPlatFormVer4.Service
@@ -74,31 +73,22 @@ namespace EventPlatFormVer4.Service
             }
         }
 
-        public void Deny(string id)
+        public async Task Deny(string id)
         {
             using (var db = _context)
             {
-                Event @event = (Event)db.Events.Where(item => item.Id == id);
+                Event @event = await db.Events.Where(item => item.Id == id).FirstOrDefaultAsync();
                 @event.State = 2;
                 db.Events.Update(@event);
                 db.SaveChanges();
             }
         }
 
-        public Event Verify(string id)
+        public async Task<Event> Verify(string id)//只有一个信息的方法
         {
             using (var db = _context)
             {
-                Event @event = (Event)db.Events.Where(item => item.Id == id);
-                return @event;
-            }
-        }
-
-        public Event Alter(string id)
-        {
-            using (var db = _context)
-            {
-                Event @event = (Event)db.Events.Where(item => item.Id == id);
+                Event @event =await db.Events.Where(item => item.Id == id).FirstOrDefaultAsync();
                 return @event;
             }
         }

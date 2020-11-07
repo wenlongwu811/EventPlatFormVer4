@@ -56,18 +56,12 @@ namespace EventPlatFormVer4.Controllers
 
         //Get:Administrator/Alter:修改已审核
         /// <summary>
-        /// 进入要修改的页面
+        /// 进入某一个活动
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public async Task<IActionResult> Alter(string id)
-        {
-            
-            return View(await administratorService.EventInformation(id));
-
-        }
-
-        //GET:Administrators/Verify:待审核
+    
+        //GET:Administrators/Verify:审核
         public async Task<IActionResult> Verify(string id)
         {
            return View(await administratorService.EventInformation(id));
@@ -94,8 +88,6 @@ namespace EventPlatFormVer4.Controllers
         }
 
         // POST: Administrators/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,RoleID,Name,Email,Phone,Pwd")] Administrator administrator)
