@@ -19,11 +19,19 @@ namespace EventPlatFormVer4.Service
         {
             _context = context;
         }
-        public static List<Participant> ToList()//遍历数据库
+        public static List<Participant> ToListParticipant()//遍历Participant表
         {
             using(var db = _context)
             {
                 var query = db.Participants.ToList();
+                return query;
+            }
+        }
+        public static List<EventParticipant> ToListEP()//遍历EP表
+        {
+            using(var db = _context)
+            {
+                var query = db.EventParticipants.ToList();
                 return query;
             }
         }
@@ -32,7 +40,7 @@ namespace EventPlatFormVer4.Service
         {
             using (var db = _context)
             {
-                List<Participant> participants =ParticipantService.ToList();
+                List<Participant> participants =ParticipantService.ToListParticipant();
                 foreach(Participant _participant in participants)
                 {
                     if (participant.Equals(_participant)) throw new ApplicationException("用户已存在，添加失败");
@@ -44,7 +52,7 @@ namespace EventPlatFormVer4.Service
                 }
                 catch (Exception e)
                 {
-                    throw new ApplicationException(""+e);
+                    throw new ApplicationException($"{e.Message}");
                 }
             }
         }
@@ -86,17 +94,30 @@ namespace EventPlatFormVer4.Service
                 var participant = (Participant)db.Participants.Where(item => item.ID == id);
                 @event.Participant = participant;
                 @event.State = 0;
-                participant.PartiEvent.Add(@event);
-                await db.SaveChangesAsync();
+                List<EventParticipant> eventParticipants = ToListEP();
+                foreach(EventParticipant eventParticipant in eventParticipants)
+                {
+                    if (eventParticipant.Equals(@event)) throw new ApplicationException("已经报名过");
+                }
+                try
+                {
+                    participant.PartiEvent.Add(@event);
+                    await db.SaveChangesAsync();
+                }
+                catch(Exception e)
+                {
+                    throw new ApplicationException($"{e.Message}");
+                }
             }
         }
         //查找已参加的比赛
-        public List<EventParticipant> FindEvent(string id)
+        public async Task<List<EventParticipant>> FindEvent(string id)
         {
             using (var db=_context)
             {
                 var participant = (Participant)db.Participants.Where(item => item.ID == id);
-                return participant.PartiEvent;
+                var events=participant.PartiEvent;
+                return events;
             }
         }
         //退赛，将List中已经报名成功的event的PartiState改为3

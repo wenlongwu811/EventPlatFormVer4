@@ -7,11 +7,14 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 //using EventPlatFormVer4.Data;
 using EventPlatFormVer4.Models;
+using EventPlatFormVer4.Service;
 
 namespace EventPlatFormVer4.Controllers
 {
     public class ParticipantsController : Controller
     {
+        private ParticipantService participantService;
+
         private readonly MvcEpfContext _context;
 
         public ParticipantsController(MvcEpfContext context)
@@ -25,15 +28,22 @@ namespace EventPlatFormVer4.Controllers
             return View(await _context.Participants.ToListAsync());
         }
 
+
+        //参赛者主界面
+        public async Task<IActionResult> Info(string? id)
+        {
+            return View(await participantService.Find(id));
+        }
+
+        //参赛者个人信息
         public async Task<IActionResult> Details(string? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
+            var participant = await participantService.Find(id);
 
-            var participant = await _context.Participants
-                .FirstOrDefaultAsync(m => m.ID == id);
             if (participant == null)
             {
                 return NotFound();
@@ -149,5 +159,8 @@ namespace EventPlatFormVer4.Controllers
         {
             return _context.Participants.Any(e => e.ID == id);
         }
+
+        //报名
+
     }
 }
