@@ -64,8 +64,10 @@ namespace EventPlatFormVer4.Models
         public string Grade { get; set; } //participant参加活动的分数
 
 
+
         //TODO: 确认Detail的类，如果需要上传文件的话应该改成什么类呢？会在后续改成提交文档
         public string Detail { get; set; } // 活动其他细节（报名条件，活动标准，活动具体内容和流程)
+
 
         public Event()
         {
