@@ -13,16 +13,12 @@ namespace EventPlatFormVer4.Controllers
 {
     public class AdministratorsController : Controller
     {
-<<<<<<< Updated upstream
 
-        public AdministratorService administratorService;
-=======
         /// <summary>
         /// 开始使用administratorService
         /// </summary>
         private AdministratorService administratorService;
 
->>>>>>> Stashed changes
         private readonly MvcEpfContext _context;
 
         public AdministratorsController(MvcEpfContext context)
@@ -47,27 +43,21 @@ namespace EventPlatFormVer4.Controllers
             return View(await administratorService.GetEvents());
         }
         // GET: Administrators/Details/5
-<<<<<<< Updated upstream
-        public async Task<IActionResult> Details(string id)
-=======
+
         /// <summary>
         /// 没有使用异步方法  
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
         public async Task<IActionResult> Details(string? id)
->>>>>>> Stashed changes
         {
+            
             if (id == null)
             {
                 return NotFound();
             }
-<<<<<<< Updated upstream
             var administrator = await administratorService.FindAsync(id);
-=======
 
-            var administrator = administratorService.Find(id);
->>>>>>> Stashed changes
             if (administrator == null)
             {
                 return NotFound();

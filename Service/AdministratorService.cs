@@ -48,7 +48,6 @@ namespace EventPlatFormVer4.Service
         {
             using (var db = _context)
             {
-
                 var adminitrator =await db.Administrators.Where(item => item.Id == id).FirstOrDefaultAsync();
                 return adminitrator;//TODO添加显式转换
             }
