@@ -57,13 +57,6 @@ namespace EventPlatFormVer4.Models
         [Display(Name = "状态")]
 
         public int State { get; set; } //赛事申请状态，0/1/2/3/4表示待审核/审核成功/审核失败/取消/申请取消
-        //public bool Apply_Change_State { get; set; } //申请修改State标识，false/true表示默认/申请修改
-        public int PartiState { get; set; } //参与者报名状态，0/1/2/3表示待审核/审核成功/审核失败/取消
-        //public int Apply_Change_PartiState { get; set; } //申请修改PartiState标识，0/1表示默认/申请修改
-
-        public string Grade { get; set; } //participant参加活动的分数
-
-
 
         //TODO: 确认Detail的类，如果需要上传文件的话应该改成什么类呢？会在后续改成提交文档
         public string Detail { get; set; } // 活动其他细节（报名条件，活动标准，活动具体内容和流程)
