@@ -1,0 +1,20 @@
+﻿@model IEnumerable<EventPlatFormVer4.Models.Administrator>
+
+@{
+    ViewData["Title"] = "Info";
+}
+
+<h1>工作台</h1>
+<frameset rows="50%,*">
+    <frameset cols="50%,50%">
+        <frame src="/view/Evens/Administrators/state0.cshtml">
+            <frameset rows="50%,50%">
+                <frameset src="/view/Evens/Administrators/state1.cshtml">
+                <frameset src="/view/Evens/Administrators/state2.cshtml">
+            </frameset>
+    </frameset>
+    <frameset cols="50%,50%">
+        <frame src="/view/Evens/Administrators/state3.cshtml">
+        <frame src="/view/Evens/Administrators/Details.cshtml">
+    </frameset>
+</frameset>

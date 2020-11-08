@@ -7,11 +7,13 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 //using EventPlatFormVer4.Data;
 using EventPlatFormVer4.Models;
+using EventPlatFormVer4.Service;
 
 namespace EventPlatFormVer4.Controllers
 {
     public class EventsController : Controller
     {
+        private EventService eventService;
         private readonly MvcEpfContext _context;
 
         public EventsController(MvcEpfContext context)
@@ -43,7 +45,7 @@ namespace EventPlatFormVer4.Controllers
             return View(@event);
         }
 
-        // GET: Events/Create
+        // GET: Events/Create: 创建新Event
         public IActionResult Create()
         {
             return View();
