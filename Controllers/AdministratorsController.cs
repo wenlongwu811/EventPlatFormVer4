@@ -14,9 +14,6 @@ namespace EventPlatFormVer4.Controllers
     public class AdministratorsController : Controller
     {
 
-        /// <summary>
-        /// 开始使用administratorService
-        /// </summary>
         private AdministratorService administratorService;
 
         private readonly MvcEpfContext _context;
@@ -27,28 +24,20 @@ namespace EventPlatFormVer4.Controllers
         }
 
         // GET: Administrators
-        //todo 
         public async Task<IActionResult> Index()
         {
-            //return "You are an Administrator!";
             return View(await _context.Administrators.ToListAsync());
         }
-        /// <summary>
-        /// 管理员首页面
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        public async Task<IActionResult> Info()
-        {
-            return View(await administratorService.GetEvents());
-        }
-        // GET: Administrators/Details/5
+        
 
-        /// <summary>
-        /// 没有使用异步方法  
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
+        public async Task<IActionResult> Info(string id)
+        {
+
+            return View(await administratorService.GetEvents());
+
+        }
+
+        // GET: Administrators/Details/5
         public async Task<IActionResult> Details(string? id)
         {
             
@@ -66,31 +55,25 @@ namespace EventPlatFormVer4.Controllers
             return View(administrator);
         }
 
-        //Get:Administrator/Alter:修改已审核
-        /// <summary>
-        /// 进入某一个活动
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-    
         //GET:Administrators/Verify:审核
-        public async Task<IActionResult> Verify(string id)
+        public async Task<IActionResult> Verify(string eventid,string admid)
         {
-           return View(await administratorService.EventInformation(id));
+            ViewBag.id = admid;
+           return View(await administratorService.EventInformation(eventid));
         }
 
         //:Administrators/Accept：接受未审核
         public async Task<IActionResult> Accept(string id, [Bind("State")] Event events)
         {
             await administratorService.Accept(id);
-           return View(await administratorService.EventInformation(id));
+            return RedirectToAction(nameof(Info));
         }
 
         //Get:Administrator/Ban:禁止未审核
         public async Task<IActionResult>Ban(string id ,[Bind("State")] Event events)
         {
             await administratorService.Accept(id);
-            return View(await administratorService.EventInformation(id));
+            return RedirectToAction(nameof(Info));
         }
 
         // GET: Administrators/Create:创建管理者

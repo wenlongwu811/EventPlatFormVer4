@@ -34,9 +34,6 @@
                 @Html.DisplayNameFor(model => model.Detail)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.State)
-            </th>
-            <th>
                 @Html.DisplayName("审核")
             </th>
         </tr>
@@ -44,44 +41,63 @@
     <tbody>
         @foreach (var item in Model)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Rank)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.EventStartTime)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.EventEndTime)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.SignUpStartTime)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.SignUpEndTime)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Address)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Detail)
-                </td>
-                <td>
-                     @Html.DisplayName("未通过")
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Rank)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EventStartTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EventEndTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SignUpStartTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SignUpEndTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Address)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Detail)
+            </td>
+            <td>
+            @switch (item.State)
+            {
+                case 0:
+                    <td>
+                        <a asp-action="Accept" asp-route-id="@item.Id">Accept</a> |
+                        <a asp-action="Ban" asp-route-id="@item.Id">Ban</a>
                     </td>
-                <td>
-                    <a asp-action="Accept" asp-route-id="@item.Id">Accept</a> |
-                    <a asp-action="Ban" asp-route-id="@item.Id">Ban</a>
-                </td>
-
-            </tr>
+                    <td asp-action="Info" asp-route-id="@ViewBag.Id">Back</td>
+                    break;
+                case 1:
+                    <td>
+                        <a asp-action="Ban" asp-route-id="@item.Id">Ban</a>
+                    </td>
+                    <td asp-action="Info" asp-route-id="@ViewBag.Id">Back</td>
+                    break;
+                case 2:
+                    <td>
+                        <a asp-action="Ban" asp-route-id="@item.Id">Ban</a>
+                    </td>
+                    <td asp-action="Info" asp-route-id="@ViewBag.Id">Back</td>
+                    break;
+                case 3:
+                    <td>
+                        <a asp-action="Ban" asp-route-id="@item.Id">Ban</a>
+                    </td>
+                    <td asp-action="Info" asp-route-id="@ViewBag.Id">Back</td>
+                    break;
+                default:
+                    break;
+            }
+        </tr>
         }
     </tbody>
 </table>
-
-<div>
-    <a asp-action="Index">Back</a>
-</div>
