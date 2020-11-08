@@ -41,6 +41,15 @@ namespace EventPlatFormVer4.Service
             }
         }
 
+        public async Task<List<EventParticipant>> GetEventParticipantsAsync(string eventId) // 返回单个Event的所有Participants
+        {
+            using (var db = _context)
+            {
+                var eventParticipants = await db.EventParticipants.Where(ep => ep.EventId == eventId).ToListAsync();
+                return eventParticipants;
+            }
+        }
+
         public async Task AddEvent(Event @event) // 添加new Event
         {
             try
@@ -80,7 +89,7 @@ namespace EventPlatFormVer4.Service
             }
         }
 
-        public async Task UpdateEventParticipant(Event newEvent)
+        public async Task UpdateEventParticipants(Event newEvent)
         {
             /**
              * 更新E-P表
