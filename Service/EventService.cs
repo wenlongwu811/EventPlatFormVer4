@@ -4,6 +4,7 @@ using System.Composition;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using System.Xml.Serialization;
 using EventPlatFormVer4.Models;
 using Microsoft.EntityFrameworkCore;
@@ -13,7 +14,7 @@ namespace EventPlatFormVer4.Service
     /**
      * The service class to manage events
      */
-    class EventService
+    public class EventService
     {
         public EventService(MvcEpfContext context) // context 配置
         {
@@ -22,32 +23,42 @@ namespace EventPlatFormVer4.Service
 
         private static MvcEpfContext _context;
 
-        public static List<Event> GetAllEvents()
+        public async Task<List<Event>> GetAllEvents()
         {
             using (var db = _context)
             {
-                return AllEvents(db).ToList();
+                var events = await db.Events.ToListAsync();
+                return events;
             }
         }
 
-        public static Event GetEvent(string id) // 根据EventID来查询
+        public async Task<Event> GetEvent(string id) // 根据EventID来查询
         {
             using (var db = _context)
             {
-                return AllEvents(db).FirstOrDefault(e => e.Id == id); // FirstOrDefault方法返回序列中的第一个或者默认值
+                var @event = await db.Events.Where(e => e.Id == id).FirstOrDefaultAsync(); // FirstOrDefault方法返回序列中的第一个或者默认值
+                return @event; 
             }
         }
 
-        public static Event AddEvent(Event @event) // 添加new Event
+        public async Task<List<EventParticipant>> GetEventParticipantsAsync(string eventId) // 返回单个Event的所有Participants
+        {
+            using (var db = _context)
+            {
+                var eventParticipants = await db.EventParticipants.Where(ep => ep.EventId == eventId).ToListAsync();
+                return eventParticipants;
+            }
+        }
+
+        public async Task AddEvent(Event @event) // 添加new Event
         {
             try
             {
                 using (var db = _context)
                 {
                     db.Events.Add(@event);
-                    db.SaveChanges();
+                    await db.SaveChangesAsync();
                 }
-                return @event;
             }
             catch (Exception e)
             {
@@ -56,19 +67,19 @@ namespace EventPlatFormVer4.Service
             }
         }
 
-        public static void RemoveEvent(string id)
+        public async Task RemoveEvent(string id)
         {
             /**
-             * 删除Event
+             * 在Event表中删除该Event
              *
              */
             try
             {
                 using (var db = _context)
                 {
-                    var @event = db.Events.Include("EventParticipants").Where(e => e.Id == id).FirstOrDefault();
+                    var @event = await db.Events.Include("EventParticipants").Where(e => e.Id == id).FirstOrDefaultAsync();
                     db.Events.Remove(@event);
-                    db.SaveChanges();
+                    await db.SaveChangesAsync();
                 }
             }
             catch(Exception e)
@@ -78,36 +89,67 @@ namespace EventPlatFormVer4.Service
             }
         }
 
-        public static void UpdateEventParticipant(Event newEvent)
+        public async Task UpdateEventParticipants(Event newEvent)
         {
             /**
              * 更新E-P表
              */
-            RemoveParticipants(newEvent.Id); // 先在E-P表中删除之前的参赛记录
-            using (var db = _context)
+            await RemoveEventParticipants(newEvent.Id); // 先在E-P表中删除之前的参赛记录
+            try
             {
-                db.Entry(newEvent).State = EntityState.Modified;
-                db.EventParticipants.AddRange(newEvent.EventParticipants); // 在E-P表中添加新的参赛记录
-                db.SaveChanges();
+                using (var db = _context)
+                {
+                    db.Entry(newEvent).State = EntityState.Modified;
+                    await db.EventParticipants.AddRangeAsync(newEvent.EventParticipants); // 在E-P表中添加新的参赛记录
+                    await db.SaveChangesAsync();
+                }
+            }
+            catch (Exception e)
+            {
+                // TODO: 需要根据错误类型返回不同错误信息
+                throw new ApplicationException($"添加E-P表中记录时出错{e.Message}");
             }
         }
-        public static void RemoveParticipants(string eventId)
+        public async Task RemoveEventParticipants(string eventId)
         {
             /**
              * 在E-P表中删除参加了此event的所有参赛记录
              */
-            using (var db = _context)
+            try {
+                using (var db = _context)
+                {
+                    var oldParticipants = await db.EventParticipants.Where(p => p.EventId == eventId).ToListAsync(); // 对E-P表查询，EventID相等的oldParticipants
+                    // TODO: how to apply async method in ?
+                    db.EventParticipants.RemoveRange(oldParticipants); 
+                    await db.SaveChangesAsync();
+                }
+            }
+            catch(Exception e)
             {
-                var oldParticipants = db.EventParticipants.Where(p => p.EventId == eventId); // 对E-P表查询，EventID相等的oldParticipants
-                db.EventParticipants.RemoveRange(oldParticipants);
-
+                // TODO: 需要根据错误类型返回不同错误信息
+                throw new ApplicationException($"删除E-P表中记录时出错{e.Message}");
             }
         }
-        private static IQueryable<Event> AllEvents(MvcEpfContext db) // 返回所有的 Event
+
+        public async Task<Event> FindEventAsync(string id)
         {
-            return db.Events.Include(e => e.EventParticipants.Select(p => p.Participant)).Include("Sponsor"); // include 方法会返回和该字段相关的信息
+            using (var db = _context)
+            {
+                var @event = await db.Events.Where(e => e.Id == id).FirstOrDefaultAsync();
+                return @event; // TODO : 添加显式转换
+            }
         }
 
+        public async Task<EventParticipant> FindEPAsync(string id)
+        {
+            using (var db = _context)
+            {
+                var ep = await db.EventParticipants.Where(iep => iep.Id == id).FirstOrDefaultAsync();
+                return ep; // TODO : 添加显式转换
+            }
+        }
+
+        /*
         public static void Export(string fileName)
         {
             XmlSerializer xs = new XmlSerializer(typeof(List<Event>));
@@ -134,6 +176,6 @@ namespace EventPlatFormVer4.Service
                     }
                 });
             }
-        }
+        }*/
     }
 }
