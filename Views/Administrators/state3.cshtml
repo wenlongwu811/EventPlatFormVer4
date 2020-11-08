@@ -1,0 +1,39 @@
+﻿@model IEnumerable<EventPlatFormVer4.Models.Event>
+
+<h2>待撤销活动</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Rank)
+            </th>
+            <th>
+                @Html.DisplayName("审核")
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            @if (item.State == 4)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Rank)
+                    </td>
+                    <td>
+                        <a asp-action="Verify" asp-route-id="@item.Id">修改</a>
+                    </td>
+
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
