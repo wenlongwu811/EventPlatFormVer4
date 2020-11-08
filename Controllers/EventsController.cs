@@ -27,13 +27,14 @@ namespace EventPlatFormVer4.Controllers
             return View(await _context.Events.ToListAsync());
         }
 
-        /// <summary>
-        /// 显示Event的所有Participants
-        /// </summary>
-        /// <param name="eventId"></param>
-        /// <returns></returns>
+        // TODO: add a view
+        // GET: Events/GetE-Ps/5 显示Event的所有Participants
         public async Task<IActionResult> GetEventParticipants(string eventId)
         {
+            if(eventId == null)
+            {
+                return NotFound();
+            }
             return View(await eventService.GetEventParticipantsAsync(eventId));
         }
         // GET: Events/Details/5
