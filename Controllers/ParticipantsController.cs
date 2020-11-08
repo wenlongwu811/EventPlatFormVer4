@@ -32,7 +32,7 @@ namespace EventPlatFormVer4.Controllers
         //参赛者主界面
         public async Task<IActionResult> Info(string? id)
         {
-            return View(await participantService.Find(id));
+            return View(await participantService.FindEvent(id));
         }
 
         //参赛者个人信息
@@ -67,8 +67,7 @@ namespace EventPlatFormVer4.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(participant);
-                await _context.SaveChangesAsync();
+                await participantService.Add(participant);
                 return RedirectToAction(nameof(Index));
             }
             return View(participant);
@@ -133,8 +132,7 @@ namespace EventPlatFormVer4.Controllers
                 return NotFound();
             }
 
-            var participant = await _context.Participants
-                .FirstOrDefaultAsync(m => m.ID == id);
+            var participant = await participantService.Find(id);
             if (participant == null)
             {
                 return NotFound();
@@ -148,9 +146,7 @@ namespace EventPlatFormVer4.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(string id)
         {
-            var participant = await _context.Participants.FindAsync(id);
-            _context.Participants.Remove(participant);
-            await _context.SaveChangesAsync();
+            await participantService.Delete(id);
             return RedirectToAction(nameof(Index));
         }
 
@@ -161,6 +157,17 @@ namespace EventPlatFormVer4.Controllers
         }
 
         //报名
+        public async Task<IActionResult> Apply(EventParticipant EP,string id)
+        {
+            await participantService.Apply(EP,id);
+            return View(_context.Events.Where(item=>!item.Equals(EP)));
+        }
+        //退赛
+        public async Task<IActionResult> ExitEvent(string? id, [Bind("State")] EventParticipant EP)
+        {
+            await participantService.ExitEvent(EP, id);
+            return View(participantService.FindEvent(id));
+        }
 
     }
 }
