@@ -17,6 +17,24 @@ namespace EventPlatFormVer4.Service
             _context = context;
         }
 
+        public static List<Sponsor> ToListSponsor()//遍历Sponsor表
+        {
+            using (var db = _context)
+            {
+                var query = db.Sponsors.ToList();
+                return query;
+            }
+        }
+        public static List<EventParticipant> ToListEP()//遍历EP表
+        {
+            using (var db = _context)
+            {
+                var query = db.EventParticipants.ToList();
+                return query;
+            }
+        }
+
+        /*
         public void Add(Sponsor sponsor)//新增赞助者
         {
             try
@@ -32,7 +50,29 @@ namespace EventPlatFormVer4.Service
                 throw new ApplicationException("添加失败");
             }
         }
-        public void Delete(string id)//删除赞助者
+        */
+
+        public async Task Add(Sponsor sponsor)//新增赞助者
+        {
+            using (var db = _context)
+            {
+                List<Sponsor> sponsors = SponsorService.ToListSponsor();
+                foreach (Sponsor _sponsor in sponsors)
+                {
+                    if (sponsor.Equals(_sponsor)) throw new ApplicationException("用户已存在，添加失败");
+                }
+                try
+                {
+                    db.Sponsors.Add(sponsor);
+                    await db.SaveChangesAsync();
+                }
+                catch (Exception e)
+                {
+                    throw new ApplicationException($"{e.Message}");
+                }
+            }
+        }
+        public async Task Delete(string id)//删除赞助者
         {
             using (var db = _context)
             {
@@ -41,7 +81,7 @@ namespace EventPlatFormVer4.Service
                 db.SaveChanges();
             }
         }
-        public void Update(Sponsor sponsor)//更新赞助者
+        public async Task Update(Sponsor sponsor)//更新赞助者
         {
             using (var db = _context)
             {
@@ -49,7 +89,7 @@ namespace EventPlatFormVer4.Service
                 db.SaveChanges();
             }
         }
-        public Sponsor Find(string id)//查找赞助者
+        public async Task<Sponsor> Find(string id)//查找赞助者
         {
             using (var db = _context)
             {
@@ -59,16 +99,31 @@ namespace EventPlatFormVer4.Service
         }
 
         // -----------申请举办event,只要申请了，活动就写入到数据库，event的State=0为待审核
-        public void Apply(Event _event, string id)//TODO：需要处理多次申请同名活动产生不同的id问题
+        public async Task Apply(Event _event, string id)//TODO：需要处理多次申请同名活动产生不同的id问题
         {
             using (var db = _context)
             {
                 var @event = (Event)db.Events.Where(item => item.Id == _event.Id);
                 var sponsor = (Sponsor)db.Sponsors.Where(item => item.Id == id);
                 @event.State = 0;//待审核
-                sponsor.SponEvents.Add(@event);
-                db.SaveChanges();
+                List<EventParticipant> eventParticipants = ToListEP();
+                foreach (EventParticipant eventParticipant in eventParticipants)
+                {
+                    if (eventParticipant.Equals(@event)) throw new ApplicationException("已经报名过");
+                }
+                try
+                {
+                    sponsor.SponEvents.Add(@event);
+                    await db.SaveChangesAsync();
+                }
+                catch (Exception e)
+                {
+                    throw new ApplicationException($"{e.Message}");
+                }
+                //sponsor.SponEvents.Add(@event);
+                //db.SaveChanges();
             }
+
             /*
             using (var db = _context)
             {
@@ -78,6 +133,20 @@ namespace EventPlatFormVer4.Service
                 db.SaveChanges();
             }
             */
+
+        }
+
+        // -----------查找已申请的events
+        public async Task<List<Event>> ApplyEvents(string id)
+        {
+            using (var db = _context)
+            {
+                var sponsor = (Sponsor)db.Sponsors.Where(item => item.Id == id);
+                var events = sponsor.SponEvents;
+                return events;
+                //var query = db.Events.Where(item => item.State == state);
+                //return query.ToList();//打印event列表
+            }
         }
 
         // -----------向Administor申请取消event,将event的State修改为4
@@ -152,16 +221,6 @@ namespace EventPlatFormVer4.Service
                 eventParticipant.Grade = grade;
                 db.EventParticipants.Update(eventParticipant);
                 db.SaveChanges();
-            }
-        }
-
-        // -----------显示自己已经申请的event列表,待定，可删
-        public List<Event> ApplyEvents(int state)
-        {
-            using (var db = _context)
-            {
-                var queue = db.Events.Where(item => item.State == state);
-                return queue.ToList();//打印event列表
             }
         }
     }
