@@ -34,23 +34,6 @@ namespace EventPlatFormVer4.Service
             }
         }
 
-        /*
-        public void Add(Sponsor sponsor)//新增赞助者
-        {
-            try
-            {
-                using (var db = _context)
-                {
-                    db.Sponsors.Add(sponsor);
-                    db.SaveChanges();
-                }
-            }
-            catch (Exception)
-            {
-                throw new ApplicationException("添加失败");
-            }
-        }
-
         public async Task Add(Sponsor sponsor)//新增赞助者
         {
             using (var db = _context)

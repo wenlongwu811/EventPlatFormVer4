@@ -20,7 +20,7 @@ namespace EventPlatFormVer4.Controllers
         public SponsorsController(MvcEpfContext context)
         {
             _context = context;
-            sponserv = new SponsorService(context);
+            sponService = new SponsorService(context);
         }
 
         // GET: Sponsors
