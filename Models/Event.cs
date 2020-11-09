@@ -16,7 +16,6 @@ namespace EventPlatFormVer4.Models
         public string SponsorId { get; set; }
         [ForeignKey("SponsorId")]
         public Sponsor Sponsor { get; set; }
-        public string SponsorName { get => (Sponsor != null) ? Sponsor.Name : ""; }
 
         public List<EventParticipant> EventParticipants { get; set; } //参与人员表
 
@@ -26,7 +25,7 @@ namespace EventPlatFormVer4.Models
 
         [Display(Name = "活动等级")]
         [Required(ErrorMessage = "此项必填")]
-        public string Rank { get; set; } // 活动性质，
+        public string Rank { get; set; } // 活动等级，
 
         public DateTime CreateTime { get; set; } // 活动提交申请时间
 
@@ -107,7 +106,7 @@ namespace EventPlatFormVer4.Models
         {
             var hashCode = -294571041;
             hashCode = hashCode * -1561131293 + Id.GetHashCode();
-            hashCode = hashCode * -1561131293 + EqualityComparer<string>.Default.GetHashCode(SponsorName);
+            hashCode = hashCode * -1561131293 + EqualityComparer<string>.Default.GetHashCode(Sponsor.Name);
             hashCode = hashCode * -1561131293 + CreateTime.GetHashCode();
             return hashCode;
         }
