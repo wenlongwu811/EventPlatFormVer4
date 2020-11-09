@@ -29,19 +29,24 @@ namespace EventPlatFormVer4.Controllers
         {
             return View(await _context.Administrators.ToListAsync());
         }
-        
 
-        public async Task<IActionResult> Info()
+
+        public async Task<IActionResult> Info(string id)
         {
+            ViewData["admid"] = id;
+            return View(await _context.Events.ToListAsync());
 
-            return View(await administratorService.GetEvents());
+        }
 
+        public async Task<IActionResult> State0()
+        {
+            return View(await _context.Events.ToListAsync());
         }
 
         // GET: Administrators/Details/5
         public async Task<IActionResult> Details(string id)
         {
-            
+
             if (id == null)
             {
                 return NotFound();
@@ -57,9 +62,10 @@ namespace EventPlatFormVer4.Controllers
         }
 
         //GET:Administrators/Verify:审核
+        [HttpGet]
         public async Task<IActionResult> Verify(string eventid,string admid)
         {
-            ViewBag.id = admid;
+            ViewData["aid"] = admid;
            return View(await administratorService.EventInformation(eventid));
         }
 
@@ -73,7 +79,7 @@ namespace EventPlatFormVer4.Controllers
         //Get:Administrator/Ban:禁止未审核
         public async Task<IActionResult>Ban(string id ,[Bind("State")] Event events)
         {
-            await administratorService.Accept(id);
+            await administratorService.Deny(id);
             return RedirectToAction(nameof(Info));
         }
 
@@ -113,8 +119,6 @@ namespace EventPlatFormVer4.Controllers
         }
 
         // POST: Administrators/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(string id, [Bind("Id,RoleID,Name,Email,Phone,Pwd")] Administrator administrator)
@@ -160,4 +164,3 @@ namespace EventPlatFormVer4.Controllers
         }
     }
 }
-//wwl

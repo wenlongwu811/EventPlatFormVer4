@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using EventPlatFormVer4.Models;
 using SQLitePCL;
+using System.Security.Cryptography.X509Certificates;
 
 namespace EventPlatFormVer4.Service
 {
@@ -97,7 +98,7 @@ namespace EventPlatFormVer4.Service
         {
             using (var db = _context)
             {
-                var query = await db.Events.ToListAsync();
+                var query = await db.Events.Where(item => item.Id != null).ToListAsync();
                 return query;
             }
         }
