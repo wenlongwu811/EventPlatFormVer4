@@ -41,8 +41,8 @@ namespace EventPlatFormVer4.Models
         {
             var item = obj as EventParticipant;
             return item != null &&
-                Event.Name == item.Event.Name &&
-                Participant.Name == item.Participant.Name;
+                Event.Id == item.Event.Id &&
+                Participant.ID == item.Participant.ID;
         }
 
         public override int GetHashCode()
