@@ -28,7 +28,7 @@ namespace EventPlatFormVer4.Service
                 }
 
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 throw new ApplicationException("添加失败");
             }
