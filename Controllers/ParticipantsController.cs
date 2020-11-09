@@ -166,7 +166,7 @@ namespace EventPlatFormVer4.Controllers
         //退赛
         public async Task<IActionResult> ExitEvent(string id, [Bind("State")] EventParticipant EP)//前端是如何让传入这个EP的呢
         {
-            await participantService.ExitEvent(EP, id);
+            await participantService.ExistEvent(EP, id);
             return View(participantService.FindEvent(id));
         }
 
