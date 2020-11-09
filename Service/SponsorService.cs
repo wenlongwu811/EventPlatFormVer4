@@ -32,13 +32,13 @@ namespace EventPlatFormVer4.Service
                 throw new ApplicationException("添加失败");
             }
         }
-        public void Delete(string id)//删除赞助者
+        public async Task Delete(string id)//删除赞助者
         {
             using (var db = _context)
             {
                 var sponsor = db.Sponsors.Where(item => item.Id == id);
                 db.Sponsors.RemoveRange(sponsor);
-                db.SaveChanges();
+                await db.SaveChangesAsync();
             }
         }
         public void Update(Sponsor sponsor)//更新赞助者
@@ -49,7 +49,7 @@ namespace EventPlatFormVer4.Service
                 db.SaveChanges();
             }
         }
-        public Sponsor Find(string id)//查找赞助者
+        public async Task<Sponsor> Find(string id)//查找赞助者
         {
             using (var db = _context)
             {

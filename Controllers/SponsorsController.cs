@@ -19,6 +19,7 @@ namespace EventPlatFormVer4.Controllers
         public SponsorsController(MvcEpfContext context)
         {
             _context = context;
+            sponserv = new SponsorService(context);
         }
 
         // GET: Sponsors
@@ -35,7 +36,7 @@ namespace EventPlatFormVer4.Controllers
                 return NotFound();
             }
 
-            var sponsor = await sponserv.Find(id);//Todo：同步异步问题待解决，await用不了
+            var sponsor = sponserv.Find(id);//Todo：同步异步问题待解决，await用不了
 
             if (sponsor == null)
             {

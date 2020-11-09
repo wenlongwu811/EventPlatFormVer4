@@ -20,7 +20,9 @@ namespace EventPlatFormVer4.Controllers
         public ParticipantsController(MvcEpfContext context)
         {
             _context = context;
+            participantService = new ParticipantService(context);
         }
+
 
         // GET: participants
         public async Task<IActionResult> Index()
@@ -32,7 +34,7 @@ namespace EventPlatFormVer4.Controllers
         //参赛者主界面
         public async Task<IActionResult> Info(string? id)
         {
-            return View(await participantService.FindEvent(id));
+            return View(participantService.FindEvent(id));
         }
 
         //参赛者个人信息
@@ -93,8 +95,7 @@ namespace EventPlatFormVer4.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-
-        public async Task<IActionResult> Edit(string id, [Bind("Id,RoleID,Name,Email,PhoneNum,Passwd")] Participant participant)
+        public async Task<IActionResult> Edit(string id, [Bind("ID,RoleID,Name,PassWd,Email,PhoneNum")] Participant participant)
 
         {
             if (id != participant.ID)

@@ -21,6 +21,7 @@ namespace EventPlatFormVer4.Controllers
         public AdministratorsController(MvcEpfContext context)
         {
             _context = context;
+            administratorService = new AdministratorService(context);
         }
 
         // GET: Administrators
