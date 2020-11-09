@@ -50,7 +50,6 @@ namespace EventPlatFormVer4.Service
                 throw new ApplicationException("添加失败");
             }
         }
-        */
 
         public async Task Add(Sponsor sponsor)//新增赞助者
         {
@@ -78,7 +77,7 @@ namespace EventPlatFormVer4.Service
             {
                 var sponsor = await db.Sponsors.Where(item => item.Id == id).FirstOrDefaultAsync();
                 db.Sponsors.RemoveRange(sponsor);
-                db.SaveChanges();
+                await db.SaveChangesAsync();
             }
         }
         public async Task Update(Sponsor sponsor)//更新赞助者

@@ -27,6 +27,7 @@ namespace EventPlatFormVer4.Models
         public EventParticipant() {
             Id = Guid.NewGuid().ToString();
         }
+        public int Index { get; set; }
 
         public EventParticipant(Event @event, Participant participant)
         {
