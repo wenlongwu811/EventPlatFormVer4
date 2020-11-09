@@ -31,7 +31,7 @@ namespace EventPlatFormVer4.Controllers
         }
         
 
-        public async Task<IActionResult> Info(string id)
+        public async Task<IActionResult> Info()
         {
 
             return View(await administratorService.GetEvents());
