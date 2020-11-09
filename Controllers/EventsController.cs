@@ -19,7 +19,6 @@ namespace EventPlatFormVer4.Controllers
         public EventsController(MvcEpfContext context)
         {
             _context = context;
-            eventService = new EventService(context);
         }
 
         // GET: Events
@@ -39,7 +38,7 @@ namespace EventPlatFormVer4.Controllers
             return View(await eventService.GetEventParticipantsAsync(eventId));
         }
         // GET: Events/Details/5
-        public async Task<IActionResult> Details(string id)
+        public async Task<IActionResult> Details(string? id)
         {
             if (id == null)
             {
@@ -83,7 +82,7 @@ namespace EventPlatFormVer4.Controllers
         }
 
         // GET: Events/Edit/5
-        public async Task<IActionResult> Edit(string id)
+        public async Task<IActionResult> Edit(string? id)
         {
             if (id == null)
             {
@@ -137,7 +136,7 @@ namespace EventPlatFormVer4.Controllers
         }
 
         // GET: Events/Delete/5
-        public async Task<IActionResult> Delete(string id)
+        public async Task<IActionResult> Delete(string? id)
         {
             if (id == null)
             {
