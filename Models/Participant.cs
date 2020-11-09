@@ -27,7 +27,7 @@ namespace EventPlatFormVer4.Models
 
         public string PhoneNum { get; set; }//电话号码
 
-        [ForeignKey("EventID")]
+        [ForeignKey("EventParticipantId")]
         public List<EventParticipant> PartiEvent { get;set; }//参加的活动
 
 

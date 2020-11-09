@@ -83,24 +83,18 @@ namespace EventPlatFormVer4.Service
         {
             using (var db = _context)
             {
-                var @event = (EventParticipant)db.Events.Where(item => item.Id == EP.Id);
+                var @event = (Event)db.Events.Where(item => item.Id == EP.Id);
                 var participant = (Participant)db.Participants.Where(item => item.ID == id);
-                @event.Participant = participant;
-                @event.State = 0;
+                EventParticipant @eventParticipant=new EventParticipant();
+                @eventParticipant.Participant = participant;
+                @eventParticipant.Event = @event;
                 List<EventParticipant> eventParticipants = ToListEP();
-                foreach(EventParticipant eventParticipant in eventParticipants)
+                foreach(EventParticipant ep in eventParticipants)
                 {
-                    if (eventParticipant.Equals(@event)) throw new ApplicationException("已经报名过");
+                    if (ep.Equals(@eventParticipant)) 
                 }
-                try
-                {
-                    participant.PartiEvent.Add(@event);
+                    participant.PartiEvent.Add(@eventParticipant);
                     await db.SaveChangesAsync();
-                }
-                catch(Exception e)
-                {
-                    throw new ApplicationException($"{e.Message}");
-                }
             }
         }
         //查找已参加的比赛
