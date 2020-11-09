@@ -98,7 +98,7 @@ namespace EventPlatFormVer4.Service
             using (var db = _context)
             {
                 var query = await db.Events.ToListAsync();
-                return query.ToList();
+                return query;
             }
         }
         
