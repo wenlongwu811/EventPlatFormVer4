@@ -25,8 +25,11 @@ namespace EventPlatFormVer4.Service
                 return query;
             }
         }
+
+
         public async Task<List<EventParticipant>> ToListEP()//遍历EP表
         {
+            // TODO: 将该方法改为sponsor只能查看participant申请自己建立的event 的记录
             using (var db = _context)
             {
                 var query =await db.EventParticipants.ToListAsync();

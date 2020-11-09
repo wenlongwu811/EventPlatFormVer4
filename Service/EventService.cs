@@ -77,8 +77,8 @@ namespace EventPlatFormVer4.Service
             {
                 using (var db = _context)
                 {
-                    var @event = await db.Events.Include("EventParticipants").Where(e => e.Id == id).FirstOrDefaultAsync();
-                    db.Events.Remove(@event);
+                    var @event = await db.Events.Where(e => e.Id == id).FirstOrDefaultAsync();
+                    db.Events.RemoveRange(@event);
                     await db.SaveChangesAsync();
                 }
             }
@@ -136,7 +136,7 @@ namespace EventPlatFormVer4.Service
             using (var db = _context)
             {
                 var @event = await db.Events.Where(e => e.Id == id).FirstOrDefaultAsync();
-                return @event; // TODO : 添加显式转换
+                return @event;
             }
         }
 
@@ -145,37 +145,8 @@ namespace EventPlatFormVer4.Service
             using (var db = _context)
             {
                 var ep = await db.EventParticipants.Where(iep => iep.Id == id).FirstOrDefaultAsync();
-                return ep; // TODO : 添加显式转换
+                return ep;
             }
         }
-
-        /*
-        public static void Export(string fileName)
-        {
-            XmlSerializer xs = new XmlSerializer(typeof(List<Event>));
-            using (FileStream fs = new FileStream(fileName, FileMode.Create))
-            {
-                xs.Serialize(fs, GetAllEvents());
-            }
-        }
-        public static void Import(String path)
-        {
-            XmlSerializer xs = new XmlSerializer(typeof(List<Event>));
-            using (FileStream fs = new FileStream(path, FileMode.Open))
-            {
-                List<Event> temp = (List<Event>)xs.Deserialize(fs);
-                temp.ForEach(@event =>
-                {
-                    try
-                    {
-                        AddEvent(@event);
-                    }
-                    catch(Exception e)
-                    {
-                        throw new ApplicationException($"导入活动出错{e.Message}");
-                    }
-                });
-            }
-        }*/
     }
 }
