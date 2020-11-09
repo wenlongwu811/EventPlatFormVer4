@@ -45,15 +45,8 @@ namespace EventPlatFormVer4.Service
                 {
                     if (participant.Equals(_participant)) throw new ApplicationException("用户已存在，添加失败");
                 }
-                try
-                {
                     db.Participants.Add(participant);
                     await db.SaveChangesAsync();
-                }
-                catch (Exception e)
-                {
-                    throw new ApplicationException($"{e.Message}");
-                }
             }
         }
         //删除参赛者
@@ -115,7 +108,7 @@ namespace EventPlatFormVer4.Service
         {
             using (var db=_context)
             {
-                return(await db.EventParticipants.Where(item => item.ParticipantId == id).ToListAsync());
+                return await db.EventParticipants.Where(item => item.ParticipantId == id).ToListAsync();
             }
         }
         //退赛，将List中已经报名成功的event的PartiState改为3
