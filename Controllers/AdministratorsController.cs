@@ -39,7 +39,7 @@ namespace EventPlatFormVer4.Controllers
         }
 
         // GET: Administrators/Details/5
-        public async Task<IActionResult> Details(string? id)
+        public async Task<IActionResult> Details(string id)
         {
             
             if (id == null)
@@ -97,7 +97,7 @@ namespace EventPlatFormVer4.Controllers
         }
 
         // GET: Administrators/Edit/5
-        public async Task<IActionResult> Edit(string? id)
+        public async Task<IActionResult> Edit(string id)
         {
             if (id == null)
             {
@@ -134,7 +134,7 @@ namespace EventPlatFormVer4.Controllers
         }
 
         // GET: Administrators/Delete/5
-        public async Task<IActionResult> Delete(string? id)
+        public async Task<IActionResult> Delete(string id)
         {
             if (id == null)
             {

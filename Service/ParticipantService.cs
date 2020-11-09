@@ -119,7 +119,7 @@ namespace EventPlatFormVer4.Service
             }
         }
         //退赛，将List中已经报名成功的event的PartiState改为3
-        public async Task ExitEvent(EventParticipant EP,string id)
+        public async Task ExistEvent(EventParticipant EP,string id)
         {
             using (var db=_context)
             {

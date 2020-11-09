@@ -19,6 +19,7 @@ namespace EventPlatFormVer4.Controllers
         public EventsController(MvcEpfContext context)
         {
             _context = context;
+            eventService = new EventService(context);
         }
 
         // GET: Events
@@ -27,8 +28,18 @@ namespace EventPlatFormVer4.Controllers
             return View(await _context.Events.ToListAsync());
         }
 
+        // TODO: add a view
+        // GET: Events/GetE-Ps/5 显示Event的所有Participants
+        public async Task<IActionResult> GetEventParticipants(string eventId)
+        {
+            if(eventId == null)
+            {
+                return NotFound();
+            }
+            return View(await eventService.GetEventParticipantsAsync(eventId));
+        }
         // GET: Events/Details/5
-        public async Task<IActionResult> Details(string? id)
+        public async Task<IActionResult> Details(string id)
         {
             if (id == null)
             {
@@ -60,15 +71,19 @@ namespace EventPlatFormVer4.Controllers
         {
             if (ModelState.IsValid)
             {
+                /*
                 _context.Add(@event);
                 await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+                */
+                await eventService.AddEvent(@event);
                 return RedirectToAction(nameof(Index));
             }
             return View(@event);
         }
 
         // GET: Events/Edit/5
-        public async Task<IActionResult> Edit(string? id)
+        public async Task<IActionResult> Edit(string id)
         {
             if (id == null)
             {
@@ -99,8 +114,11 @@ namespace EventPlatFormVer4.Controllers
             {
                 try
                 {
+                    /*
                     _context.Update(@event);
                     await _context.SaveChangesAsync();
+                    */
+                    await eventService.UpdateEventParticipants(@event); // 更新 E-Participants
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -119,15 +137,15 @@ namespace EventPlatFormVer4.Controllers
         }
 
         // GET: Events/Delete/5
-        public async Task<IActionResult> Delete(string? id)
+        public async Task<IActionResult> Delete(string id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var @event = await _context.Events
-                .FirstOrDefaultAsync(m => m.Id == id);
+            // var @event = await _context.Events.FirstOrDefaultAsync(m => m.Id == id);
+            var @event = await eventService.FindEventAsync(id);
             if (@event == null)
             {
                 return NotFound();
@@ -139,14 +157,19 @@ namespace EventPlatFormVer4.Controllers
         // POST: Events/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(string id)
+        public async Task<IActionResult> DeleteConfirmed(string eventId)
         {
+            /*
             var @event = await _context.Events.FindAsync(id);
             _context.Events.Remove(@event);
             await _context.SaveChangesAsync();
+            */
+            await eventService.RemoveEventParticipants(eventId);
+            await eventService.RemoveEvent(eventId);
             return RedirectToAction(nameof(Index));
         }
 
+        // TODO: to be async
         private bool EventExists(string id)
         {
             return _context.Events.Any(e => e.Id == id);

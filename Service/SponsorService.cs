@@ -17,6 +17,24 @@ namespace EventPlatFormVer4.Service
             _context = context;
         }
 
+        public static List<Sponsor> ToListSponsor()//遍历Sponsor表
+        {
+            using (var db = _context)
+            {
+                var query = db.Sponsors.ToList();
+                return query;
+            }
+        }
+        public static List<EventParticipant> ToListEP()//遍历EP表
+        {
+            using (var db = _context)
+            {
+                var query = db.EventParticipants.ToList();
+                return query;
+            }
+        }
+
+        /*
         public void Add(Sponsor sponsor)//新增赞助者
         {
             try
@@ -27,141 +45,161 @@ namespace EventPlatFormVer4.Service
                     db.SaveChanges();
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 throw new ApplicationException("添加失败");
+            }
+        }
+
+        public async Task Add(Sponsor sponsor)//新增赞助者
+        {
+            using (var db = _context)
+            {
+                List<Sponsor> sponsors = SponsorService.ToListSponsor();
+                foreach (Sponsor _sponsor in sponsors)
+                {
+                    if (sponsor.Equals(_sponsor)) throw new ApplicationException("用户已存在，添加失败");
+                }
+                try
+                {
+                    db.Sponsors.Add(sponsor);
+                    await db.SaveChangesAsync();
+                }
+                catch (Exception e)
+                {
+                    throw new ApplicationException($"{e.Message}");
+                }
             }
         }
         public async Task Delete(string id)//删除赞助者
         {
             using (var db = _context)
             {
-                var sponsor = db.Sponsors.Where(item => item.Id == id);
+                var sponsor = await db.Sponsors.Where(item => item.Id == id).FirstOrDefaultAsync();
                 db.Sponsors.RemoveRange(sponsor);
                 await db.SaveChangesAsync();
             }
         }
-        public void Update(Sponsor sponsor)//更新赞助者
+        public async Task Update(Sponsor sponsor)//更新赞助者
         {
             using (var db = _context)
             {
                 db.Update(sponsor);
-                db.SaveChanges();
+               await db.SaveChangesAsync();
             }
         }
         public async Task<Sponsor> Find(string id)//查找赞助者
         {
             using (var db = _context)
             {
-                var sponsor = db.Sponsors.Where(item => item.Id == id);
+                var sponsor = await db.Sponsors.Where(item => item.Id == id).FirstOrDefaultAsync();
                 return (Sponsor)sponsor;
             }
         }
 
         // -----------申请举办event,只要申请了，活动就写入到数据库，event的State=0为待审核
-        public void Apply(Event _event, string id)//TODO：需要处理多次申请同名活动产生不同的id问题
+        public async Task Apply(Event _event, string id)
         {
             using (var db = _context)
             {
-                var @event = (Event)db.Events.Where(item => item.Id == _event.Id);
-                var sponsor = (Sponsor)db.Sponsors.Where(item => item.Id == id);
+                var @event = await db.Events.Where(item => item.Id == _event.Id).FirstOrDefaultAsync();
+                var sponsor = await db.Sponsors.Where(item => item.Id == id).FirstOrDefaultAsync();
                 @event.State = 0;//待审核
-                sponsor.SponEvents.Add(@event);
-                db.SaveChanges();
+                List<EventParticipant> eventParticipants = ToListEP();
+                foreach (EventParticipant eventParticipant in eventParticipants)
+                {
+                    if (eventParticipant.Equals(@event)) throw new ApplicationException("已经报名过");
+                }
+                try
+                {
+                    sponsor.SponEvents.Add(@event);
+                    await db.SaveChangesAsync();
+                }
+                catch (Exception e)
+                {
+                    throw new ApplicationException($"{e.Message}");
+                }
             }
-            /*
+        }
+
+        // -----------查找已申请的events
+        public async Task<List<Event>> ApplyEvents(string id)
+        {
             using (var db = _context)
             {
-                db.Events.Add(@event);
-                @event.State = 0;
-                db.Events.Update(@event);
-                db.SaveChanges();
+                var sponsor = await db.Sponsors.Where(item => item.Id == id).FirstOrDefaultAsync();
+                var events = sponsor.SponEvents;
+                return events;
             }
-            */
         }
 
         // -----------向Administor申请取消event,将event的State修改为4
-        public void Cancel(Event @event,string id)
+        public async Task Cancel(Event @event,string id)
         {
             using (var db = _context)
             { 
-                var sponsor = (Sponsor)db.Sponsors.Where(item => item.Id == id);
-                var _event = (Event)sponsor.SponEvents.Where(item => (item.Id == @event.Id) && (item.State == 1));
+                //var sponsor = await db.Sponsors.Where(item => item.Id == id).FirstOrDefaultAsync();
+                var _event = await db.Events.Where(item => (item.Id == @event.Id) && (item.State == 1)).FirstOrDefaultAsync();
                 _event.State = 4; //将报名成功的event的PartiState改为4，等待管理员审核
                 db.Events.Update(@event);
                 db.SaveChanges();
-                /*
-                Event @event = (Event)db.Events.Where(item => item.Id == id);
-                @event.State = 4;
-                db.Events.Update(@event);
-                db.SaveChanges();
-                */
+                
             }
         }
 
         // -----------审核participant报名
-        public void Accept(EventParticipant EP,string id)//同意未审核,将event的PartiState修改为1
+        public async Task Accept(EventParticipant EP,string id)//同意未审核,将event的PartiState修改为1
         {
             using (var db = _context)
             {
                 //Event @event = (Event)db.Events.Where(item => item.Id == id);
-                EventParticipant eventParticipant = (EventParticipant)db.EventParticipants.Where(item => item.Id == EP.Id);
+                EventParticipant eventParticipant = await db.EventParticipants.Where(item => item.Id == EP.Id).FirstOrDefaultAsync();
                 eventParticipant.State = 1;
                 db.EventParticipants.Update(eventParticipant);
                 db.SaveChanges();
             }
         }
-        public void Deny(EventParticipant EP, string id)//拒绝未审核，将event的PartiState修改为2
+        public async Task Deny(EventParticipant EP, string id)//拒绝未审核，将event的PartiState修改为2
         {
             using (var db = _context)
             {
                 //Event @event = (Event)db.Events.Where(item => item.Id == id);
-                EventParticipant eventParticipant = (EventParticipant)db.EventParticipants.Where(item => item.Id == EP.Id);
+                EventParticipant eventParticipant = await db.EventParticipants.Where(item => item.Id == EP.Id).FirstOrDefaultAsync();
                 eventParticipant.State = 2;
                 db.EventParticipants.Update(eventParticipant);
                 db.SaveChanges();
             }
         }
-        public EventParticipant Verify(EventParticipant EP, string id)//检查，将所有未审核的participant展示出来
+        public async Task<EventParticipant> Verify(EventParticipant EP, string id)//检查，将所有未审核的participant展示出来
         {
             using (var db = _context)
             {
                 //Event @event = (Event)db.Events.Where(item => item.Id == id);
-                EventParticipant eventParticipant = db.EventParticipants.Where(item => item.Id == EP.Id).FirstOrDefault();
+                EventParticipant eventParticipant =await db.EventParticipants.Where(item => item.Id == EP.Id).FirstOrDefaultAsync();
                 return eventParticipant;
             }
         }
 
-        public EventParticipant Alter(EventParticipant EP, string id)//修改已审核participant申请表的PartiState
+        public async Task<EventParticipant> Alter(EventParticipant EP, string id)//修改已审核participant申请表的PartiState
         {
             using (var db = _context)
             {
                 //Event @event = (Event)db.Events.Where(item => item.Id == id);
-                EventParticipant eventParticipant = (EventParticipant)db.EventParticipants.Where(item => item.Id == EP.Id);
+                EventParticipant eventParticipant = await db.EventParticipants.Where(item => item.Id == EP.Id).FirstOrDefaultAsync();
                 return eventParticipant;
             }
         }
 
         // -----------登记participant成绩
-        public void Check(EventParticipant EP, string id, string grade)//修改EP表的Grade属性
+        public async Task Check(EventParticipant EP, string id, string grade)//修改EP表的Grade属性
         {
             using (var db = _context)
             {
                 //Event @event = (Event)db.Events.Where(item => item.Id == participant.ID);
-                EventParticipant eventParticipant = (EventParticipant)db.EventParticipants.Where(item => item.Id == EP.Id);
+                EventParticipant eventParticipant = await db.EventParticipants.Where(item => item.Id == EP.Id).FirstOrDefaultAsync();
                 eventParticipant.Grade = grade;
                 db.EventParticipants.Update(eventParticipant);
                 db.SaveChanges();
-            }
-        }
-
-        // -----------显示自己已经申请的event列表,待定，可删
-        public List<Event> ApplyEvents(int state)
-        {
-            using (var db = _context)
-            {
-                var queue = db.Events.Where(item => item.State == state);
-                return queue.ToList();//打印event列表
             }
         }
     }

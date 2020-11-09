@@ -14,7 +14,8 @@ namespace EventPlatFormVer4.Controllers
     public class SponsorsController : Controller
     {
         private readonly MvcEpfContext _context;
-        public SponsorService sponserv;
+
+        public SponsorService sponService;
 
         public SponsorsController(MvcEpfContext context)
         {
@@ -29,14 +30,14 @@ namespace EventPlatFormVer4.Controllers
         }
 
         // GET: Sponsors/Details/5
-        public async Task<IActionResult> Details(string? id)
+        public async Task<IActionResult> Details(string id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var sponsor = sponserv.Find(id);//Todo：同步异步问题待解决，await用不了
+            var sponsor = await sponService.Find(id);
 
             if (sponsor == null)
             {
@@ -61,15 +62,15 @@ namespace EventPlatFormVer4.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(sponsor);
-                await _context.SaveChangesAsync();
+                //_context.Add(sponsor);
+                await sponService.Add(sponsor);
                 return RedirectToAction(nameof(Index));
             }
             return View(sponsor);
         }
 
         // GET: Sponsors/Edit/5
-        public async Task<IActionResult> Edit(string? id)
+        public async Task<IActionResult> Edit(string id)
         {
             if (id == null)
             {
@@ -120,7 +121,7 @@ namespace EventPlatFormVer4.Controllers
         }
 
         // GET: Sponsors/Delete/5
-        public async Task<IActionResult> Delete(string? id)
+        public async Task<IActionResult> Delete(string id)
         {
             if (id == null)
             {
@@ -131,7 +132,7 @@ namespace EventPlatFormVer4.Controllers
             var sponsor = await _context.Sponsors
                 .FirstOrDefaultAsync(m => m.Id == id);
             */
-            var sponsor =  sponserv.Delete(id);//Todo：同步异步问题待解决，await用不了
+            var sponsor = sponService.Delete(id);
 
             if (sponsor == null)
             {
@@ -151,10 +152,29 @@ namespace EventPlatFormVer4.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
+        private bool sponsorExists(string id)
+
+        {
+            return _context.Sponsors.Any(e => e.Id == id);
+        }
 
         private bool SponsorExists(string id)
         {
             return _context.Sponsors.Any(e => e.Id == id);
+        }
+
+        //申报
+        public async Task<IActionResult> Apply(Event _event, string id)//前端是如何让传入这个EP的呢
+        {
+            await sponService.Apply(_event, id);
+            return View(_context.Events.Where(item => !item.Equals(_event) && item.State == 1));
+        }
+
+        //申请取消
+        public async Task<IActionResult> Cancel(string? id, [Bind("State")] Event _event)//前端是如何让传入这个EP的呢
+        {
+            await sponService.Cancel(_event, id);
+            return View(sponService.ApplyEvents(id));
         }
     }
 }
