@@ -35,7 +35,7 @@ namespace EventPlatFormVer4.Controllers
                 return NotFound();
             }
 
-            var sponsor = await sponserv.Find(id);//Todo：同步异步问题待解决，await用不了
+            var sponsor = await sponserv.Find(id);
 
             if (sponsor == null)
             {
@@ -130,7 +130,7 @@ namespace EventPlatFormVer4.Controllers
             var sponsor = await _context.Sponsors
                 .FirstOrDefaultAsync(m => m.Id == id);
             */
-            var sponsor =  sponserv.Delete(id);//Todo：同步异步问题待解决，await用不了
+            var sponsor =  sponserv.Delete(id);
 
             if (sponsor == null)
             {
