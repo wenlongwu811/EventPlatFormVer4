@@ -12,14 +12,15 @@ namespace EventPlatFormVer4.Models
         [Key]
         public string Id { get; set; }
         public Participant Participant { get; set; }
-        public string ParticipantId { get; set; }
         [ForeignKey("ParticipantId")]
-        public string ParticipantName { get => Participant != null ? Participant.Name : ""; }
+        public string ParticipantId { get; set; }
+
+       // public string ParticipantName { get => Participant != null ? Participant.Name : ""; }
         public string Grade { get; set; }
         public Event Event { get; set; }
-        public string EventId { get; set; }
         [ForeignKey("EventId")]
-        public string EventName { get => Event != null ? Event.Name : "" ; }
+        public string EventId { get; set; }
+       // public string EventName { get => Event != null ? Event.Name : ""; set； }
         // TODO: decide the State number
         public int State { get; set; }
 
