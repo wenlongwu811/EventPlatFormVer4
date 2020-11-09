@@ -29,14 +29,14 @@ namespace EventPlatFormVer4.Models
 
         public EventParticipant(int index,  Event @event, Participant participant)
         {
-            this.Index = index;
+            //this.Index = index;
             this.Event = @event;
             this.Participant = participant;
         }
 
         public override string ToString()
         {
-            return $"[No.:{Index},event:{EventName},participant:{ParticipantName},grade:{Grade},state:{State}]";
+            return $"[event:{EventName},participant:{ParticipantName},grade:{Grade},state:{State}]";
         }
 
         public override bool Equals(object obj)
@@ -50,7 +50,7 @@ namespace EventPlatFormVer4.Models
         public override int GetHashCode()
         {
             var hashCode = -231495720;
-            hashCode = hashCode * -1525538493 + Index.GetHashCode();
+            //hashCode = hashCode * -1525538493 + Index.GetHashCode();
             hashCode = hashCode * -1525538493 + EqualityComparer<string>.Default.GetHashCode(ParticipantName);
             hashCode = hashCode * -1525538493 + EqualityComparer<string>.Default.GetHashCode(EventName);
             return hashCode;

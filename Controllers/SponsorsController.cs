@@ -28,7 +28,7 @@ namespace EventPlatFormVer4.Controllers
         }
 
         // GET: Sponsors/Details/5
-        public async Task<IActionResult> Details(string? id)
+        public async Task<IActionResult> Details(string id)
         {
             if (id == null)
             {
@@ -68,7 +68,7 @@ namespace EventPlatFormVer4.Controllers
         }
 
         // GET: Sponsors/Edit/5
-        public async Task<IActionResult> Edit(string? id)
+        public async Task<IActionResult> Edit(string id)
         {
             if (id == null)
             {
@@ -119,7 +119,7 @@ namespace EventPlatFormVer4.Controllers
         }
 
         // GET: Sponsors/Delete/5
-        public async Task<IActionResult> Delete(string? id)
+        public async Task<IActionResult> Delete(string id)
         {
             if (id == null)
             {

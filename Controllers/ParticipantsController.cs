@@ -20,6 +20,7 @@ namespace EventPlatFormVer4.Controllers
         public ParticipantsController(MvcEpfContext context)
         {
             _context = context;
+            participantService = new ParticipantService(context);
         }
 
         // GET: participants
@@ -30,13 +31,13 @@ namespace EventPlatFormVer4.Controllers
 
 
         //参赛者主界面
-        public async Task<IActionResult> Info(string? id)
+        public async Task<IActionResult> Info(string id)
         {
             return View(await participantService.FindEvent(id));
         }
 
         //参赛者个人信息
-        public async Task<IActionResult> Details(string? id)
+        public async Task<IActionResult> Details(string id)
         {
             if (id == null)
             {
@@ -73,7 +74,7 @@ namespace EventPlatFormVer4.Controllers
             return View(participant);
         }
 
-        public async Task<IActionResult> Edit(string? id)
+        public async Task<IActionResult> Edit(string id)
         {
             if (id == null)
             {
@@ -125,7 +126,7 @@ namespace EventPlatFormVer4.Controllers
             return View(participant);
         }
 
-        public async Task<IActionResult> Delete(string? id)
+        public async Task<IActionResult> Delete(string id)
         {
             if (id == null)
             {
@@ -163,7 +164,7 @@ namespace EventPlatFormVer4.Controllers
             return View(_context.Events.Where(item=>!item.Equals(EP)&&item.State==1));
         }
         //退赛
-        public async Task<IActionResult> ExitEvent(string? id, [Bind("State")] EventParticipant EP)//前端是如何让传入这个EP的呢
+        public async Task<IActionResult> ExitEvent(string id, [Bind("State")] EventParticipant EP)//前端是如何让传入这个EP的呢
         {
             await participantService.ExitEvent(EP, id);
             return View(participantService.FindEvent(id));
