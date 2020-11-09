@@ -16,7 +16,7 @@ namespace EventPlatFormVer4.Models
         public string Id { get; set; }//唯一标识的Id
         public string RoleID { get; set; }//赞助者角色Id为1
 
-        [ForeignKey("EventId")]
+       
         public List<Event> SponEvents { get; set; }//赞助的活动列表
 
         public string Certificate { get; set; } // 机构认证, （院级，校级，省级；武大办，华科办，北大办……）
