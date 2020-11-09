@@ -9,12 +9,7 @@
 <table class="table">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayName("活动名称")
-            </th>
-            <th>
-                @Html.DisplayName("承办单位")
-            </th>
+           
             <th>
                 @Html.DisplayName("开始时间")
             </th>
@@ -36,12 +31,8 @@
     <tbody>
 @foreach (var item in Model) {
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.EventName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Event.SponsorName)
-            </td>
+           
+            
             <td>
                 @Html.DisplayFor(modelItem => item.Event.EventStartTime)
             </td>
