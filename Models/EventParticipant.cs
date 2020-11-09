@@ -12,18 +12,19 @@ namespace EventPlatFormVer4.Models
         [Key]
         public string Id { get; set; }
         public Participant Participant { get; set; }
-        public string ParticipantId { get; set; }
         [ForeignKey("ParticipantId")]
+        public string ParticipantId { get; set; }
         public string Grade { get; set; }
         public Event Event { get; set; }
-        public string EventId { get; set; }
         [ForeignKey("EventId")]
+        public string EventId { get; set; }
         // TODO: decide the State number
         public int State { get; set; }
 
         public EventParticipant() {
             Id = Guid.NewGuid().ToString();
         }
+        public int Index { get; set; }
 
         public EventParticipant(Event @event, Participant participant)
         {

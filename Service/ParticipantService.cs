@@ -115,13 +115,11 @@ namespace EventPlatFormVer4.Service
         {
             using (var db=_context)
             {
-                var participant = (Participant)db.Participants.Where(item => item.ID == id);
-                var events=participant.PartiEvent;
-                return events;
+                return(await db.EventParticipants.Where(item => item.ParticipantId == id).ToListAsync());
             }
         }
         //退赛，将List中已经报名成功的event的PartiState改为3
-        public async Task ExitEvent(EventParticipant EP,string id)
+        public async Task ExistEvent(EventParticipant EP,string id)
         {
             using (var db=_context)
             {

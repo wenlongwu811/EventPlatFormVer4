@@ -14,11 +14,13 @@ namespace EventPlatFormVer4.Controllers
     public class SponsorsController : Controller
     {
         private readonly MvcEpfContext _context;
-        public SponsorService sponserv;
+
+        public SponsorService sponService;
 
         public SponsorsController(MvcEpfContext context)
         {
             _context = context;
+            sponserv = new SponsorService(context);
         }
 
         // GET: Sponsors
@@ -35,7 +37,7 @@ namespace EventPlatFormVer4.Controllers
                 return NotFound();
             }
 
-            var sponsor = await sponserv.Find(id);
+            var sponsor = await sponService.Find(id);
 
             if (sponsor == null)
             {
@@ -60,8 +62,8 @@ namespace EventPlatFormVer4.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(sponsor);
-                await _context.SaveChangesAsync();
+                //_context.Add(sponsor);
+                await sponService.Add(sponsor);
                 return RedirectToAction(nameof(Index));
             }
             return View(sponsor);
@@ -130,7 +132,7 @@ namespace EventPlatFormVer4.Controllers
             var sponsor = await _context.Sponsors
                 .FirstOrDefaultAsync(m => m.Id == id);
             */
-            var sponsor =  sponserv.Delete(id);
+            var sponsor = sponService.Delete(id);
 
             if (sponsor == null)
             {
@@ -150,10 +152,29 @@ namespace EventPlatFormVer4.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
+        private bool sponsorExists(string id)
+
+        {
+            return _context.Sponsors.Any(e => e.Id == id);
+        }
 
         private bool SponsorExists(string id)
         {
             return _context.Sponsors.Any(e => e.Id == id);
+        }
+
+        //申报
+        public async Task<IActionResult> Apply(Event _event, string id)//前端是如何让传入这个EP的呢
+        {
+            await sponService.Apply(_event, id);
+            return View(_context.Events.Where(item => !item.Equals(_event) && item.State == 1));
+        }
+
+        //申请取消
+        public async Task<IActionResult> Cancel(string? id, [Bind("State")] Event _event)//前端是如何让传入这个EP的呢
+        {
+            await sponService.Cancel(_event, id);
+            return View(sponService.ApplyEvents(id));
         }
     }
 }
