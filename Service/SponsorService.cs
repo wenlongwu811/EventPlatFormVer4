@@ -17,19 +17,19 @@ namespace EventPlatFormVer4.Service
             _context = context;
         }
 
-        public static List<Sponsor> ToListSponsor()//遍历Sponsor表
+        public async Task<List<Sponsor>> ToListSponsor()//遍历Sponsor表
         {
             using (var db = _context)
             {
-                var query = db.Sponsors.ToList();
+                var query =await db.Sponsors.ToListAsync();
                 return query;
             }
         }
-        public static List<EventParticipant> ToListEP()//遍历EP表
+        public async Task<List<EventParticipant>> ToListEP()//遍历EP表
         {
             using (var db = _context)
             {
-                var query = db.EventParticipants.ToList();
+                var query =await db.EventParticipants.ToListAsync();
                 return query;
             }
         }
@@ -38,7 +38,7 @@ namespace EventPlatFormVer4.Service
         {
             using (var db = _context)
             {
-                List<Sponsor> sponsors = SponsorService.ToListSponsor();
+                List<Sponsor> sponsors = await ToListSponsor();
                 foreach (Sponsor _sponsor in sponsors)
                 {
                     if (sponsor.Equals(_sponsor)) throw new ApplicationException("用户已存在，添加失败");
@@ -88,7 +88,7 @@ namespace EventPlatFormVer4.Service
                 var @event = await db.Events.Where(item => item.Id == _event.Id).FirstOrDefaultAsync();
                 var sponsor = await db.Sponsors.Where(item => item.Id == id).FirstOrDefaultAsync();
                 @event.State = 0;//待审核
-                List<EventParticipant> eventParticipants = ToListEP();
+                List<EventParticipant> eventParticipants = await ToListEP();
                 foreach (EventParticipant eventParticipant in eventParticipants)
                 {
                     if (eventParticipant.Equals(@event)) throw new ApplicationException("已经报名过");
