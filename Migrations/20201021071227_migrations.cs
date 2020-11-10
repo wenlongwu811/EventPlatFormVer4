@@ -92,14 +92,14 @@ namespace EventPlatFormVer4.Migrations
                     Email = table.Column<string>(nullable: true),
                     Phone = table.Column<string>(nullable: true),
                     Pwd = table.Column<string>(nullable: true),
-                    EventId = table.Column<long>(nullable: true)
+                    Event_Id = table.Column<long>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Participatants", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Participatants_Events_EventId",
-                        column: x => x.EventId,
+                        name: "FK_Participatants_Events_Event_Id",
+                        column: x => x.Event_Id,
                         principalTable: "Events",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -111,9 +111,9 @@ namespace EventPlatFormVer4.Migrations
                 column: "SponsorId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Participatants_EventId",
+                name: "IX_Participatants_Event_Id",
                 table: "Participatants",
-                column: "EventId");
+                column: "Event_Id");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

@@ -45,7 +45,7 @@ namespace EventPlatFormVer4.Service
         {
             using (var db = _context)
             {
-                var eventParticipants = await db.EventParticipants.Where(ep => ep.EventId == eventId).ToListAsync();
+                var eventParticipants = await db.EventParticipants.Where(ep => ep.Event_Id == eventId).ToListAsync();
                 return eventParticipants;
             }
         }
@@ -118,7 +118,7 @@ namespace EventPlatFormVer4.Service
             try {
                 using (var db = _context)
                 {
-                    var oldParticipants = await db.EventParticipants.Where(p => p.EventId == eventId).ToListAsync(); // 对E-P表查询，EventID相等的oldParticipants
+                    var oldParticipants = await db.EventParticipants.Where(p => p.Event_Id == eventId).ToListAsync(); // 对E-P表查询，EventID相等的oldParticipants
                     // TODO: how to apply async method in ?
                     db.EventParticipants.RemoveRange(oldParticipants); 
                     await db.SaveChangesAsync();
@@ -148,34 +148,5 @@ namespace EventPlatFormVer4.Service
                 return ep; // TODO : 添加显式转换
             }
         }
-
-        /*
-        public static void Export(string fileName)
-        {
-            XmlSerializer xs = new XmlSerializer(typeof(List<Event>));
-            using (FileStream fs = new FileStream(fileName, FileMode.Create))
-            {
-                xs.Serialize(fs, GetAllEvents());
-            }
-        }
-        public static void Import(String path)
-        {
-            XmlSerializer xs = new XmlSerializer(typeof(List<Event>));
-            using (FileStream fs = new FileStream(path, FileMode.Open))
-            {
-                List<Event> temp = (List<Event>)xs.Deserialize(fs);
-                temp.ForEach(@event =>
-                {
-                    try
-                    {
-                        AddEvent(@event);
-                    }
-                    catch(Exception e)
-                    {
-                        throw new ApplicationException($"导入活动出错{e.Message}");
-                    }
-                });
-            }
-        }*/
     }
 }

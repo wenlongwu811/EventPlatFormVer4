@@ -94,7 +94,7 @@ namespace EventPlatFormVer4.Migrations
                     b.Property<string>("Email")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                    b.Property<uint?>("EventId")
+                    b.Property<uint?>("Event_Id")
                         .HasColumnType("int unsigned");
 
                     b.Property<string>("Name")
@@ -111,7 +111,7 @@ namespace EventPlatFormVer4.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("EventId");
+                    b.HasIndex("Event_Id");
 
                     b.ToTable("Participatants");
                 });
@@ -182,7 +182,7 @@ namespace EventPlatFormVer4.Migrations
                 {
                     b.HasOne("EventPlatFormVer4.Models.Event", null)
                         .WithMany("Participants")
-                        .HasForeignKey("EventId");
+                        .HasForeignKey("Event_Id");
                 });
 #pragma warning restore 612, 618
         }

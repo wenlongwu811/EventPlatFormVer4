@@ -65,7 +65,7 @@ namespace EventPlatFormVer4.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,RoleID,Name,Email,PhoneNum,Passwd")] Participant participant)
+        public async Task<IActionResult> Create([Bind("ID,RoleID,Name,PassWd,Email,PhoneNum")] Participant participant)
         {
             if (ModelState.IsValid)
             {
