@@ -1,4 +1,4 @@
-﻿@model IEnumerable<EventPlatFormVer4.Models.Event>
+﻿@model    EventPlatFormVer4.Models.Event
 
 @{
     ViewData["Title"] = "Verify";
@@ -30,74 +30,91 @@
             <th>
                 @Html.DisplayNameFor(model => model.Address)
             </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => modelItem.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => modelItem.Rank)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => modelItem.EventStartTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => modelItem.EventEndTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => modelItem.SignUpStartTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => modelItem.SignUpEndTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => modelItem.Address)
+            </td>
+            </tr>
+        </tbody>
+
+    <thead>
+        <tr>
             <th>
                 @Html.DisplayNameFor(model => model.Detail)
-            </th>
-            <th>
-                @Html.DisplayName("审核")
             </th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
-        {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Name)
+                @Html.DisplayFor(modelItem => modelItem.Detail)
             </td>
+        </tr>
+    </tbody>
+
+
+    <thead>
+    <tr>
+        <th>
+            @Html.DisplayName("审核")
+        </th>
+    </tr>
+    </thead>
+    <tbody>
+        <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Rank)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EventStartTime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EventEndTime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SignUpStartTime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SignUpEndTime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Address)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Detail)
-            </td>
-            <td>
-            @switch (item.State)
-            {
-                case 0:
+                @switch (Model.State)
+                {
+                    case 0:
                     <td>
-                        <a asp-action="Accept" asp-route-id="@item.Id">Accept</a> |
-                        <a asp-action="Ban" asp-route-id="@item.Id">Ban</a>
+                        <a asp-action="Accept" asp-route-id="@Model.Id">Accept</a> |
+                        <a asp-action="Ban" asp-route-id="@Model.Id">Ban</a>
                     </td>
-                    <td asp-action="Info" asp-route-id="@ViewBag.Id">Back</td>
+                    <td asp-action="Info" asp-route-id="@ViewData["aid"]">Back</td>
                     break;
                 case 1:
                     <td>
-                        <a asp-action="Ban" asp-route-id="@item.Id">Ban</a>
+                        <a asp-action="Ban" asp-route-id="@Model.Id">Ban</a>|
+                        <a asp-action="Info" asp-route-id="@ViewData["aid"]">Back</a>
                     </td>
-                    <td asp-action="Info" asp-route-id="@ViewBag.Id">Back</td>
                     break;
                 case 2:
                     <td>
-                        <a asp-action="Ban" asp-route-id="@item.Id">Ban</a>
+                        <a asp-action="Accept" asp-route-id="@Model.Id">Accept</a>
+                        <a asp-action="Info" asp-route-id="@ViewData["aid"]">Back</a>
                     </td>
-                    <td asp-action="Info" asp-route-id="@ViewBag.Id">Back</td>
                     break;
                 case 3:
                     <td>
-                        <a asp-action="Ban" asp-route-id="@item.Id">Ban</a>
+                        <a asp-action="Ban" asp-route-id="@Model.Id">Ban</a>
+                        <a asp-action="Info" asp-route-id="@ViewData["aid"]">Back</a>
+
                     </td>
-                    <td asp-action="Info" asp-route-id="@ViewBag.Id">Back</td>
                     break;
                 default:
                     break;
             }
-        </tr>
-        }
+            </tr>
     </tbody>
 </table>

@@ -111,7 +111,7 @@ namespace EventPlatFormVer4.Service
             using (var db=_context)
             {
                 var participant = (Participant)db.Participants.Where(item => item.ID == id);
-                var eventParticipant = (EventParticipant)db.EventParticipants.Where(item => (item.EventId == EP.Id)&&(item.ParticipantId==id)&&(item.State==1));
+                var eventParticipant = (EventParticipant)db.EventParticipants.Where(item => (item.Event_Id == EP.Id)&&(item.ParticipantId==id)&&(item.State==1));
 
                 eventParticipant.State = 3;
                 await db.SaveChangesAsync();
