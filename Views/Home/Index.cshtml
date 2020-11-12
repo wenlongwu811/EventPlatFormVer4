@@ -3,33 +3,55 @@
     ViewData["Title"] = "Home Page";
 }
   
+<script>
+    function start() {
+        var id = document.getElementById("input1").value;
+        var pwd = document.getElementById("input2").value;
+        var radionum = document.getElementByName("Rolelist").Role;
+        for (var i = 0; i < radionum.length; {
+            if(radionum[i].cheaked){
+            Role = radionum[i].value;
+        }
+        if (Role == 0) {
+            <a asp-controller="Administrators" asp-action="Loading" asp-route-id="id" asp-route-pwd="pwd">登录</a>
+        }
+        else if (Role == 1) {
+            <a asp-controller="Sponsors" asp-action="Loading" asp-route-id="id" asp-route-pwd="pwd">登录</a>
+        }
+        else {
+            <a asp-controller="Participants" asp-action="Loading" asp-route-id="id" asp-route-pwd="pwd">登录</a>
+        }
+</script>
+
 <div class="text-center">
     <div class="row">
         <div class="col-md-4">
-            <form asp-action="Create">
+            <form asp-controller="Administrators" asp-action="Loading">
                 <!-- //TODO此处设置的是初始登录页面，需要修改的，这个时候点击的还是Create而不是登录-->
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-group">
                     <label asp-for="Name" class="control-label"></label>
-                    <input asp-for="Name" class="form-control" />
+                    <input asp-for="Name" class="form-control" id="input1"/>
                     <span asp-validation-for="Name" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="Pwd" class="control-label"></label>
-                    <input asp-for="Pwd" class="form-control" />
+                    <input asp-for="Pwd" class="form-control" id="input2"/>
                     <span asp-validation-for="Pwd" class="text-danger"></span>
                 </div>
-                <div class="form-group">
+                <div class="form-group"  align="left">
                     <div>
-                        <input type="radio" name="Adm" value="0">Administrators<br>
-                        <input type="radio" name="Par" value="1">Participants<br>
-                        <input type="radio" name="Spo" value="2">Sponsors<br>
-                    </div>
-                    <div class="form-group">
-                        <a asp-action="Details" asp-route-id="1">登录</a>
+                        <input type="radio" name="Role" value="0">Administrators<br>
+                        <input type="radio" name="Role" value="2">Participants<br>
+                        <input type="radio" name="Role" value="1">Sponsors
                     </div>
                 </div>
+                <div>
+                    <button onclick="start()">登录</button>
+                    <button ><a asp-controller="Administrators" asp-action="Login" >注册</a></button>
+                </div>              
             </form>
         </div>
     </div>
 </div>
+
