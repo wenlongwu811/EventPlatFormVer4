@@ -42,7 +42,7 @@ namespace EventPlatFormVer4.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                return RedirectToAction("Index", "Home");
             }
             var participant = await participantService.Find(id);
 

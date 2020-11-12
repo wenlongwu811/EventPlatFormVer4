@@ -38,18 +38,38 @@ namespace EventPlatFormVer4.Controllers
 
         }
 
-        public async Task<IActionResult> State0()
+        public async Task<IActionResult> Loading(string name ,string pwd,string role)
         {
-            return View(await _context.Events.ToListAsync());
+            if (role == "0")
+            {
+                string s = await administratorService.loading(name, pwd);
+                return RedirectToAction("Details", "Administrators", new { id = s });
+            }
+            else if (role=="1")
+            {
+                var sponsor = await _context.Sponsors.Where(item => item.Name == name && item.Pwd == pwd).FirstOrDefaultAsync();
+                string s;
+                if (sponsor == null) s = null;
+                else s = sponsor.Id;
+                return RedirectToAction("Details", "Sponsors", new { id = s });
+            }
+            else
+            {
+                var participant = await _context.Participants.Where(item => item.Name == name && item.PassWd == pwd).FirstOrDefaultAsync();
+                string s;
+                if (participant == null) s = null;
+                else s = participant.ID;
+                return RedirectToAction("Details", "Participants", new { id = s });
+            }
         }
 
         // GET: Administrators/Details/5
-        public async Task<IActionResult> Details(string id)
+        public async Task<IActionResult> Details(string? id)
         {
 
             if (id == null)
             {
-                return NotFound();
+                return RedirectToAction("Index","Home");
             }
             var administrator = await administratorService.FindAsync(id);
 
@@ -83,6 +103,11 @@ namespace EventPlatFormVer4.Controllers
             return RedirectToAction(nameof(Info));
         }
 
+        public IActionResult Login()
+        {
+            return View();
+        }
+
         // GET: Administrators/Create:创建管理者
         public IActionResult Create()
         {
@@ -92,14 +117,30 @@ namespace EventPlatFormVer4.Controllers
         // POST: Administrators/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,RoleID,Name,Email,Phone,Pwd")] Administrator administrator)
+        public async Task<IActionResult> Create(string role,[Bind("Id,RoleID,Name,Email,Phone,Pwd")] Administrator administrator)
         {
-            if (ModelState.IsValid)
+            if (role == null)
             {
-                await administratorService.Add(administrator);
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index", "Home");
             }
-            return View(administrator);
+            else if (role == "0")
+            {
+                if (ModelState.IsValid)
+                {
+                    await administratorService.Add(administrator);
+                    return RedirectToAction(nameof(Index));
+                }
+                return View(administrator);
+            }
+            else if (role == "1")
+            {
+                return RedirectToAction("Create", "Sponsors");
+            }
+            else
+            {
+                return RedirectToAction("Create", "Participants");
+            }
+            
         }
 
         // GET: Administrators/Edit/5
