@@ -1,0 +1,26 @@
+﻿@model EventPlatFormVer4.Models.Administrator
+
+@{
+    ViewData["Title"] = "Login";
+}
+
+
+<div class="text-center">
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-controller="Administrators" asp-action="Create">
+                <div class="form-group" align="left">
+                    <div>
+                        <p>请选择您想注册的单位</p><br>
+                        <input type="radio" name="Role" value="2">Participants<br>
+                        <input type="radio" name="Role" value="1">Sponsors
+                    </div>
+                </div>
+                <div>
+                    <input type="submit" value="Submit">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+

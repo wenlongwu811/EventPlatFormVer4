@@ -54,6 +54,16 @@ namespace EventPlatFormVer4.Service
             }
         }
 
+        public async Task<string> loading(string name,string pwd)
+        {
+            using (var db = _context)
+            {
+                var adminitrator = await db.Administrators.Where(item => item.Name == name&&item.Pwd==pwd).FirstOrDefaultAsync();
+                if (adminitrator==null) return null;
+                else return adminitrator.Id;
+            }
+        }
+
         public async Task Update(Administrator administrator)
         {
             using (var db = _context)
