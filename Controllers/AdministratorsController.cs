@@ -29,22 +29,47 @@ namespace EventPlatFormVer4.Controllers
         {
             return View(await _context.Administrators.ToListAsync());
         }
-        
 
-        public async Task<IActionResult> Info()
+
+        public async Task<IActionResult> Info(string id)
         {
-
-            return View(await administratorService.GetEvents());
+            ViewData["admid"] = id;
+            return View(await _context.Events.ToListAsync());
 
         }
 
-        // GET: Administrators/Details/5
-        public async Task<IActionResult> Details(string id)
+        public async Task<IActionResult> Loading(string name ,string pwd,string role)
         {
-            
+            if (role == "0")
+            {
+                string s = await administratorService.loading(name, pwd);
+                return RedirectToAction("Details", "Administrators", new { id = s });
+            }
+            else if (role=="1")
+            {
+                var sponsor = await _context.Sponsors.Where(item => item.Name == name && item.Pwd == pwd).FirstOrDefaultAsync();
+                string s;
+                if (sponsor == null) s = null;
+                else s = sponsor.Id;
+                return RedirectToAction("Details", "Sponsors", new { id = s });
+            }
+            else
+            {
+                var participant = await _context.Participants.Where(item => item.Name == name && item.PassWd == pwd).FirstOrDefaultAsync();
+                string s;
+                if (participant == null) s = null;
+                else s = participant.ID;
+                return RedirectToAction("Details", "Participants", new { id = s });
+            }
+        }
+
+        // GET: Administrators/Details/5
+        public async Task<IActionResult> Details(string? id)
+        {
+
             if (id == null)
             {
-                return NotFound();
+                return RedirectToAction("Index","Home");
             }
             var administrator = await administratorService.FindAsync(id);
 
@@ -57,9 +82,10 @@ namespace EventPlatFormVer4.Controllers
         }
 
         //GET:Administrators/Verify:审核
+        [HttpGet]
         public async Task<IActionResult> Verify(string eventid,string admid)
         {
-            ViewBag.id = admid;
+            ViewData["aid"] = admid;
            return View(await administratorService.EventInformation(eventid));
         }
 
@@ -73,8 +99,13 @@ namespace EventPlatFormVer4.Controllers
         //Get:Administrator/Ban:禁止未审核
         public async Task<IActionResult>Ban(string id ,[Bind("State")] Event events)
         {
-            await administratorService.Accept(id);
+            await administratorService.Deny(id);
             return RedirectToAction(nameof(Info));
+        }
+
+        public IActionResult Login()
+        {
+            return View();
         }
 
         // GET: Administrators/Create:创建管理者
@@ -86,14 +117,30 @@ namespace EventPlatFormVer4.Controllers
         // POST: Administrators/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,RoleID,Name,Email,Phone,Pwd")] Administrator administrator)
+        public async Task<IActionResult> Create(string role,[Bind("Id,RoleID,Name,Email,Phone,Pwd")] Administrator administrator)
         {
-            if (ModelState.IsValid)
+            if (role == null)
             {
-                await administratorService.Add(administrator);
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index", "Home");
             }
-            return View(administrator);
+            else if (role == "0")
+            {
+                if (ModelState.IsValid)
+                {
+                    await administratorService.Add(administrator);
+                    return RedirectToAction(nameof(Index));
+                }
+                return View(administrator);
+            }
+            else if (role == "1")
+            {
+                return RedirectToAction("Create", "Sponsors");
+            }
+            else
+            {
+                return RedirectToAction("Create", "Participants");
+            }
+            
         }
 
         // GET: Administrators/Edit/5
@@ -113,8 +160,6 @@ namespace EventPlatFormVer4.Controllers
         }
 
         // POST: Administrators/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(string id, [Bind("Id,RoleID,Name,Email,Phone,Pwd")] Administrator administrator)
@@ -160,4 +205,3 @@ namespace EventPlatFormVer4.Controllers
         }
     }
 }
-//wwl
