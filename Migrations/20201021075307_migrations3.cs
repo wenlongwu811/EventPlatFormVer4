@@ -144,7 +144,7 @@ namespace EventPlatFormVer4.Migrations
                 oldNullable: true);
 
             migrationBuilder.AlterColumn<uint>(
-                name: "EventId",
+                name: "Event_Id",
                 table: "Participatants",
                 nullable: true,
                 oldClrType: typeof(long),
@@ -432,7 +432,7 @@ namespace EventPlatFormVer4.Migrations
                 oldNullable: true);
 
             migrationBuilder.AlterColumn<long>(
-                name: "EventId",
+                name: "Event_Id",
                 table: "Participatants",
                 type: "bigint",
                 nullable: true,

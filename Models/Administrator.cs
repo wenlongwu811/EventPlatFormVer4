@@ -16,14 +16,12 @@ namespace EventPlatFormVer4.Models
         [RegularExpression(@"[0-9]{13}", ErrorMessage = "13位数字")]
         public string Name { get; set; }
 
-
-        [RegularExpression(@"^\w+@[A-Za-z_]+?\.[a-zA-Z]{2,3}$", ErrorMessage = "请输入正确的格式")]
         [Required]
+        [RegularExpression(@"^\w+@[A-Za-z_]+?\.[a-zA-Z]{2,3}$", ErrorMessage = "请输入正确的格式")]
         public string Email { get; set; }
 
-
-        [RegularExpression(@"[A-Za-z0-9]{6,}", ErrorMessage = "至少6位数字字母组合")]
         [Required]
+        [RegularExpression(@"[A-Za-z0-9]{6,}", ErrorMessage = "至少6位数字字母组合")]
         public string Pwd { get; set; }
 
         public Administrator()

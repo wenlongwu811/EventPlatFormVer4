@@ -30,11 +30,11 @@ namespace EventPlatFormVer4.Controllers
         }
 
         // GET: Sponsors/Details/5
-        public async Task<IActionResult> Details(string id)
+        public async Task<IActionResult> Details(string? id)
         {
             if (id == null)
             {
-                return NotFound();
+                return RedirectToAction("Index", "Home");
             }
 
             var sponsor = await sponService.Find(id);
