@@ -9,7 +9,7 @@
 <table class="table">
     <thead>
         <tr>
-           
+
             <th>
                 @Html.DisplayName("开始时间")
             </th>
@@ -29,42 +29,45 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
+        @foreach (var item in Model)
+        {
+            <tr>
 
 
-            <td>
-                @Html.DisplayFor(modelItem => item.Event.EventStartTime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Event.EventEndTime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Event.Address)
-            </td>
-            <td>
-                @if (item.State == 0)
-                {
-                    @Html.Display("待审核")
-                }
-                @if (item.State == 1)
-                {
-                    @Html.Display("报名成功")
-                }
-                @if (item.State == 2)
-                {
-                    @Html.Display("被拒绝")
-                }
-                @if (item.State == 3)
-                {
-                    @Html.Display("已退赛")
-                }
-            </td>
-            <td>
-                <a asp-action="ExitEvent" asp-route-id="@item.Id">ExitEvent</a> |
-            </td>
-            <td asp-action="GotoApply">去报名</td>
-        </tr>
-}
+                <td>
+                    @Html.DisplayFor(modelItem => item.Event.EventStartTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Event.EventEndTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Event.Address)
+                </td>
+                <td>
+                    @if (item.State == 0)
+                    {
+                        @Html.Display("待审核")
+                    }
+                    @if (item.State == 1)
+                    {
+                        @Html.Display("报名成功")
+                    }
+                    @if (item.State == 2)
+                    {
+                        @Html.Display("被拒绝")
+                    }
+                    @if (item.State == 3)
+                    {
+                        @Html.Display("已退赛")
+                    }
+                </td>
+                <td>
+                    <a asp-action="ExitEvent" asp-route-id="@item.Id">ExitEvent</a> |
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
+<div>
+    <a asp-action="GotoApply">去报名</a>
+</div>

@@ -15,7 +15,7 @@
             <th>
                 @Html.DisplayName("活动等级")
             </th>
-            
+
             <th>
                 @Html.DisplayName("开始时间")
             </th>
@@ -38,34 +38,38 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Rank)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EventStartTime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EventEndTime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SignUpStartTime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SignUpEndTime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Address)
-            </td>
-            <td>
-                <a asp-action="Apply" asp-route-id="@ViewData["Pid"]">Apply</a> |
-            </td>
-            <td asp-action="Info" asp-route-id="@ViewData["Pid"]">Back</td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Rank)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EventStartTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EventEndTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SignUpStartTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SignUpEndTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Address)
+                </td>
+                <td>
+                    <a asp-action="Apply" asp-route-id="@ViewData["Pid"]">Apply</a> |
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
+<div>
+    <a asp-action="Info" asp-route-id="@ViewData["Pid"]">Back</a>
+</div>
+
