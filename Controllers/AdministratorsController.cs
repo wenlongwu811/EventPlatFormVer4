@@ -173,7 +173,7 @@ namespace EventPlatFormVer4.Controllers
             {
                
                 await administratorService.Update(administrator);
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Details","Administrators",new { id = id});
             }
             return View(administrator);
         }
@@ -187,6 +187,7 @@ namespace EventPlatFormVer4.Controllers
             }
 
             var administrator = await administratorService.FindAsync(id);
+            ViewData["aid"] = administrator.Id;
             if (administrator == null)
             {
                 return NotFound();
@@ -201,7 +202,7 @@ namespace EventPlatFormVer4.Controllers
         public async Task<IActionResult> DeleteConfirmed(string id)
         {
             await administratorService.Delete(id);
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Index","Home");
         }
     }
 }

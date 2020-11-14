@@ -5,6 +5,7 @@
 }
 
 <h1>工作台</h1>
+<button><a asp-action="Details" asp-route-id="@ViewData["admid"]">返回</a></button>
 <table class="table">
     <thead>
         <tr>
@@ -28,9 +29,9 @@
             @if (item.State == 0)
             {
                 <tr>
-                   <td>
-                @Html.DisplayName("·")
-                </td>
+                    <td>
+                        @Html.DisplayName("·")
+                    </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Name)
                     </td>
@@ -38,7 +39,7 @@
                         @Html.DisplayFor(modelItem => item.Rank)
                     </td>
                     <td>
-                        <a asp-action="Verify" asp-route-eventid="@item.Id" asp-route-admid="@ViewData["admid"]">审核</a>
+                        <button> <a asp-action="Verify" asp-route-eventid="@item.Id" asp-route-admid="@ViewData["admid"]">审核</a></button>
                     </td>
                 </tr>
             }
@@ -66,21 +67,21 @@
         {
             @if (item.State == 1)
             {
-        <tr>
-            <td>
-                @Html.DisplayName("·")
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Rank)
-            </td>
-            <td>
-                <a asp-action="Verify" asp-route-eventid="@item.Id" asp-route-admid="@ViewData["admid"]">审核</a>
-            </td>
+                <tr>
+                    <td>
+                        @Html.DisplayName("·")
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Rank)
+                    </td>
+                    <td>
+                        <button> <a asp-action="Verify" asp-route-eventid="@item.Id" asp-route-admid="@ViewData["admid"]">审核</a></button>
+                    </td>
 
-        </tr>
+                </tr>
             }
         }
     </tbody>
@@ -105,21 +106,21 @@
         {
             @if (item.State == 2)
             {
-        <tr>
-            <td>
-                @Html.DisplayName("·")
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Rank)
-            </td>
-            <td>
-                <a asp-action="Verify" asp-route-eventid="@item.Id" asp-route-admid="@ViewData["admid"]">审核</a>
-            </td>
+                <tr>
+                    <td>
+                        @Html.DisplayName("·")
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Rank)
+                    </td>
+                    <td>
+                        <button> <a asp-action="Verify" asp-route-eventid="@item.Id" asp-route-admid="@ViewData["admid"]">审核</a></button>
+                    </td>
 
-        </tr>
+                </tr>
             }
         }
     </tbody>
@@ -144,20 +145,20 @@
         {
             @if (item.State == 3)
             {
-        <tr>
-            <td>
-                @Html.DisplayName("·")
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Rank)
-            </td>
-            <td>
-                <a asp-action="Verify" asp-route-eventid="@item.Id" asp-route-admid="@ViewData["admid"]">审核</a>
-            </td>
-        </tr>
+                <tr>
+                    <td>
+                        @Html.DisplayName("·")
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Rank)
+                    </td>
+                    <td>
+                        <button>  <a asp-action="Verify" asp-route-eventid="@item.Id" asp-route-admid="@ViewData["admid"]">审核</a></button>
+                    </td>
+                </tr>
             }
         }
     </tbody>
