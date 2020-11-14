@@ -23,7 +23,7 @@
                 @Html.DisplayName("报名状态")
             </th>
             <th>
-                @Html.DisplayName("报名")
+                @Html.DisplayName("退赛")
             </th>
             <th></th>
         </tr>
@@ -31,8 +31,8 @@
     <tbody>
 @foreach (var item in Model) {
         <tr>
-           
-            
+
+
             <td>
                 @Html.DisplayFor(modelItem => item.Event.EventStartTime)
             </td>
@@ -60,10 +60,10 @@
                     @Html.Display("已退赛")
                 }
             </td>
-            <!--item是EP类的，似乎不应该传入item的id？-->
             <td>
                 <a asp-action="ExitEvent" asp-route-id="@item.Id">ExitEvent</a> |
             </td>
+            <td asp-action="GotoApply">去报名</td>
         </tr>
 }
     </tbody>
