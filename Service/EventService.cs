@@ -50,21 +50,25 @@ namespace EventPlatFormVer4.Service
             }
         }
 
+        public async Task<List<EventParticipant>> GetParticipantEventsAsync(string participantId) // 返回单个Participant的所有Events
+        {
+            using (var db = _context)
+            {
+                var participantEvents = await db.EventParticipants.Where(ep => ep.ParticipantId == participantId).ToListAsync();
+                return participantEvents;
+            }
+        }
+
         public async Task AddEvent(Event @event) // 添加new Event
         {
-            try
-            {
+           
                 using (var db = _context)
                 {
                     db.Events.Add(@event);
                     await db.SaveChangesAsync();
                 }
-            }
-            catch (Exception e)
-            {
-                // TODO: 需要根据错误类型返回不同错误信息
-                throw new ApplicationException($"添加活动出错{e.Message}");
-            }
+            
+            
         }
 
         public async Task RemoveEvent(string id)

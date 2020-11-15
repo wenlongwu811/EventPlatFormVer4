@@ -19,8 +19,10 @@ namespace EventPlatFormVer4.Controllers
         public EventsController(MvcEpfContext context)
         {
             _context = context;
+            eventService = new EventService(context);
         }
 
+       
         // GET: Events
         public async Task<IActionResult> Index()
         {
@@ -35,7 +37,18 @@ namespace EventPlatFormVer4.Controllers
             {
                 return NotFound();
             }
+            ViewData["Event_Id"] = eventId;
             return View(await eventService.GetEventParticipantsAsync(eventId));
+        }
+        // GET: Events/GetE-Ps/5 显示Event的所有Participants
+        public async Task<IActionResult> GetParticipantEvents(string participantId)
+        {
+            if (participantId == null)
+            {
+                return NotFound();
+            }
+            ViewData["Participant_Id"] = participantId;
+            return View(await eventService.GetParticipantEventsAsync(participantId));
         }
         // GET: Events/Details/5
         public async Task<IActionResult> Details(string? id)
@@ -56,8 +69,9 @@ namespace EventPlatFormVer4.Controllers
         }
 
         // GET: Events/Create: 创建新Event
-        public IActionResult Create()
+        public IActionResult Create(string id)
         {
+            ViewData["sid"] = id;
             return View();
         }
 
@@ -66,17 +80,12 @@ namespace EventPlatFormVer4.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Rank,EventStartTime,EventEndTime,SignUpStartTime,SignUpEndTime,Address,Detail")] Event @event)
+        public async Task<IActionResult> Create(string id,[Bind("Name,SponsorId,Rank,EventStartTime,EventEndTime,SignUpStartTime,SignUpEndTime,Address,Detail")] Event @event)
         {
             if (ModelState.IsValid)
             {
-                /*
-                _context.Add(@event);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-                */
                 await eventService.AddEvent(@event);
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Info_Apply","Sponsors",new { id=id});
             }
             return View(@event);
         }
@@ -168,7 +177,7 @@ namespace EventPlatFormVer4.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        // TODO: to be async
+
         private bool EventExists(string id)
         {
             return _context.Events.Any(e => e.Id == id);

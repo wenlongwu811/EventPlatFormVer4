@@ -34,22 +34,22 @@ namespace EventPlatFormVer4.Models
         [Required(ErrorMessage = "此项必填")]
         public DateTime EventStartTime { get; set; } // 活动开始时间
 
-        [Display(Name = "活动结束名称")]
+        [Display(Name = "活动结束时间")]
         [DataType(DataType.Date)]
         [Required(ErrorMessage = "此项必填")]
         public DateTime EventEndTime { get; set; } // 活动结束时间
 
-        [Display(Name = "报名开始名称")]
+        [Display(Name = "报名开始时间")]
         [DataType(DataType.Date)]
         [Required(ErrorMessage = "此项必填")]
         public DateTime SignUpStartTime { get; set; } // 报名开始时间
 
-        [Display(Name = "报名截止名称")]
+        [Display(Name = "报名截止时间")]
         [DataType(DataType.Date)]
         [Required(ErrorMessage = "此项必填")]
-        public DateTime SignUpEndTime { get; set; } // 报名结束时间
+        public DateTime SignUpEndTime { get; set; } // 报名截至时间
 
-        [Display(Name = "举办地址")]
+        [Display(Name = "活动地点")]
         [Required(ErrorMessage = "此项必填")]
         public string Address { get; set; } // 活动举办地址
 
