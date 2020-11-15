@@ -1,0 +1,46 @@
+﻿@model IEnumerable<EventPlatFormVer4.Models.EventParticipant>
+
+
+@{
+    ViewData["Title"] = "Show_Verify";
+}
+
+<h2>报名者详细信息</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayName("报名者ID")
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Grade)
+            </th>
+            <th>
+                @Html.DisplayName("详情")
+            </th>
+            <th>
+                @Html.DisplayName("其他")
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Grade)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Details)
+            </td>
+            <td>
+                <button> <a asp-action="P_Verify" asp-route-EventId="@ViewData["eveid"]" asp-route-sid="@ViewData["admid"]">详细信息</a></button>
+            </td>
+        </tr>
+        }
+    </tbody>
+
+</table>

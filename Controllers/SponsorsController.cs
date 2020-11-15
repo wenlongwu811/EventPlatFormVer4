@@ -29,26 +29,37 @@ namespace EventPlatFormVer4.Controllers
             return View(await _context.Sponsors.ToListAsync());
         }
 
-        //GET:Administrators/Show:详细信息
+        //GET:Administrators/Show_Apply:详细信息
         [HttpGet]
-        public async Task<IActionResult> Show(string eventid, string sid)
+        public async Task<IActionResult> Show_Apply(string EventId, string sid)
         {
             ViewData["sid"] = sid;
-            return View(await sponService.EventInformation(eventid));
+            return View(await sponService.EventInformation(EventId));
         }
 
-        public async Task<IActionResult> Info_Apply(string id)//申报活动
+        //GET:Administrators/Show_Verify:详细信息
+        [HttpGet]
+        public async Task<IActionResult> Show_Verify(string EventId, string sid)
+        {
+            ViewData["sid"] = sid;
+            ViewData["eveid"] = EventId;
+            
+            var @event = await _context.EventParticipants.Where(item => item.EventId == EventId).ToListAsync();
+            return View(@event);
+        }
+
+        public async Task<IActionResult> Info_Apply(string id)//申报活动，展示活动列表
         {
             ViewData["admid"] = id;
             var @event = await _context.Events.Where(item => item.SponsorId == id).ToListAsync();
             return View(@event);
 
         }
-        public async Task<IActionResult> Info_Verify(string id)//审核参加
+        public async Task<IActionResult> Info_Verify(string id)//审核参加，展示活动列表
         {
             ViewData["admid"] = id;
-            return View(sponService.ApplyEvents(id));
-
+            var @event = await _context.Events.Where(item => item.SponsorId == id).ToListAsync();
+            return View(@event);
         }
 
 

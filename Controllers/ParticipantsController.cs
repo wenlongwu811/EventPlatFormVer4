@@ -14,6 +14,7 @@ namespace EventPlatFormVer4.Controllers
     public class ParticipantsController : Controller
     {
         private ParticipantService participantService;
+        private EventParticipantService eventParticipantService;
 
         private readonly MvcEpfContext _context;
 
@@ -90,7 +91,7 @@ namespace EventPlatFormVer4.Controllers
             {
                 return NotFound();
             }
-
+            ViewData["participantId"] = id;
             var participant = await _context.Participants.FindAsync(id);
             if (participant == null)
             {
@@ -165,15 +166,30 @@ namespace EventPlatFormVer4.Controllers
         {
             return _context.Participants.Any(e => e.ID == id);
         }
+
         //报名
-        public async Task<IActionResult> Apply(string eventId,string id)
+        public async Task<IActionResult> Apply(string EventId,string id)
         {
             ViewData["Pid"] = id;
-            ViewData["EventId"] = eventId;
-            await participantService.Apply(eventId,id);
+            ViewData["EventId"] = EventId;
+            await participantService.Apply(EventId,id);
             _context.EventParticipants.UpdateRange();
-            return View(_context.Events.Where(item => item.Id == eventId).FirstOrDefault());
+            return View(_context.Events.Where(item => item.Id == EventId).FirstOrDefault());
+
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Apply([Bind("ID,RoleID,Name,PassWd,Email,PhoneNum")] EventParticipant eventParticipant)
+        {
+            if (ModelState.IsValid)
+            {
+                await eventParticipantService.AddEP(eventParticipant);
+                return RedirectToAction(nameof(Index));
+            }
+            return View(eventParticipant);
+        }
+
         //退赛
         public async Task<IActionResult> ExitEvent(string id, string EPID)
         {

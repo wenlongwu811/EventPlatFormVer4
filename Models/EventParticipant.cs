@@ -25,16 +25,24 @@ namespace EventPlatFormVer4.Models
         [ForeignKey("EventId")]
         public string EventId { get; set; }
 
+
         public int State { get; set; }
+        public string Details { get; set; }
+
 
         public EventParticipant()
         {
             Id = Guid.NewGuid().ToString();
+            State = 0;
+            this.Grade = "";
         }
         public EventParticipant(Event @event, Participant participant)
         {
+            this.Id = Guid.NewGuid().ToString();
             this.Event = @event;
             this.Participant = participant;
+            this.State = 0;
+            this.Grade = "";
         }
 
         public override string ToString()
