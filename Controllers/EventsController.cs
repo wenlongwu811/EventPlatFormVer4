@@ -14,6 +14,7 @@ namespace EventPlatFormVer4.Controllers
     public class EventsController : Controller
     {
         private EventService eventService;
+        private EventParticipantService eventParticipantService;
         private readonly MvcEpfContext _context;
 
         public EventsController(MvcEpfContext context)
@@ -36,7 +37,7 @@ namespace EventPlatFormVer4.Controllers
                 return NotFound();
             }
             ViewData["Event_Id"] = eventId;
-            return View(await eventService.GetEventParticipantsAsync(eventId));
+            return View(await eventParticipantService.GetEventParticipantsAsync(eventId));
         }
         // GET: Events/GetE-Ps/5 显示Event的所有Participants
         public async Task<IActionResult> GetParticipantEvents(string participantId)
@@ -46,7 +47,7 @@ namespace EventPlatFormVer4.Controllers
                 return NotFound();
             }
             ViewData["Participant_Id"] = participantId;
-            return View(await eventService.GetParticipantEventsAsync(participantId));
+            return View(await eventParticipantService.GetParticipantEventsAsync(participantId));
         }
         // GET: Events/Details/5
         public async Task<IActionResult> Details(string? id)
