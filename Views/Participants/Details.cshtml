@@ -45,5 +45,6 @@
 <div>
     <a asp-action="Edit" asp-route-id="@Model.ID">Edit</a> |
     <a asp-action="Index">Back to List</a> |
-    <a asp-action="HistoryEventsForParticipants" asp-route-id="@Model.ID">History Events</a>
+    <a asp-action="GetParticipantEvents" asp-route-id="@Model.ID">History Events</a> |
+    <a asp-action="ApplyEvents" asp-route-id="@Model.ID">Apply Events</a>
 </div>
