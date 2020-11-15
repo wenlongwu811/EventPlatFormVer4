@@ -68,6 +68,21 @@ namespace EventPlatFormVer4.Controllers
             return View(@event);
         }
 
+        public async Task<IActionResult> DetailsForParticipants(string? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var @event = await _context.Events
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (@event == null)
+            {
+                return NotFound();
+            }
+            return View(@event);
+        }
         // GET: Events/Create: 创建新Event
         public IActionResult Create(string id)
         {
