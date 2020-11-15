@@ -50,6 +50,15 @@ namespace EventPlatFormVer4.Service
             }
         }
 
+        public async Task<List<EventParticipant>> GetParticipantEventsAsync(string participantId) // 返回单个Participant的所有Events
+        {
+            using (var db = _context)
+            {
+                var participantEvents = await db.EventParticipants.Where(ep => ep.ParticipantId == participantId).ToListAsync();
+                return participantEvents;
+            }
+        }
+
         public async Task AddEvent(Event @event) // 添加new Event
         {
             try
