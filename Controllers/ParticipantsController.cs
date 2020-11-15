@@ -91,7 +91,7 @@ namespace EventPlatFormVer4.Controllers
             {
                 return NotFound();
             }
-
+            ViewData["participantId"] = id;
             var participant = await _context.Participants.FindAsync(id);
             if (participant == null)
             {
@@ -168,13 +168,13 @@ namespace EventPlatFormVer4.Controllers
         }
 
         //报名
-        public async Task<IActionResult> Apply(string eventId,string id)
+        public async Task<IActionResult> Apply(string EventId,string id)
         {
             ViewData["Pid"] = id;
-            ViewData["EventId"] = eventId;
-            await participantService.Apply(eventId,id);
+            ViewData["EventId"] = EventId;
+            await participantService.Apply(EventId,id);
             _context.EventParticipants.UpdateRange();
-            return View(_context.Events.Where(item => item.Id == eventId).FirstOrDefault());
+            return View(_context.Events.Where(item => item.Id == EventId).FirstOrDefault());
 
         }
 

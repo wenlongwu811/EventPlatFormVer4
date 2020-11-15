@@ -32,26 +32,24 @@ namespace EventPlatFormVer4.Controllers
 
         // TODO: add a view
         // GET: Events/GetE-Ps/5 显示Event的所有Participants
-        public async Task<IActionResult> GetEventParticipants(string eventId)
+        public async Task<IActionResult> GetEventParticipants(string EventId)
         {
-            if(eventId == null)
+            if(EventId == null)
             {
                 return NotFound();
             }
 
-            ViewData["EventId"] = eventId;
-            return View(await eventService.GetEventParticipantsAsync(eventId));
+            ViewData["EventId"] = EventId;
+            return View(await eventService.GetEventParticipantsAsync(EventId));
 
         }
         // GET: Events/GetE-Ps/5 显示Event的所有Participants
         public async Task<IActionResult> GetParticipantEvents(string participantId)
         {
-            if (participantId == null)
-            {
-                return NotFound();
-            }
             ViewData["Participant_Id"] = participantId;
-            return View(await eventParticipantService.GetParticipantEventsAsync(participantId));
+            //   return View(await eventParticipantService.GetParticipantEventsAsync(participantId));
+            var ep = await _context.EventParticipants.Where(item => item.ParticipantId == participantId).ToListAsync();
+            return View(ep);
         }
         // GET: Events/Details/5
         public async Task<IActionResult> Details(string? id)
@@ -183,15 +181,15 @@ namespace EventPlatFormVer4.Controllers
         // POST: Events/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(string eventId)
+        public async Task<IActionResult> DeleteConfirmed(string EventId)
         {
             /*
             var @event = await _context.Events.FindAsync(id);
             _context.Events.Remove(@event);
             await _context.SaveChangesAsync();
             */
-            await eventService.RemoveEventParticipants(eventId);
-            await eventService.RemoveEvent(eventId);
+            await eventService.RemoveEventParticipants(EventId);
+            await eventService.RemoveEvent(EventId);
             return RedirectToAction(nameof(Index));
         }
 
