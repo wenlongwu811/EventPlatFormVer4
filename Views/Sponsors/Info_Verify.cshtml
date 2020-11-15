@@ -1,10 +1,11 @@
 ﻿@model IEnumerable<EventPlatFormVer4.Models.Event>
 
 @{
-    ViewData["Title"] = "Info";
+    ViewData["Title"] = "Info_Verify";
 }
 
-<h1>赞助活动</h1>
+<h2>审核报名</h2>
+<button><a asp-action="Apply" asp-route-id="@ViewData["admid"]">注册活动</a></button>
 <button><a asp-action="Details" asp-route-id="@ViewData["admid"]">返回</a></button>
 <table class="table">
     <thead>
@@ -39,7 +40,7 @@
                         @Html.DisplayFor(modelItem => item.Rank)
                     </td>
                     <td>
-                        <button> <a asp-action="Verify" asp-route-eventid="@item.Id" asp-route-admid="@ViewData["admid"]">审核</a></button>
+                        <button> <a asp-action="Show" asp-route-eventid="@item.Id" asp-route-sid="@ViewData["admid"]">详细信息</a></button>
                     </td>
                 </tr>
             }
@@ -78,7 +79,7 @@
                         @Html.DisplayFor(modelItem => item.Rank)
                     </td>
                     <td>
-                        <button> <a asp-action="Verify" asp-route-eventid="@item.Id" asp-route-admid="@ViewData["admid"]">审核</a></button>
+                        <button> <a asp-action="Show" asp-route-eventid="@item.Id" asp-route-sid="@ViewData["admid"]">详细信息</a></button>
                     </td>
 
                 </tr>
@@ -117,7 +118,7 @@
                         @Html.DisplayFor(modelItem => item.Rank)
                     </td>
                     <td>
-                        <button> <a asp-action="Verify" asp-route-eventid="@item.Id" asp-route-admid="@ViewData["admid"]">审核</a></button>
+                        <button> <a asp-action="Show" asp-route-eventid="@item.Id" asp-route-sid="@ViewData["admid"]">详细信息</a></button>
                     </td>
 
                 </tr>
@@ -156,7 +157,7 @@
                         @Html.DisplayFor(modelItem => item.Rank)
                     </td>
                     <td>
-                        <button>  <a asp-action="Verify" asp-route-eventid="@item.Id" asp-route-admid="@ViewData["admid"]">审核</a></button>
+                        <button>  <a asp-action="Show" asp-route-eventid="@item.Id" asp-route-sid="@ViewData["admid"]">详细信息</a></button>
                     </td>
                 </tr>
             }

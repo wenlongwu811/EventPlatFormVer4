@@ -28,14 +28,29 @@ namespace EventPlatFormVer4.Controllers
         {
             return View(await _context.Sponsors.ToListAsync());
         }
-        
-        public async Task<IActionResult> Info(string id)
+
+        //GET:Administrators/Show:详细信息
+        [HttpGet]
+        public async Task<IActionResult> Show(string eventid, string sid)
+        {
+            ViewData["sid"] = sid;
+            return View(await sponService.EventInformation(eventid));
+        }
+
+        public async Task<IActionResult> Info_Apply(string id)//申报活动
+        {
+            ViewData["admid"] = id;
+            var @event = await _context.Events.Where(item => item.SponsorId == id).ToListAsync();
+            return View(@event);
+
+        }
+        public async Task<IActionResult> Info_Verify(string id)//审核参加
         {
             ViewData["admid"] = id;
             return View(sponService.ApplyEvents(id));
 
         }
-        
+
 
         // GET: Sponsors/Details/5
         public async Task<IActionResult> Details(string? id)
@@ -167,17 +182,18 @@ namespace EventPlatFormVer4.Controllers
         }
 
         //申报
-        public async Task<IActionResult> Apply(Event _event, string id)//前端是如何让传入这个EP的呢
+        public async Task<IActionResult> Apply(string id)
         {
-            await sponService.Apply(_event, id);
-            return View(_context.Events.Where(item => !item.Equals(_event) && item.State == 1));
+            return RedirectToAction("Create", "Events",new {id=id });
         }
 
         //申请取消
-        public async Task<IActionResult> Cancel(string? id, [Bind("State")] Event _event)//前端是如何让传入这个EP的呢
+        public async Task<IActionResult> Cancel(string id,string sid)
         {
-            await sponService.Cancel(_event, id);
-            return View(sponService.ApplyEvents(id));
+            var _event = await _context.Events.Where(item => (item.Id == id)).FirstAsync();
+            _event.State = 3;
+            _context.SaveChanges();
+            return RedirectToAction("Info_Apply", new { id = sid });
         }
     }
 }
