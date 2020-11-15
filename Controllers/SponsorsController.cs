@@ -43,6 +43,7 @@ namespace EventPlatFormVer4.Controllers
         {
             ViewData["sid"] = sid;
             ViewData["eveid"] = eventid;
+            
             var @event = await _context.EventParticipants.Where(item => item.Event_Id == eventid).ToListAsync();
             return View(@event);
         }
