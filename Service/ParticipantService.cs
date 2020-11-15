@@ -80,21 +80,21 @@ namespace EventPlatFormVer4.Service
         }
 
         //报名，将对应的event添加到自己的List里面，并将EP的State改为0
-        public async Task Apply(Event @event,string id)
+        public async Task Apply(string eventId,string id)
         {
 
             using (var db = _context)
             {
-                var _event = (Event)db.Events.Where(item => item.Id == @event.Id);
-                var _participant = (Participant)db.Participants.Where(item => item.ID == id);
-                EventParticipant eventParticipant=new EventParticipant();
-                eventParticipant.Participant = _participant;
-                eventParticipant.Event = _event;
-                List<EventParticipant> @eventParticipants = ToListEP();
-                foreach(EventParticipant ep in @eventParticipants)
-                {
-                    if (ep.Equals(eventParticipant)) return;
-                }
+                var _event = db.Events.Where(item => item.Id == eventId).FirstOrDefault();
+                var _participant = db.Participants.Where(item => item.ID == id).FirstOrDefault();
+                EventParticipant eventParticipant=new EventParticipant(_event, _participant);
+                eventParticipant.Id= Guid.NewGuid().ToString();
+                eventParticipant.Grade = "";
+                //List<EventParticipant> @eventParticipants = ToListEP();
+                //foreach (EventParticipant ep in @eventParticipants)
+                //{
+                //    if (ep.Equals(eventParticipant)) return;
+                //}
                 eventParticipant.State = 0;
                 db.EventParticipants.Add(eventParticipant);
                 await db.SaveChangesAsync();
@@ -113,7 +113,7 @@ namespace EventPlatFormVer4.Service
         {
             using (var db=_context)
             {
-                var eventParticipant = (EventParticipant)db.EventParticipants.Where(item => (item.Event_Id == EP.Event_Id)&&(item.ParticipantId==id)&&(item.State==1));
+                var eventParticipant = (EventParticipant)db.EventParticipants.Where(item => (item.EventId == EP.EventId)&&(item.ParticipantId==id)&&(item.State==1));
                 eventParticipant.State = 3;
                 await db.SaveChangesAsync();
             }

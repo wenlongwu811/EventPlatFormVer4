@@ -1,14 +1,20 @@
-﻿@model IEnumerable<EventPlatFormVer4.Models.EventParticipant>
+﻿@model IEnumerable<EventPlatFormVer4.Models.Event>
 
 @{
     ViewData["Title"] = "Info";
 }
 
-<h1>已参加活动</h1>
+<h1>可报名活动</h1>
 
 <table class="table">
     <thead>
         <tr>
+            <th>
+                @Html.DisplayName("活动名称")
+            </th>
+            <th>
+                @Html.DisplayName("活动等级")
+            </th>
 
             <th>
                 @Html.DisplayName("开始时间")
@@ -17,13 +23,16 @@
                 @Html.DisplayName("结束时间")
             </th>
             <th>
+                @Html.DisplayName("报名开始时间")
+            </th>
+            <th>
+                @Html.DisplayName("报名结束时间")
+            </th>
+            <th>
                 @Html.DisplayName("活动地址")
             </th>
             <th>
-                @Html.DisplayName("报名状态")
-            </th>
-            <th>
-                @Html.DisplayName("退赛")
+                @Html.DisplayName("报名")
             </th>
             <th></th>
         </tr>
@@ -32,42 +41,35 @@
         @foreach (var item in Model)
         {
             <tr>
-
-
                 <td>
-                    @Html.DisplayFor(modelItem => item.Event.EventStartTime)
+                    @Html.DisplayFor(modelItem => item.Name)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Event.EventEndTime)
+                    @Html.DisplayFor(modelItem => item.Rank)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Event.Address)
+                    @Html.DisplayFor(modelItem => item.EventStartTime)
                 </td>
                 <td>
-                    @if (item.State == 0)
-                    {
-                        @Html.Display("待审核")
-                    }
-                    @if (item.State == 1)
-                    {
-                        @Html.Display("报名成功")
-                    }
-                    @if (item.State == 2)
-                    {
-                        @Html.Display("被拒绝")
-                    }
-                    @if (item.State == 3)
-                    {
-                        @Html.Display("已退赛")
-                    }
+                    @Html.DisplayFor(modelItem => item.EventEndTime)
                 </td>
                 <td>
-                    <a asp-action="ExitEvent" asp-route-id="@item.Id">ExitEvent</a> |
+                    @Html.DisplayFor(modelItem => item.SignUpStartTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SignUpEndTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Address)
+                </td>
+                <td>
+                    <a asp-action="Apply" asp-route-id="@ViewData["Pid"]" asp-route-eventId="@item.Id">进入报名</a> 
                 </td>
             </tr>
         }
     </tbody>
 </table>
 <div>
-    <a asp-action="GotoApply" asp-route-id="@ViewData["Pid"]">去报名</a>
+    <a asp-action="HaveApplied" asp-route-id="@ViewData["Pid"]">已参加活动</a>
 </div>
+

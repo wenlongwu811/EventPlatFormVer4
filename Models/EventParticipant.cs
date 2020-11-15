@@ -22,15 +22,15 @@ namespace EventPlatFormVer4.Models
 
         public Event Event { get; set; }
 
-        [ForeignKey("Event_Id")]
-        public string Event_Id { get; set; }
+        [ForeignKey("EventId")]
+        public string EventId { get; set; }
 
         public int State { get; set; }
 
-        public EventParticipant() {
+        public EventParticipant()
+        {
             Id = Guid.NewGuid().ToString();
         }
-
         public EventParticipant(Event @event, Participant participant)
         {
             this.Event = @event;

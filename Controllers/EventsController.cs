@@ -37,7 +37,7 @@ namespace EventPlatFormVer4.Controllers
             {
                 return NotFound();
             }
-            ViewData["Event_Id"] = eventId;
+            ViewData["EventId"] = eventId;
             return View(await eventService.GetEventParticipantsAsync(eventId));
         }
         // GET: Events/GetE-Ps/5 显示Event的所有Participants

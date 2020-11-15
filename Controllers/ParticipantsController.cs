@@ -35,9 +35,7 @@ namespace EventPlatFormVer4.Controllers
         public async Task<IActionResult> Info(string id)
         {
             ViewData["Pid"] = id;
-            var _findEvent= participantService.FindEvent(id).Result;
-            var findEvent = _findEvent.AsEnumerable();
-            return View(findEvent);
+            return View(_context.Events.Where(item=>item.State==1));
 
         }
 
@@ -57,6 +55,13 @@ namespace EventPlatFormVer4.Controllers
 
             return View(participant);
         }
+        //已报名的比赛
+        public async Task<IActionResult> HaveApplied(string id)
+        {
+            ViewData["Pid"] = id;
+            return View(_context.EventParticipants.Where(item => item.ParticipantId == id));
+        }
+
 
         // GET: participants/Create
         public IActionResult Create()
@@ -160,18 +165,14 @@ namespace EventPlatFormVer4.Controllers
         {
             return _context.Participants.Any(e => e.ID == id);
         }
-        //转到报名界面
-        public async Task<IActionResult> GotoApply(string id)
-        {
-            ViewData["Pid"] = id;
-            return View(_context.Events.Where(item=>item.State == 1));
-        }
         //报名
-        public async Task<IActionResult> Apply(Event @event,string id)
+        public async Task<IActionResult> Apply(string eventId,string id)
         {
             ViewData["Pid"] = id;
-            participantService.Apply(@event,id);
-            return RedirectToAction(nameof(Info));
+            ViewData["EventId"] = eventId;
+            await participantService.Apply(eventId,id);
+            _context.EventParticipants.UpdateRange();
+            return View(_context.Events.Where(item => item.Id == eventId).FirstOrDefault());
         }
         //退赛
         public async Task<IActionResult> ExitEvent(string id, [Bind("State")] EventParticipant EP)

@@ -48,7 +48,7 @@ namespace EventPlatFormVer4.Models
         public override bool Equals(object obj)
         {
             var participant = obj as Participant;
-            return participant != null && Name == participant.Name && Email == participant.Email && PhoneNum == participant.PhoneNum;
+            return participant != null && ID==participant.ID;
         }
         public override int GetHashCode()
         {
