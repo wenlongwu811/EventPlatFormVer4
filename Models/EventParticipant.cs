@@ -30,12 +30,12 @@ namespace EventPlatFormVer4.Models
         public string Details { get; set; }
 
 
-        public EventParticipant() {
+        public EventParticipant()
+        {
             Id = Guid.NewGuid().ToString();
             State = 0;
             this.Grade = "";
         }
-
         public EventParticipant(Event @event, Participant participant)
         {
             this.Id = Guid.NewGuid().ToString();
