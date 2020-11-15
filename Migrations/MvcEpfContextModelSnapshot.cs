@@ -35,8 +35,8 @@ namespace EventPlatFormVer4.Migrations
                     b.Property<string>("Pwd")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                    b.Property<uint>("RoleID")
-                        .HasColumnType("int unsigned");
+                    b.Property<string>("RoleID")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.HasKey("Id");
 
@@ -47,7 +47,7 @@ namespace EventPlatFormVer4.Migrations
                 {
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int unsigned");
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<string>("Address")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
@@ -82,7 +82,7 @@ namespace EventPlatFormVer4.Migrations
                 {
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int unsigned");
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<string>("Email")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
@@ -96,8 +96,8 @@ namespace EventPlatFormVer4.Migrations
                     b.Property<string>("Pwd")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                    b.Property<uint>("RoleID")
-                        .HasColumnType("int unsigned");
+                    b.Property<string>("RoleID")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.HasKey("Id");
 
@@ -108,7 +108,7 @@ namespace EventPlatFormVer4.Migrations
                 {
                     b.Property<string>("ID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int unsigned");
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<string>("Email")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
@@ -122,8 +122,8 @@ namespace EventPlatFormVer4.Migrations
                     b.Property<string>("Pwd")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                    b.Property<uint>("RoleID")
-                        .HasColumnType("int unsigned");
+                    b.Property<string>("RoleID")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.HasKey("ID");
 
@@ -134,7 +134,7 @@ namespace EventPlatFormVer4.Migrations
                 {
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int unsigned");
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<string>("Certificate")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
@@ -151,8 +151,8 @@ namespace EventPlatFormVer4.Migrations
                     b.Property<string>("Pwd")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                    b.Property<uint>("RoleID")
-                        .HasColumnType("int unsigned");
+                    b.Property<string>("RoleID")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.HasKey("Id");
 
