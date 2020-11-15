@@ -15,7 +15,6 @@
             <th>
                 @Html.DisplayName("活动等级")
             </th>
-
             <th>
                 @Html.DisplayName("开始时间")
             </th>
@@ -61,6 +60,6 @@
     </tbody>
 </table>
 <div>
-    <a asp-action="Info" asp-route-id="@ViewData["Pid"]">继续报名</a>
+    <a asp-action="Back" asp-route-participantId="@ViewData["Participant_Id"]">继续报名</a>
 </div>
 
