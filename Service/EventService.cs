@@ -47,7 +47,7 @@ namespace EventPlatFormVer4.Service
             {
                 if (eventId == null)
                     return null;
-                var eventParticipants = await db.EventParticipants.Where(ep => ep.Event_Id == eventId).ToListAsync();
+                var eventParticipants = await db.EventParticipants.Where(ep => ep.EventId == eventId).ToListAsync();
                 return eventParticipants;
             }
         }
@@ -128,7 +128,7 @@ namespace EventPlatFormVer4.Service
             try {
                 using (var db = _context)
                 {
-                    var oldParticipants = await db.EventParticipants.Where(p => p.Event_Id == eventId).ToListAsync(); // 对E-P表查询，EventID相等的oldParticipants
+                    var oldParticipants = await db.EventParticipants.Where(p => p.EventId == eventId).ToListAsync(); // 对E-P表查询，EventID相等的oldParticipants
                     // TODO: how to apply async method in ?
                     db.EventParticipants.RemoveRange(oldParticipants); 
                     await db.SaveChangesAsync();

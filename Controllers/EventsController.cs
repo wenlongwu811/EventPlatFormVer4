@@ -38,8 +38,10 @@ namespace EventPlatFormVer4.Controllers
             {
                 return NotFound();
             }
-            ViewData["Event_Id"] = eventId;
-            return View(await eventParticipantService.GetEventParticipantsAsync(eventId));
+
+            ViewData["EventId"] = eventId;
+            return View(await eventService.GetEventParticipantsAsync(eventId));
+
         }
         // GET: Events/GetE-Ps/5 显示Event的所有Participants
         public async Task<IActionResult> GetParticipantEvents(string participantId)
