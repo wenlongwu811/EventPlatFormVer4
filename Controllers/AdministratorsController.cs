@@ -29,13 +29,10 @@ namespace EventPlatFormVer4.Controllers
         {
             return View(await _context.Administrators.ToListAsync());
         }
-
-
         public async Task<IActionResult> Info(string id)
         {
             ViewData["admid"] = id;
             return View(await _context.Events.ToListAsync());
-
         }
 
         public async Task<IActionResult> Loading(string name ,string pwd,string role)

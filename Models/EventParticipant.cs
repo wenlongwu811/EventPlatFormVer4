@@ -25,8 +25,10 @@ namespace EventPlatFormVer4.Models
         [ForeignKey("Event_Id")]
         public string Event_Id { get; set; }
 
+
         public int State { get; set; }
         public string Details { get; set; }
+
 
         public EventParticipant() {
             Id = Guid.NewGuid().ToString();

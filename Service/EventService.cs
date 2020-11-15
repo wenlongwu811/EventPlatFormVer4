@@ -45,6 +45,8 @@ namespace EventPlatFormVer4.Service
         {
             using (var db = _context)
             {
+                if (eventId == null)
+                    return null;
                 var eventParticipants = await db.EventParticipants.Where(ep => ep.Event_Id == eventId).ToListAsync();
                 return eventParticipants;
             }
@@ -54,6 +56,10 @@ namespace EventPlatFormVer4.Service
         {
             using (var db = _context)
             {
+                if (participantId == null)
+                {
+                    return null;
+                }
                 var participantEvents = await db.EventParticipants.Where(ep => ep.ParticipantId == participantId).ToListAsync();
                 return participantEvents;
             }
