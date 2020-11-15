@@ -72,7 +72,7 @@ namespace EventPlatFormVer4.Service
                await db.SaveChangesAsync();
             }
         }
-        public async Task<Sponsor> Find(string id)//查找赞助者
+        public async Task<Sponsor> FindAsync(string id)//查找赞助者
         {
             using (var db = _context)
             {
@@ -111,20 +111,28 @@ namespace EventPlatFormVer4.Service
         {
             using (var db = _context)
             {
-                var sponsor = await db.Sponsors.Where(item => item.Id == id).FirstOrDefaultAsync();
-                var events = sponsor.SponEvents;
+                var events = await db.Events.Where(item => item.Id == id).ToListAsync();
+                //var events = sponsor.SponEvents;
                 return events;
             }
         }
+        // -----------这里我应该调用Event里面的Get方法，自己临时写了一个；
+        public async Task<Event> EventInformation(string id)
+        {
+            using (var db = _context)
+            {
+                var @event = await db.Events.Where(item => item.Id == id).FirstOrDefaultAsync();
+                return @event;
+            }
+        }
 
-        // -----------向Administor申请取消event,将event的State修改为4
+        // -----------向Administor申请取消event,将event的State修改为3
         public async Task Cancel(Event @event,string id)
         {
             using (var db = _context)
             { 
-                //var sponsor = await db.Sponsors.Where(item => item.Id == id).FirstOrDefaultAsync();
                 var _event = await db.Events.Where(item => (item.Id == @event.Id) && (item.State == 1)).FirstOrDefaultAsync();
-                _event.State = 4; //将报名成功的event的PartiState改为4，等待管理员审核
+                _event.State = 3; //将报名成功的event的PartiState改为3，等待管理员审核
                 db.Events.Update(@event);
                 db.SaveChanges();
                 
@@ -136,7 +144,6 @@ namespace EventPlatFormVer4.Service
         {
             using (var db = _context)
             {
-                //Event @event = (Event)db.Events.Where(item => item.Id == id);
                 EventParticipant eventParticipant = await db.EventParticipants.Where(item => item.Id == EP.Id).FirstOrDefaultAsync();
                 eventParticipant.State = 1;
                 db.EventParticipants.Update(eventParticipant);
@@ -147,7 +154,6 @@ namespace EventPlatFormVer4.Service
         {
             using (var db = _context)
             {
-                //Event @event = (Event)db.Events.Where(item => item.Id == id);
                 EventParticipant eventParticipant = await db.EventParticipants.Where(item => item.Id == EP.Id).FirstOrDefaultAsync();
                 eventParticipant.State = 2;
                 db.EventParticipants.Update(eventParticipant);
