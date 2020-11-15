@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace EventPlatFormVer4.Models
 {
-    public class Event : IComparable<Event>
+    public class Event
     {
         [Key]
         public string Id { get; set; }
@@ -39,15 +39,15 @@ namespace EventPlatFormVer4.Models
         [Required(ErrorMessage = "此项必填")]
         public DateTime EventEndTime { get; set; } // 活动结束时间
 
-        [Display(Name = "报名开始名称")]
+        [Display(Name = "报名开始时间")]
         [DataType(DataType.Date)]
         [Required(ErrorMessage = "此项必填")]
         public DateTime SignUpStartTime { get; set; } // 报名开始时间
 
-        [Display(Name = "报名截止名称")]
+        [Display(Name = "报名截止时间")]
         [DataType(DataType.Date)]
         [Required(ErrorMessage = "此项必填")]
-        public DateTime SignUpEndTime { get; set; } // 报名结束时间
+        public DateTime SignUpEndTime { get; set; } // 报名截至时间
 
         [Display(Name = "活动地点")]
         [Required(ErrorMessage = "此项必填")]
@@ -110,10 +110,6 @@ namespace EventPlatFormVer4.Models
             hashCode = hashCode * -1561131293 + CreateTime.GetHashCode();
             return hashCode;
         }
-        int IComparable<Event>.CompareTo(Event other)
-        {
-            if (other == null) return 1;
-            return this.Id.CompareTo(other.Id);
-        }
+        
     }
 }

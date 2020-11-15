@@ -1,10 +1,10 @@
 ﻿@model EventPlatFormVer4.Models.Event
 
 @{
-    ViewData["Title"] = "Verify";
+    ViewData["Title"] = "Show_Apply";
 }
 
-<h1>活动信息</h1> 
+<h2>活动详细信息</h2>
 <table class="table">
     <thead>
         <tr>
@@ -26,9 +26,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.SignUpEndTime)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Address)
-            </th>
+            
         </tr>
     </thead>
     <tbody>
@@ -51,11 +49,25 @@
             <td>
                 @Html.DisplayFor(modelItem => modelItem.SignUpEndTime)
             </td>
+            
+        </tr>
+    </tbody>
+
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Address)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
             <td>
                 @Html.DisplayFor(modelItem => modelItem.Address)
             </td>
         </tr>
     </tbody>
+
 
     <thead>
         <tr>
@@ -76,7 +88,7 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayName("审核")
+                @Html.DisplayName("操作")
             </th>
         </tr>
     </thead>
@@ -85,32 +97,25 @@
             <td>
                 @switch (Model.State)
                 {
-                    case 0:
+                case 0:
                     <td>
-                        <button> <a asp-action="Accept" asp-route-id="@Model.Id">Accept</a> </button>
-                        <button> <a asp-action="Ban" asp-route-id="@Model.Id">Ban</a></button>
+                        <button><a asp-action="Info_Apply" asp-route-id="@ViewData["sid"]">Back</a></button>
                     </td>
-                    <td><button><a asp-action="Info" asp-route-id="@ViewData["aid"]">Back</a></button></td>
                     break;
                 case 1:
                     <td>
-                        <button type="button" disabled="disabled"> Accept</button>
-                        <button><a asp-action="Ban" asp-route-id="@Model.Id">Ban</a></button>
-                        <button><a asp-action="Info" asp-route-id="@ViewData["aid"]">Back</a></button>
+                        <button> <a asp-action="Cancel" asp-route-id="@Model.Id" asp-route-sid="@ViewData["sid"]">申请取消</a> </button>
                     </td>
+                    <td><button><a asp-action="Info_Apply" asp-route-id="@ViewData["sid"]">Back</a></button></td>
                     break;
                 case 2:
                     <td>
-                        <button><a asp-action="Accept" asp-route-id="@Model.Id">Accept</a></button>
-                        <button disabled="disabled">Ban</button>
-                        <button><a asp-action="Info" asp-route-id="@ViewData["aid"]">Back</a></button>
+                        <button><a asp-action="Info_Apply" asp-route-id="@ViewData["sid"]">Back</a></button>
                     </td>
                     break;
                 case 3:
                     <td>
-                        <button type="button" disabled="disabled"> Accept</button>
-                        <button><a asp-action="Ban" asp-route-id="@Model.Id">Ban</a></button>
-                        <button><a asp-action="Info" asp-route-id="@ViewData["aid"]">Back</a></button>
+                        <button><a asp-action="Info_Apply" asp-route-id="@ViewData["sid"]">Back</a></button>
                     </td>
                     break;
                 default:
@@ -118,4 +123,4 @@
             }
             </tr>
         </tbody>
-</table>
+    </table>

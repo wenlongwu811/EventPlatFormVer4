@@ -1,0 +1,42 @@
+﻿@model IEnumerable<EventPlatFormVer4.Models.Event>
+
+@{
+    ViewData["Title"] = "Info_Verify";
+}
+
+<h2>审核报名</h2>
+<button><a asp-action="Details" asp-route-id="@ViewData["admid"]">返回</a></button>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayName("已批准活动")
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Rank)
+            </th>
+            <th>
+                @Html.DisplayName("审核")
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            @if (item.State == 1)//申报成功的活动
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Rank)
+                    </td>
+                    <td>
+                        <button> <a asp-action="Show_Verify" asp-route-eventid="@item.Id" asp-route-sid="@ViewData["admid"]">审核报名</a></button>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>

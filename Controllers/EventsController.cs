@@ -20,8 +20,10 @@ namespace EventPlatFormVer4.Controllers
         public EventsController(MvcEpfContext context)
         {
             _context = context;
+            eventService = new EventService(context);
         }
 
+       
         // GET: Events
         public async Task<IActionResult> Index()
         {
@@ -36,8 +38,10 @@ namespace EventPlatFormVer4.Controllers
             {
                 return NotFound();
             }
-            ViewData["Event_Id"] = eventId;
-            return View(await eventParticipantService.GetEventParticipantsAsync(eventId));
+
+            ViewData["EventId"] = eventId;
+            return View(await eventService.GetEventParticipantsAsync(eventId));
+
         }
         // GET: Events/GetE-Ps/5 显示Event的所有Participants
         public async Task<IActionResult> GetParticipantEvents(string participantId)
@@ -83,8 +87,9 @@ namespace EventPlatFormVer4.Controllers
             return View(@event);
         }
         // GET: Events/Create: 创建新Event
-        public IActionResult Create()
+        public IActionResult Create(string id)
         {
+            ViewData["sid"] = id;
             return View();
         }
 
@@ -93,17 +98,12 @@ namespace EventPlatFormVer4.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Rank,EventStartTime,EventEndTime,SignUpStartTime,SignUpEndTime,Address,Detail")] Event @event)
+        public async Task<IActionResult> Create(string id,[Bind("Name,SponsorId,Rank,EventStartTime,EventEndTime,SignUpStartTime,SignUpEndTime,Address,Detail")] Event @event)
         {
             if (ModelState.IsValid)
             {
-                /*
-                _context.Add(@event);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-                */
                 await eventService.AddEvent(@event);
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Info_Apply","Sponsors",new { id=id});
             }
             return View(@event);
         }

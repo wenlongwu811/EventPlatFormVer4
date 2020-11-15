@@ -4,7 +4,7 @@
     ViewData["Title"] = "Verify";
 }
 
-<h1>活动信息</h1> 
+<h1>待审核活动列表</h1>
 <table class="table">
     <thead>
         <tr>
@@ -86,36 +86,36 @@
                 @switch (Model.State)
                 {
                     case 0:
-                    <td>
-                        <button> <a asp-action="Accept" asp-route-id="@Model.Id">Accept</a> </button>
-                        <button> <a asp-action="Ban" asp-route-id="@Model.Id">Ban</a></button>
-                    </td>
-                    <td><button><a asp-action="Info" asp-route-id="@ViewData["aid"]">Back</a></button></td>
+            <td>
+                <button> <a asp-action="Accept" asp-route-id="@Model.Id">Accept</a> </button>
+                <button> <a asp-action="Ban" asp-route-id="@Model.Id">Ban</a></button>
+            </td>
+            <td><button><a asp-action="Info" asp-route-id="@ViewData["aid"]">Back</a></button></td>
                     break;
                 case 1:
-                    <td>
-                        <button type="button" disabled="disabled"> Accept</button>
-                        <button><a asp-action="Ban" asp-route-id="@Model.Id">Ban</a></button>
-                        <button><a asp-action="Info" asp-route-id="@ViewData["aid"]">Back</a></button>
-                    </td>
+            <td>
+                <button type="button" disabled="disabled"> Accept</button>
+                <button><a asp-action="Ban" asp-route-id="@Model.Id">Ban</a></button>
+                <button><a asp-action="Info" asp-route-id="@ViewData["aid"]">Back</a></button>
+            </td>
                     break;
                 case 2:
-                    <td>
-                        <button><a asp-action="Accept" asp-route-id="@Model.Id">Accept</a></button>
-                        <button disabled="disabled">Ban</button>
-                        <button><a asp-action="Info" asp-route-id="@ViewData["aid"]">Back</a></button>
-                    </td>
+            <td>
+                <button><a asp-action="Accept" asp-route-id="@Model.Id">Accept</a></button>
+                <button disabled="disabled">Ban</button>
+                <button><a asp-action="Info" asp-route-id="@ViewData["aid"]">Back</a></button>
+            </td>
                     break;
                 case 3:
-                    <td>
-                        <button type="button" disabled="disabled"> Accept</button>
-                        <button><a asp-action="Ban" asp-route-id="@Model.Id">Ban</a></button>
-                        <button><a asp-action="Info" asp-route-id="@ViewData["aid"]">Back</a></button>
-                    </td>
+            <td>
+                <button type="button" disabled="disabled"> Accept</button>
+                <button><a asp-action="Ban" asp-route-id="@Model.Id">Ban</a></button>
+                <button><a asp-action="Info" asp-route-id="@ViewData["aid"]">Back</a></button>
+            </td>
                     break;
                 default:
                     break;
             }
             </tr>
         </tbody>
-</table>
+    </table>

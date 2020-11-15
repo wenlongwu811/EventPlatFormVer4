@@ -27,13 +27,13 @@ namespace EventPlatFormVer4.Models
 
         public string PhoneNum { get; set; }//电话号码
 
+
         public List<EventParticipant> PartiEvent { get;set; }//参加的活动
 
 
 
         public Participant()
         {
-            ID = Guid.NewGuid().ToString();//ID唯一性
             RoleID = "2";
             PartiEvent = new List<EventParticipant>();
         }
@@ -41,11 +41,15 @@ namespace EventPlatFormVer4.Models
         {
             if (eventParticipant != null) PartiEvent = eventParticipant;
         }
+        public Participant(string id)
+        {
+            ID = id;
+        }
 
         public override bool Equals(object obj)
         {
             var participant = obj as Participant;
-            return participant != null && Name == participant.Name && Email == participant.Email && PhoneNum == participant.PhoneNum;
+            return participant != null && ID==participant.ID;
         }
         public override int GetHashCode()
         {

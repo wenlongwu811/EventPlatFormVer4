@@ -35,7 +35,9 @@ namespace EventPlatFormVer4.Controllers
         //参赛者主界面
         public async Task<IActionResult> Info(string id)
         {
-            return View(participantService.FindEvent(id));
+            ViewData["Pid"] = id;
+            return View(_context.Events.Where(item=>item.State==1));
+
         }
 
         //参赛者个人信息
@@ -54,6 +56,13 @@ namespace EventPlatFormVer4.Controllers
 
             return View(participant);
         }
+        //已报名的比赛
+        public async Task<IActionResult> HaveApplied(string id)
+        {
+            ViewData["Pid"] = id;
+            return View(_context.EventParticipants.Where(item => item.ParticipantId == id));
+        }
+
 
         // GET: participants/Create
         public IActionResult Create()
@@ -66,7 +75,7 @@ namespace EventPlatFormVer4.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,RoleID,Name,PassWd,Email,PhoneNum")] Participant participant)
+        public async Task<IActionResult> Create([Bind("ID,Name,PassWd,Email,PhoneNum")] Participant participant)
         {
             if (ModelState.IsValid)
             {
@@ -113,7 +122,7 @@ namespace EventPlatFormVer4.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!participantExists(participant.ID))
+                    if (!ParticipantExists(participant.ID))
                     {
                         return NotFound();
                     }
@@ -152,16 +161,21 @@ namespace EventPlatFormVer4.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool participantExists(string id)
+        private bool ParticipantExists(string id)
 
         {
             return _context.Participants.Any(e => e.ID == id);
         }
 
-        //申请报名
-        public IActionResult Apply()
+        //报名
+        public async Task<IActionResult> Apply(string eventId,string id)
         {
-            return View();
+            ViewData["Pid"] = id;
+            ViewData["EventId"] = eventId;
+            await participantService.Apply(eventId,id);
+            _context.EventParticipants.UpdateRange();
+            return View(_context.Events.Where(item => item.Id == eventId).FirstOrDefault());
+
         }
 
         [HttpPost]
@@ -177,10 +191,11 @@ namespace EventPlatFormVer4.Controllers
         }
 
         //退赛
-        public async Task<IActionResult> ExitEvent(string id, [Bind("State")] EventParticipant EP)//前端是如何让传入这个EP的呢
+        public async Task<IActionResult> ExitEvent(string id, [Bind("State")] EventParticipant EP)
         {
-            await participantService.ExistEvent(EP, id);
-            return View(participantService.FindEvent(id));
+            ViewData["Pid"] = id;
+            await participantService.ExitEvent(EP, id);
+            return RedirectToAction(nameof(Info));
         }
 
     }
