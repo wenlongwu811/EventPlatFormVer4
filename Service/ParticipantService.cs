@@ -101,11 +101,11 @@ namespace EventPlatFormVer4.Service
             }
         }
         //查找已参加的比赛
-        public async Task<EventParticipant> FindEvent(string id)
+        public async Task<List<EventParticipant>> FindEvent(string id)
         {
             using (var db=_context)
             {
-                return await (Task<EventParticipant>)db.EventParticipants.Where(item => item.ParticipantId == id);
+                return await db.EventParticipants.Where(item => item.ParticipantId == id).ToListAsync();
             }
         }
         //退赛，将List中已经报名成功的event的PartiState改为3

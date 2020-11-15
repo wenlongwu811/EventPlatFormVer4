@@ -35,7 +35,9 @@ namespace EventPlatFormVer4.Controllers
         public async Task<IActionResult> Info(string id)
         {
             ViewData["Pid"] = id;
-            return View(participantService.FindEvent(id));
+            var _findEvent= participantService.FindEvent(id).Result;
+            var findEvent = _findEvent.AsEnumerable();
+            return View(findEvent);
 
         }
 
