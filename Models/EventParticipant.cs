@@ -25,7 +25,8 @@ namespace EventPlatFormVer4.Models
         [ForeignKey("Event_Id")]
         public string Event_Id { get; set; }
 
-        public int State { get; set; }
+        public int State { get; set; } // 0待审核  1通过 2拒绝 3退赛
+        public int Detail { get; set; }
 
         public EventParticipant() {
             Id = Guid.NewGuid().ToString();
