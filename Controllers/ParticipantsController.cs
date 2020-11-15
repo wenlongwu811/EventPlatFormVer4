@@ -116,7 +116,7 @@ namespace EventPlatFormVer4.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!participantExists(participant.ID))
+                    if (!ParticipantExists(participant.ID))
                     {
                         return NotFound();
                     }
@@ -155,7 +155,7 @@ namespace EventPlatFormVer4.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool participantExists(string id)
+        private bool ParticipantExists(string id)
 
         {
             return _context.Participants.Any(e => e.ID == id);
@@ -170,7 +170,7 @@ namespace EventPlatFormVer4.Controllers
         public async Task<IActionResult> Apply(Event @event,string id)
         {
             ViewData["Pid"] = id;
-            await participantService.Apply(@event,id);
+            participantService.Apply(@event,id);
             return RedirectToAction(nameof(Info));
         }
         //退赛

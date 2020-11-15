@@ -97,7 +97,7 @@ namespace EventPlatFormVer4.Service
                 }
                 eventParticipant.State = 0;
                 db.EventParticipants.Add(eventParticipant);
-                db.SaveChangesAsync();
+                await db.SaveChangesAsync();
             }
         }
         //查找已参加的比赛
@@ -113,9 +113,7 @@ namespace EventPlatFormVer4.Service
         {
             using (var db=_context)
             {
-                var participant = (Participant)db.Participants.Where(item => item.ID == id);
                 var eventParticipant = (EventParticipant)db.EventParticipants.Where(item => (item.Event_Id == EP.Event_Id)&&(item.ParticipantId==id)&&(item.State==1));
-
                 eventParticipant.State = 3;
                 await db.SaveChangesAsync();
             }
