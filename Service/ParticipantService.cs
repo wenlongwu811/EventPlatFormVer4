@@ -111,13 +111,17 @@ namespace EventPlatFormVer4.Service
             }
         }
         //退赛，将List中已经报名成功的event的PartiState改为3
-        public async Task ExitEvent(EventParticipant EP,string id)
+        public async Task ExitEvent(string EPID,string id)
         {
             using (var db=_context)
             {
-                var eventParticipant = (EventParticipant)db.EventParticipants.Where(item => (item.EventId == EP.EventId)&&(item.ParticipantId==id)&&(item.State==1));
-                eventParticipant.State = 3;
-                await db.SaveChangesAsync();
+                var eventParticipant = db.EventParticipants.Where(item => (item.Id == EPID)&&(item.ParticipantId==id)).FirstOrDefault();
+                if (eventParticipant.State == 1)
+                {
+                    eventParticipant.State = 3;
+                    await db.SaveChangesAsync();
+                }
+                else return;
             }
         }
 
