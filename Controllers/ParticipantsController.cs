@@ -14,6 +14,7 @@ namespace EventPlatFormVer4.Controllers
     public class ParticipantsController : Controller
     {
         private ParticipantService participantService;
+        private EventParticipantService eventParticipantService;
 
         private readonly MvcEpfContext _context;
 
@@ -183,7 +184,7 @@ namespace EventPlatFormVer4.Controllers
         {
             if (ModelState.IsValid)
             {
-                await eventParticipantService.Add(eventParticipant);
+                await eventParticipantService.AddEP(eventParticipant);
                 return RedirectToAction(nameof(Index));
             }
             return View(eventParticipant);

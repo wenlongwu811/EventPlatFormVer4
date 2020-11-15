@@ -149,14 +149,5 @@ namespace EventPlatFormVer4.Service
                 return @event;
             }
         }
-
-        public async Task<EventParticipant> FindEPAsync(string id)
-        {
-            using (var db = _context)
-            {
-                var ep = await db.EventParticipants.Where(iep => iep.Id == id).FirstOrDefaultAsync();
-                return ep;
-            }
-        }
     }
 }
