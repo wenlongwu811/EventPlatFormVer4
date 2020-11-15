@@ -35,7 +35,8 @@ namespace EventPlatFormVer4.Controllers
         public async Task<IActionResult> Info(string id)
         {
             ViewData["Pid"] = id;
-            return View(await participantService.FindEvent(id));
+            return View(participantService.FindEvent(id));
+
         }
 
         //参赛者个人信息
@@ -158,8 +159,9 @@ namespace EventPlatFormVer4.Controllers
             return _context.Participants.Any(e => e.ID == id);
         }
         //转到报名界面
-        public async Task<IActionResult> GotoApply()
+        public async Task<IActionResult> GotoApply(string id)
         {
+            ViewData["Pid"] = id;
             return View(_context.Events.Where(item=>item.State == 1));
         }
         //报名

@@ -34,13 +34,16 @@ namespace EventPlatFormVer4.Models
 
         public Participant()
         {
-            ID = Guid.NewGuid().ToString();//ID唯一性
             RoleID = "2";
             PartiEvent = new List<EventParticipant>();
         }
         public Participant(List<EventParticipant> eventParticipant) : this()
         {
             if (eventParticipant != null) PartiEvent = eventParticipant;
+        }
+        public Participant(string id)
+        {
+            ID = id;
         }
 
         public override bool Equals(object obj)

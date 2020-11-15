@@ -97,15 +97,15 @@ namespace EventPlatFormVer4.Service
                 }
                 eventParticipant.State = 0;
                 db.EventParticipants.Add(eventParticipant);
-                await db.SaveChangesAsync();
+                db.SaveChangesAsync();
             }
         }
         //查找已参加的比赛
-        public async Task<List<EventParticipant>> FindEvent(string id)
+        public async Task<EventParticipant> FindEvent(string id)
         {
             using (var db=_context)
             {
-                return await db.EventParticipants.Where(item => item.ParticipantId == id).ToListAsync();
+                return await (Task<EventParticipant>)db.EventParticipants.Where(item => item.ParticipantId == id);
             }
         }
         //退赛，将List中已经报名成功的event的PartiState改为3
