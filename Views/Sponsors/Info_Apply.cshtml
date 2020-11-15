@@ -20,7 +20,7 @@
                 @Html.DisplayNameFor(model => model.Rank)
             </th>
             <th>
-                @Html.DisplayName("审核")
+                @Html.DisplayName("其他")
             </th>
         </tr>
     </thead>
@@ -40,7 +40,7 @@
                         @Html.DisplayFor(modelItem => item.Rank)
                     </td>
                     <td>
-                        <button> <a asp-action="Show" asp-route-eventid="@item.Id" asp-route-sid="@ViewData["admid"]">详细信息</a></button>
+                        <button> <a asp-action="Show_Apply" asp-route-eventid="@item.Id" asp-route-sid="@ViewData["admid"]">详细信息</a></button>
                     </td>
                 </tr>
             }
@@ -58,7 +58,7 @@
                 @Html.DisplayNameFor(model => model.Rank)
             </th>
             <th>
-                @Html.DisplayName("审核")
+                @Html.DisplayName("其他")
             </th>
         </tr>
     </thead>
@@ -79,7 +79,7 @@
                         @Html.DisplayFor(modelItem => item.Rank)
                     </td>
                     <td>
-                        <button> <a asp-action="Show" asp-route-eventid="@item.Id" asp-route-sid="@ViewData["admid"]">详细信息</a></button>
+                        <button> <a asp-action="Show_Apply" asp-route-eventid="@item.Id" asp-route-sid="@ViewData["admid"]">详细信息</a></button>
                     </td>
 
                 </tr>
@@ -98,7 +98,7 @@
                 @Html.DisplayNameFor(model => model.Rank)
             </th>
             <th>
-                @Html.DisplayName("审核")
+                @Html.DisplayName("其他")
             </th>
         </tr>
     </thead>
@@ -118,7 +118,7 @@
                         @Html.DisplayFor(modelItem => item.Rank)
                     </td>
                     <td>
-                        <button> <a asp-action="Show" asp-route-eventid="@item.Id" asp-route-sid="@ViewData["admid"]">详细信息</a></button>
+                        <button> <a asp-action="Show_Apply" asp-route-eventid="@item.Id" asp-route-sid="@ViewData["admid"]">详细信息</a></button>
                     </td>
 
                 </tr>
@@ -137,7 +137,7 @@
                 @Html.DisplayNameFor(model => model.Rank)
             </th>
             <th>
-                @Html.DisplayName("审核")
+                @Html.DisplayName("其他")
             </th>
         </tr>
     </thead>
@@ -157,7 +157,7 @@
                         @Html.DisplayFor(modelItem => item.Rank)
                     </td>
                     <td>
-                        <button>  <a asp-action="Show" asp-route-eventid="@item.Id" asp-route-sid="@ViewData["admid"]">详细信息</a></button>
+                        <button>  <a asp-action="Show_Apply" asp-route-eventid="@item.Id" asp-route-sid="@ViewData["admid"]">详细信息</a></button>
                     </td>
                 </tr>
             }

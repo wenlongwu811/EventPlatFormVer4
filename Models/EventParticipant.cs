@@ -25,6 +25,7 @@ namespace EventPlatFormVer4.Models
         public string Event_Id { get; set; }
 
         public int State { get; set; }
+        public string Details { get; set; }
 
         public EventParticipant() {
             Id = Guid.NewGuid().ToString();
