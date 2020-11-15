@@ -28,6 +28,14 @@ namespace EventPlatFormVer4.Controllers
         {
             return View(await _context.Sponsors.ToListAsync());
         }
+        /*
+        public async Task<IActionResult> Info(string id)
+        {
+            ViewData["admid"] = id;
+            return View(await _context.Sponsors.ToListAsync());
+
+        }
+        */
 
         // GET: Sponsors/Details/5
         public async Task<IActionResult> Details(string? id)
