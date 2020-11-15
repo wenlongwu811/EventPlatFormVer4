@@ -1,15 +1,21 @@
-﻿@model IEnumerable<EventPlatFormVer4.Models.EventParticipant>
+﻿@model IEnumerable<EventPlatFormVer4.Models.Event>
 
 @{
     ViewData["Title"] = "Info";
 }
 
-<h1>已参加活动</h1>
+<h1>可报名活动</h1>
 
 <table class="table">
     <thead>
         <tr>
-           
+            <th>
+                @Html.DisplayName("活动名称")
+            </th>
+            <th>
+                @Html.DisplayName("活动等级")
+            </th>
+
             <th>
                 @Html.DisplayName("开始时间")
             </th>
@@ -17,10 +23,13 @@
                 @Html.DisplayName("结束时间")
             </th>
             <th>
-                @Html.DisplayName("活动地址")
+                @Html.DisplayName("报名开始时间")
             </th>
             <th>
-                @Html.DisplayName("报名状态")
+                @Html.DisplayName("报名结束时间")
+            </th>
+            <th>
+                @Html.DisplayName("活动地址")
             </th>
             <th>
                 @Html.DisplayName("报名")
@@ -29,42 +38,38 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-           
-            
-            <td>
-                @Html.DisplayFor(modelItem => item.Event.EventStartTime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Event.EventEndTime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Event.Address)
-            </td>
-            <td>
-                @if (item.State == 0)
-                {
-                    @Html.Display("待审核")
-                }
-                @if (item.State == 1)
-                {
-                    @Html.Display("报名成功")
-                }
-                @if (item.State == 2)
-                {
-                    @Html.Display("被拒绝")
-                }
-                @if (item.State == 3)
-                {
-                    @Html.Display("已退赛")
-                }
-            </td>
-            <!--item是EP类的，似乎不应该传入item的id？-->
-            <td>
-                <a asp-action="ExitEvent" asp-route-id="@item.Id">ExitEvent</a> |
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Rank)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EventStartTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EventEndTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SignUpStartTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SignUpEndTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Address)
+                </td>
+                <td>
+                    <a asp-action="Apply" asp-route-id="@ViewData["Pid"]" asp-route-EventId="@item.Id">进入报名</a> 
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
+<div>
+    <a asp-action="HaveApplied" asp-route-id="@ViewData["Pid"]">已参加活动</a>
+</div>
+

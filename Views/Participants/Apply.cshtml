@@ -1,4 +1,4 @@
-﻿@model IEnumerable<EventPlatFormVer4.Models.Event>
+﻿@model EventPlatFormVer4.Models.Event
 
 @{
     ViewData["Title"] = "Apply";
@@ -15,7 +15,7 @@
             <th>
                 @Html.DisplayName("活动等级")
             </th>
-            
+
             <th>
                 @Html.DisplayName("开始时间")
             </th>
@@ -31,41 +31,36 @@
             <th>
                 @Html.DisplayName("活动地址")
             </th>
-            <th>
-                @Html.DisplayName("报名")
-            </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Rank)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EventStartTime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EventEndTime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SignUpStartTime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SignUpEndTime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Address)
-            </td>
-            <!--item是event类的,这里似乎不应该传入item的Id？-->
-            <td>
-                <a asp-action="Apply" asp-route-id="@item.Id">Apply</a> |
-            </td>
-        </tr>
-}
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => Model.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => Model.Rank)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => Model.EventStartTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => Model.EventEndTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => Model.SignUpStartTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => Model.SignUpEndTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => Model.Address)
+                </td>
+            </tr>
     </tbody>
 </table>
+<div>
+    <a asp-action="Info" asp-route-id="@ViewData["Pid"]">继续报名</a>
+</div>
+

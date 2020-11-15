@@ -58,7 +58,7 @@
                         @Html.DisplayFor(modelItem => item.Event.Address)
                     </td>
                     <td>
-                        <button> <a asp-action="DetailsForParticipants" asp-route-eventid="@item.EventId" asp-route-admid="@ViewData["Participant_Id"]">Details</a></button>
+                        <button> <a asp-action="DetailsForParticipants" asp-route-EventId="@item.EventId" asp-route-admid="@ViewData["Participant_Id"]">Details</a></button>
                     </td>
                 </tr>
             }
@@ -112,7 +112,7 @@
                              @Html.DisplayName("具体细节")
                        </td>
                     <td>
-                        <button> <a asp-action="Verify" asp-route-eventid="@item.Id" asp-route-admid="@ViewData["admid"]">审核</a></button>
+                        <button> <a asp-action="Verify" asp-route-EventId="@item.Id" asp-route-admid="@ViewData["admid"]">审核</a></button>
                     </td>
 
                 </tr>
@@ -168,7 +168,7 @@
 
                     </td>
                     <td>
-                        <button> <a asp-action="DetailsForParticipants" asp-route-eventid="@item.EventId" asp-route-admid="@ViewData["Participant_Id"]">Details</a></button>
+                        <button> <a asp-action="DetailsForParticipants" asp-route-EventId="@item.EventId" asp-route-admid="@ViewData["Participant_Id"]">Details</a></button>
                     </td>
 
                 </tr>
@@ -222,7 +222,7 @@
                         @Html.DisplayFor(modelItem =>item.Event.EventStartTime)
                     </td>
                     <td>
-                        <button> <a asp-action="DetailsForParticipants" asp-route-eventid="@item.EventId" asp-route-admid="@ViewData["Participant_Id"]">Details</a></button>
+                        <button> <a asp-action="DetailsForParticipants" asp-route-EventId="@item.EventId" asp-route-admid="@ViewData["Participant_Id"]">Details</a></button>
                     </td>
 
                 </tr>
@@ -274,7 +274,7 @@
                              @Html.DisplayFor(modelItem => item.Grade)
                        </td>
                        <td>
-                             <button> <a asp-action="Verify" asp-route-eventid="@item.Id" asp-route-admid="@ViewData["admid"]">具体细节</a></button>
+                             <button> <a asp-action="Verify" asp-route-EventId="@item.Id" asp-route-admid="@ViewData["admid"]">具体细节</a></button>
                        </td>
                 </tr>
             }

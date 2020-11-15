@@ -31,20 +31,20 @@ namespace EventPlatFormVer4.Controllers
 
         //GET:Administrators/Show_Apply:详细信息
         [HttpGet]
-        public async Task<IActionResult> Show_Apply(string eventid, string sid)
+        public async Task<IActionResult> Show_Apply(string EventId, string sid)
         {
             ViewData["sid"] = sid;
-            return View(await sponService.EventInformation(eventid));
+            return View(await sponService.EventInformation(EventId));
         }
 
         //GET:Administrators/Show_Verify:详细信息
         [HttpGet]
-        public async Task<IActionResult> Show_Verify(string eventid, string sid)
+        public async Task<IActionResult> Show_Verify(string EventId, string sid)
         {
             ViewData["sid"] = sid;
-            ViewData["eveid"] = eventid;
+            ViewData["eveid"] = EventId;
             
-            var @event = await _context.EventParticipants.Where(item => item.EventId == eventid).ToListAsync();
+            var @event = await _context.EventParticipants.Where(item => item.EventId == EventId).ToListAsync();
             return View(@event);
         }
 
