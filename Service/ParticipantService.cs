@@ -78,23 +78,20 @@ namespace EventPlatFormVer4.Service
             }
         }
 
-        //报名，将对应的event添加到自己的List里面，并将EP的State改为0
-        public async Task Apply(EventParticipant EP,string id)
+        //报名，将对应的event添加到自己的List里面，并new 一个E-P对象，其的State改为0
+        public async Task Apply(string eventId,string participantId)
         {
             using (var db = _context)
             {
-                var @event = (EventParticipant)db.Events.Where(item => item.Id == EP.Id);
-                var participant = (Participant)db.Participants.Where(item => item.ID == id);
-                @event.Participant = participant;
-                @event.State = 0;
-                List<EventParticipant> eventParticipants = ToListEP();
-                foreach(EventParticipant eventParticipant in eventParticipants)
-                {
-                    if (eventParticipant.Equals(@event)) throw new ApplicationException("已经报名过");
-                }
+                var ep = await db.EventParticipants.Where(item => item.ParticipantId == participantId && item.Event_Id == eventId).FirstOrDefaultAsync();
+                if(ep!=null)
+                    throw new ApplicationException("已经报名过");
                 try
                 {
-                    participant.PartiEvent.Add(@event);
+                    var participant = await db.Participants.Where(p => p.ID == participantId).FirstOrDefaultAsync();
+                    var @event = await db.Events.Where(ev => ev.Id == eventId).FirstOrDefaultAsync();
+                    EventParticipant eventParticipant = new EventParticipant(@event,participant);
+                    participant.PartiEvent.Add(eventParticipant);
                     await db.SaveChangesAsync();
                 }
                 catch(Exception e)
