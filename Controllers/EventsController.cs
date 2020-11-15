@@ -37,7 +37,18 @@ namespace EventPlatFormVer4.Controllers
             {
                 return NotFound();
             }
+            ViewData["Event_Id"] = eventId;
             return View(await eventService.GetEventParticipantsAsync(eventId));
+        }
+        // GET: Events/GetE-Ps/5 显示Event的所有Participants
+        public async Task<IActionResult> GetParticipantEvents(string participantId)
+        {
+            if (participantId == null)
+            {
+                return NotFound();
+            }
+            ViewData["Participant_Id"] = participantId;
+            return View(await eventService.GetParticipantEventsAsync(participantId));
         }
         // GET: Events/Details/5
         public async Task<IActionResult> Details(string? id)
@@ -166,7 +177,7 @@ namespace EventPlatFormVer4.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        // TODO: to be async
+
         private bool EventExists(string id)
         {
             return _context.Events.Any(e => e.Id == id);

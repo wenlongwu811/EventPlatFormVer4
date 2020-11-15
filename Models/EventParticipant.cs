@@ -17,6 +17,7 @@ namespace EventPlatFormVer4.Models
         [ForeignKey("ParticipantId")]
         public string ParticipantId { get; set; }
 
+        [Display(Name = "成绩")]
         public string Grade { get; set; }
 
         public Event Event { get; set; }
