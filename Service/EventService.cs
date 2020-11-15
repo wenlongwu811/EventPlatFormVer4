@@ -40,31 +40,6 @@ namespace EventPlatFormVer4.Service
                 return @event; 
             }
         }
-
-        public async Task<List<EventParticipant>> GetEventParticipantsAsync(string eventId) // 返回单个Event的所有Participants
-        {
-            using (var db = _context)
-            {
-                if (eventId == null)
-                    return null;
-                var eventParticipants = await db.EventParticipants.Where(ep => ep.Event_Id == eventId).ToListAsync();
-                return eventParticipants;
-            }
-        }
-
-        public async Task<List<EventParticipant>> GetParticipantEventsAsync(string participantId) // 返回单个Participant的所有Events
-        {
-            using (var db = _context)
-            {
-                if (participantId == null)
-                {
-                    return null;
-                }
-                var participantEvents = await db.EventParticipants.Where(ep => ep.ParticipantId == participantId).ToListAsync();
-                return participantEvents;
-            }
-        }
-
         public async Task AddEvent(Event @event) // 添加new Event
         {
             try
@@ -152,15 +127,6 @@ namespace EventPlatFormVer4.Service
             {
                 var @event = await db.Events.Where(e => e.Id == id).FirstOrDefaultAsync();
                 return @event;
-            }
-        }
-
-        public async Task<EventParticipant> FindEPAsync(string id)
-        {
-            using (var db = _context)
-            {
-                var ep = await db.EventParticipants.Where(iep => iep.Id == id).FirstOrDefaultAsync();
-                return ep;
             }
         }
     }
