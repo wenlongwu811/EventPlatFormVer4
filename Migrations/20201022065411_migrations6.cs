@@ -36,13 +36,13 @@ namespace EventPlatFormVer4.Migrations
             migrationBuilder.AddColumn<uint>(
                 name: "EventId",
                 table: "Participatants",
-                type: "int unsigned",
+                type: "string",
                 nullable: true);
 
             migrationBuilder.AddColumn<uint>(
                 name: "SponsorId",
                 table: "Events",
-                type: "int unsigned",
+                type: "string",
                 nullable: true);
 
             migrationBuilder.CreateIndex(

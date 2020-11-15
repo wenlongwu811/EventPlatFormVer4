@@ -19,7 +19,7 @@ namespace EventPlatFormVer4.Migrations
 
             modelBuilder.Entity("EventPlatFormVer4.Models.Administrator", b =>
                 {
-                    b.Property<uint>("Id")
+                    b.Property<string>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int unsigned");
 
@@ -45,7 +45,7 @@ namespace EventPlatFormVer4.Migrations
 
             modelBuilder.Entity("EventPlatFormVer4.Models.Event", b =>
                 {
-                    b.Property<uint>("Id")
+                    b.Property<string>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int unsigned");
 
@@ -80,7 +80,7 @@ namespace EventPlatFormVer4.Migrations
 
             modelBuilder.Entity("EventPlatFormVer4.Models.Participatant", b =>
                 {
-                    b.Property<uint>("Id")
+                    b.Property<string>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int unsigned");
 
@@ -106,7 +106,7 @@ namespace EventPlatFormVer4.Migrations
 
             modelBuilder.Entity("EventPlatFormVer4.Models.Person", b =>
                 {
-                    b.Property<uint>("ID")
+                    b.Property<string>("ID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int unsigned");
 
@@ -132,7 +132,7 @@ namespace EventPlatFormVer4.Migrations
 
             modelBuilder.Entity("EventPlatFormVer4.Models.Sponsor", b =>
                 {
-                    b.Property<uint>("Id")
+                    b.Property<string>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int unsigned");
 
