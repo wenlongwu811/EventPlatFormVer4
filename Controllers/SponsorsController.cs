@@ -31,6 +31,7 @@ namespace EventPlatFormVer4.Controllers
         
         public async Task<IActionResult> Info(string id)
         {
+            ViewData["admid"] = id;
             return View(sponService.ApplyEvents(id));
 
         }
@@ -44,7 +45,7 @@ namespace EventPlatFormVer4.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-            var sponsor = await sponService.Find(id);
+            var sponsor = await sponService.FindAsync(id);
 
             if (sponsor == null)
             {
@@ -134,18 +135,13 @@ namespace EventPlatFormVer4.Controllers
             {
                 return NotFound();
             }
-
-            /*
-            var sponsor = await _context.Sponsors
-                .FirstOrDefaultAsync(m => m.Id == id);
-            */
-            var sponsor = sponService.Delete(id);
-
+            var sponsor = await sponService.FindAsync(id);
+            ViewData["aid"] = sponsor.Id;
+            //var sponsor = sponService.Delete(id);
             if (sponsor == null)
             {
                 return NotFound();
             }
-
             return View(sponsor);
         }
 

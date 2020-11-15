@@ -72,7 +72,7 @@ namespace EventPlatFormVer4.Service
                await db.SaveChangesAsync();
             }
         }
-        public async Task<Sponsor> Find(string id)//查找赞助者
+        public async Task<Sponsor> FindAsync(string id)//查找赞助者
         {
             using (var db = _context)
             {
