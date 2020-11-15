@@ -10,6 +10,9 @@
     <thead>
         <tr>
             <th>
+                @Html.DisplayName("EventId")
+            </th>
+            <th>
                 @Html.DisplayName("开始时间")
             </th>
             <th>
@@ -31,8 +34,9 @@
         @foreach (var item in Model)
         {
             <tr>
-
-
+                <td>
+                    @Html.DisplayFor(modelItem => item.EventId)
+                </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Event.EventStartTime)
                 </td>
@@ -43,25 +47,10 @@
                     @Html.DisplayFor(modelItem => item.Event.Address)
                 </td>
                 <td>
-                    @if (item.State == 0)
-                    {
-                        @Html.Display("待审核")
-                    }
-                    @if (item.State == 1)
-                    {
-                        @Html.Display("报名成功")
-                    }
-                    @if (item.State == 2)
-                    {
-                        @Html.Display("被拒绝")
-                    }
-                    @if (item.State == 3)
-                    {
-                        @Html.Display("已退赛")
-                    }
+                    @Html.Display("test")
                 </td>
                 <td>
-                    <a asp-action="ExitEvent" asp-route-id="@item.Id">ExitEvent</a> |
+                    <a asp-action="ExitEvent" asp-route-id="@ViewData["Pid"]" asp-route-EPID="@item.Id">ExitEvent</a> 
                 </td>
             </tr>
         }

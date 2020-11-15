@@ -175,11 +175,13 @@ namespace EventPlatFormVer4.Controllers
             return View(_context.Events.Where(item => item.Id == eventId).FirstOrDefault());
         }
         //退赛
-        public async Task<IActionResult> ExitEvent(string id, [Bind("State")] EventParticipant EP)
+        public async Task<IActionResult> ExitEvent(string id, string EPID)
         {
             ViewData["Pid"] = id;
-            await participantService.ExitEvent(EP, id);
-            return RedirectToAction(nameof(Info));
+            ViewData["EPID"] = EPID;
+            await participantService.ExitEvent(EPID, id);
+            _context.EventParticipants.UpdateRange();
+            return View(Info(id));
         }
 
     }
