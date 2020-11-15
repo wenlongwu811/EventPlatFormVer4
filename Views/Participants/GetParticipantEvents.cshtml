@@ -35,7 +35,7 @@
     <tbody>
         @foreach (var item in Model)
         {
-            @if ((item.ParticipantId == @ViewData["Participant_Id"]) && (item.Event.EventEndTime > DateTime.Now))
+            @if ((item.ParticipantId == @ViewData["Participant_Id"]) && (item.Event.EventEndTime >= DateTime.Now))
             {
                 <tr>
                     <td>
@@ -65,71 +65,23 @@
     </tbody>
     <thead>
         <tr>
-               <th>
-                     @Html.DisplayName("已参加活动")
-               </th>
-               <th>
-                     @Html.DisplayNameFor(model => model.Event.Name)
-               </th>
-               <th>
-                     @Html.DisplayNameFor(model => model.Event.Rank)
-               </th>
-               <th>
-                     @Html.DisplayNameFor(model => model.Event.EventEndTime)
-               </th>
-               <th>
-                     @Html.DisplayNameFor(model => model.Grade)
-               </th>
-               <th>
-                     @Html.DisplayName("具体细节")
-               </th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            @if (item.State == 1)
-            {
-                <tr>
-                       <td>
-                             @Html.DisplayName(" ")
-                       </td>
-                       <td>
-                             @Html.DisplayFor(model => model.Event.Name)
-                       </td>
-                       <td>
-                             @Html.DisplayFor(model => model.Event.Rank)
-                       </th>
-                       <th>
-                             @Html.DisplayFor(model => model.Event.EventEndTime)
-                       </th>
-                       <th>
-                             @Html.DisplayFor(model => model.Grade)
-                       </th>
-                       <th>
-                             @Html.DisplayName("具体细节")
-                       </th>
-                    <td>
-                        <button> <a asp-action="Verify" asp-route-eventid="@item.Id" asp-route-admid="@ViewData["admid"]">审核</a></button>
-                    </td>
-
-                </tr>
-            }
-        }
-    </tbody>
-    <thead>
-        <tr>
             <th>
-                @Html.DisplayName("已拒绝活动")
+                @Html.DisplayName("待审核活动")
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Name)
+                @Html.DisplayNameFor(model => model.Event.Name)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Rank)
+                @Html.DisplayNameFor(model => model.Event.Rank)
             </th>
             <th>
-                @Html.DisplayName("审核")
+                @Html.DisplayNameFor(model => model.Event.SignUpEndTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Event.EventEndTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Event.Address)
             </th>
         </tr>
     </thead>
@@ -156,40 +108,53 @@
             }
         }
     </tbody>
+
     <thead>
         <tr>
-            <th>
-                @Html.DisplayName("请求撤销活动")
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Rank)
-            </th>
-            <th>
-                @Html.DisplayName("审核")
-            </th>
+               <th>
+                     @Html.DisplayName("已参加活动")
+               </th>
+               <th>
+                     @Html.DisplayNameFor(model => model.Event.Name)
+               </th>
+               <th>
+                     @Html.DisplayNameFor(model => model.Event.Rank)
+               </th>
+               <th>
+                     @Html.DisplayNameFor(model => model.Event.EventEndTime)
+               </th>
+               <th>
+                     @Html.DisplayNameFor(model => model.Grade)
+               </th>
+               <th>
+                     @Html.DisplayName("具体细节")
+               </th>
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model)
         {
-            @if (item.State == 3)
+            @if ((item.ParticipantId == @ViewData["Participant_Id"]) && (item.Event.EventEndTime < DateTime.Now))
             {
                 <tr>
-                    <td>
-                        @Html.DisplayName("·")
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Name)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Rank)
-                    </td>
-                    <td>
-                        <button>  <a asp-action="Verify" asp-route-eventid="@item.Id" asp-route-admid="@ViewData["admid"]">审核</a></button>
-                    </td>
+                       <td>
+                             @Html.DisplayName(" ")
+                       </td>
+                       <td>
+                             @Html.DisplayFor(model => model.Event.Name)
+                       </td>
+                       <td>
+                             @Html.DisplayFor(model => model.Event.Rank)
+                       </td>
+                       <td>
+                             @Html.DisplayFor(model => model.Event.EventEndTime)
+                       </td>
+                       <td>
+                             @Html.DisplayFor(model => model.Grade)
+                       </td>
+                       <td>
+                             <button> <a asp-action="Verify" asp-route-eventid="@item.Id" asp-route-admid="@ViewData["admid"]">具体细节</a></button>
+                       </td>
                 </tr>
             }
         }

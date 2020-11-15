@@ -41,20 +41,34 @@ namespace EventPlatFormVer4.Service
             }
         }
 
-        public async Task<List<EventParticipant>> GetEventParticipantsAsync(string eventId) // 返回单个Event的所有Participants
+        public async Task<List<Participant>> GetEventParticipantsAsync(string eventId) // 返回单个Event的所有Participants
         {
             using (var db = _context)
             {
-                var eventParticipants = await db.EventParticipants.Where(ep => ep.Event_Id == eventId).ToListAsync();
+                List<Participant> eventParticipants = new List<Participant>();
+                var ep = await db.EventParticipants.Where(ep => ep.Event_Id == eventId).ToListAsync();
+                foreach(var item in ep)
+                {
+                    Participant participant = await db.Participants.Where(p => p.ID == item.ParticipantId).FirstOrDefaultAsync();
+                    if (participant!=null)
+                        eventParticipants.Add(participant);
+                }
                 return eventParticipants;
             }
         }
 
-        public async Task<List<EventParticipant>> GetParticipantEventsAsync(string participantId) // 返回单个Participant的所有Events
+        public async Task<List<Event>> GetParticipantEventsAsync(string participantId) // 返回单个Participant的所有Events
         {
             using (var db = _context)
             {
-                var participantEvents = await db.EventParticipants.Where(ep => ep.ParticipantId == participantId).ToListAsync();
+                List<Event> participantEvents = new List<Event>();
+                var ep = await db.EventParticipants.Where(ep => ep.ParticipantId == participantId).ToListAsync();
+                foreach(var item in ep)
+                {
+                    Event @event = await db.Events.Where(e => e.Id == item.Event_Id).FirstOrDefaultAsync();
+                    if (@event != null)
+                        participantEvents.Add(@event);
+                }
                 return participantEvents;
             }
         }
