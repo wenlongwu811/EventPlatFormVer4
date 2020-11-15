@@ -191,11 +191,13 @@ namespace EventPlatFormVer4.Controllers
         }
 
         //退赛
-        public async Task<IActionResult> ExitEvent(string id, [Bind("State")] EventParticipant EP)
+        public async Task<IActionResult> ExitEvent(string id, string EPID)
         {
             ViewData["Pid"] = id;
-            await participantService.ExitEvent(EP, id);
-            return RedirectToAction(nameof(Info));
+            ViewData["EPID"] = EPID;
+            await participantService.ExitEvent(EPID, id);
+            _context.EventParticipants.UpdateRange();
+            return View(Info(id));
         }
 
     }
