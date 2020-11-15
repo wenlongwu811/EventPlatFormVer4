@@ -81,13 +81,13 @@ namespace EventPlatFormVer4.Service
 
 
         //报名，将对应的event添加到自己的List里面，并将EP的State改为0
-        public async Task Apply(string eventId,string id)
+        public async Task Apply(string EventId,string id)
         {
 
             using (var db = _context)
             {
 
-                var _event = db.Events.Where(item => item.Id == eventId).FirstOrDefault();
+                var _event = db.Events.Where(item => item.Id == EventId).FirstOrDefault();
                 var _participant = db.Participants.Where(item => item.ID == id).FirstOrDefault();
                 EventParticipant eventParticipant=new EventParticipant(_event, _participant);
                 eventParticipant.Id= Guid.NewGuid().ToString();

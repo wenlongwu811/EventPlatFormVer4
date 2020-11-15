@@ -32,7 +32,7 @@ namespace EventPlatFormVer4.Service
             }
         }
 
-        public async Task<Event> GetEvent(string id) // 根据EventID来查询
+        public async Task<Event> GetEvent(string id) // 根据EventId来查询
         {
             using (var db = _context)
             {
@@ -41,13 +41,13 @@ namespace EventPlatFormVer4.Service
             }
         }
 
-        public async Task<List<EventParticipant>> GetEventParticipantsAsync(string eventId) // 返回单个Event的所有Participants
+        public async Task<List<EventParticipant>> GetEventParticipantsAsync(string EventId) // 返回单个Event的所有Participants
         {
             using (var db = _context)
             {
-                if (eventId == null)
+                if (EventId == null)
                     return null;
-                var eventParticipants = await db.EventParticipants.Where(ep => ep.EventId == eventId).ToListAsync();
+                var eventParticipants = await db.EventParticipants.Where(ep => ep.EventId == EventId).ToListAsync();
                 return eventParticipants;
             }
         }
@@ -120,7 +120,7 @@ namespace EventPlatFormVer4.Service
                 throw new ApplicationException($"添加E-P表中记录时出错{e.Message}");
             }
         }
-        public async Task RemoveEventParticipants(string eventId)
+        public async Task RemoveEventParticipants(string EventId)
         {
             /**
              * 在E-P表中删除参加了此event的所有参赛记录
@@ -128,7 +128,7 @@ namespace EventPlatFormVer4.Service
             try {
                 using (var db = _context)
                 {
-                    var oldParticipants = await db.EventParticipants.Where(p => p.EventId == eventId).ToListAsync(); // 对E-P表查询，EventID相等的oldParticipants
+                    var oldParticipants = await db.EventParticipants.Where(p => p.EventId == EventId).ToListAsync(); // 对E-P表查询，EventId相等的oldParticipants
                     // TODO: how to apply async method in ?
                     db.EventParticipants.RemoveRange(oldParticipants); 
                     await db.SaveChangesAsync();
