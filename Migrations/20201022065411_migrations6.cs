@@ -11,11 +11,11 @@ namespace EventPlatFormVer4.Migrations
                 table: "Events");
 
             migrationBuilder.DropForeignKey(
-                name: "FK_Participatants_Events_Event_Id",
+                name: "FK_Participatants_Events_EventId",
                 table: "Participatants");
 
             migrationBuilder.DropIndex(
-                name: "IX_Participatants_Event_Id",
+                name: "IX_Participatants_EventId",
                 table: "Participatants");
 
             migrationBuilder.DropIndex(
@@ -23,7 +23,7 @@ namespace EventPlatFormVer4.Migrations
                 table: "Events");
 
             migrationBuilder.DropColumn(
-                name: "Event_Id",
+                name: "EventId",
                 table: "Participatants");
 
             migrationBuilder.DropColumn(
@@ -34,7 +34,7 @@ namespace EventPlatFormVer4.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AddColumn<uint>(
-                name: "Event_Id",
+                name: "EventId",
                 table: "Participatants",
                 type: "int unsigned",
                 nullable: true);
@@ -46,9 +46,9 @@ namespace EventPlatFormVer4.Migrations
                 nullable: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Participatants_Event_Id",
+                name: "IX_Participatants_EventId",
                 table: "Participatants",
-                column: "Event_Id");
+                column: "EventId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Events_SponsorId",
@@ -64,9 +64,9 @@ namespace EventPlatFormVer4.Migrations
                 onDelete: ReferentialAction.Restrict);
 
             migrationBuilder.AddForeignKey(
-                name: "FK_Participatants_Events_Event_Id",
+                name: "FK_Participatants_Events_EventId",
                 table: "Participatants",
-                column: "Event_Id",
+                column: "EventId",
                 principalTable: "Events",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Restrict);
