@@ -157,12 +157,24 @@ namespace EventPlatFormVer4.Controllers
             return _context.Participants.Any(e => e.ID == id);
         }
 
-        //报名
-        public async Task<IActionResult> Apply(EventParticipant EP,string id)//前端是如何让传入这个EP的呢
+        //申请报名
+        public IActionResult Apply()
         {
-            await participantService.Apply(EP,id);
-            return View(_context.Events.Where(item=>!item.Equals(EP)&&item.State==1));
+            return View();
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Apply([Bind("ID,RoleID,Name,PassWd,Email,PhoneNum")] EventParticipant eventParticipant)
+        {
+            if (ModelState.IsValid)
+            {
+                await eventParticipantService.Add(eventParticipant);
+                return RedirectToAction(nameof(Index));
+            }
+            return View(eventParticipant);
+        }
+
         //退赛
         public async Task<IActionResult> ExitEvent(string id, [Bind("State")] EventParticipant EP)//前端是如何让传入这个EP的呢
         {
