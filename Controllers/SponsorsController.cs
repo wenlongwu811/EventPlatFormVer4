@@ -44,7 +44,7 @@ namespace EventPlatFormVer4.Controllers
             ViewData["sid"] = sid;
             ViewData["eveid"] = EventId;
             
-            var @event = await _context.EventParticipants.Where(item => item.EventId == EventId).ToListAsync();
+            var @event = await _context.EventParticipants.Where(item => item.EventId == EventId && item.State == 0).ToListAsync();
             return View(@event);
         }
 
@@ -205,6 +205,24 @@ namespace EventPlatFormVer4.Controllers
             _event.State = 3;
             _context.SaveChanges();
             return RedirectToAction("Info_Apply", new { id = sid });
+        }
+
+        //同意
+        public async Task<IActionResult> Accept(string epid,string eid,string sid)
+        {
+            var eventParticipant = await _context.EventParticipants.Where(item => item.Id == epid).FirstOrDefaultAsync();
+            eventParticipant.State = 1;
+            _context.SaveChanges();
+            return RedirectToAction("Show_Verify",  new { EventId = eid, sid = sid });
+        }
+
+        //拒绝
+        public async Task<IActionResult> Deny(string epid, string eid, string sid)
+        {
+            var eventParticipant = await _context.EventParticipants.Where(item => item.Id == epid).FirstOrDefaultAsync();
+            eventParticipant.State = 2;
+            _context.SaveChanges();
+            return RedirectToAction("Show_Verify", new { EventId = eid, sid = sid });
         }
     }
 }
