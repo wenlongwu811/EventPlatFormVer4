@@ -4,7 +4,7 @@
     ViewData["Title"] = "History Events";
 }
 
-<h1>工作台</h1>
+<h2>历史申请活动</h2>
 <button><a asp-action="Details" asp-route-id="@ViewData["Participant_Id"]">返回</a></button>
 <table class="table">
     <thead>
@@ -42,7 +42,6 @@
                         @Html.DisplayName(" ")
                     </td>
                     <td>
-
                         @Html.DisplayFor(modelItem => item.Event.Name)
                     </td>
                     <td>
@@ -58,7 +57,7 @@
                         @Html.DisplayFor(modelItem => item.Event.Address)
                     </td>
                     <td>
-                        <button> <a asp-action="DetailsForParticipants" asp-route-eventid="@item.EventId" asp-route-admid="@ViewData["Participant_Id"]">Details</a></button>
+                        <button> <a asp-action="DetailsForParticipants" asp-route-EventId="@item.EventId" asp-route-admid="@ViewData["Participant_Id"]">Details</a></button>
                     </td>
                 </tr>
             }
@@ -66,62 +65,6 @@
     </tbody>
     <thead>
         <tr>
-
-               <th>
-                     @Html.DisplayName("已参加活动")
-               </th>
-               <th>
-                     @Html.DisplayNameFor(model => model.Event.Name)
-               </th>
-               <th>
-                     @Html.DisplayNameFor(model => model.Event.Rank)
-               </th>
-               <th>
-                     @Html.DisplayNameFor(model => model.Event.EventEndTime)
-               </th>
-               <th>
-                     @Html.DisplayNameFor(model => model.Grade)
-               </th>
-               <th>
-                     @Html.DisplayName("具体细节")
-               </th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            @if (item.State == 1)
-            {
-                <tr>
-                       <td>
-                             @Html.DisplayName(" ")
-                       </td>
-                       <td>
-                             @Html.DisplayFor(model => item.Event.Name)
-                       </td>
-                       <td>
-                             @Html.DisplayFor(model => item.Event.Rank)
-                       </td>
-                       <td>
-                             @Html.DisplayFor(model => item.Event.EventEndTime)
-                       </td>
-                       <td>
-                             @Html.DisplayFor(model => item.Grade)
-                       </td>
-                       <td>
-                             @Html.DisplayName("具体细节")
-                       </td>
-                    <td>
-                        <button> <a asp-action="Verify" asp-route-eventid="@item.Id" asp-route-admid="@ViewData["admid"]">审核</a></button>
-                    </td>
-
-                </tr>
-            }
-        }
-    </tbody>
-    <thead>
-        <tr>
-
             <th>
                 @Html.DisplayName("待审核申请")
             </th>
@@ -161,21 +104,21 @@
                     </td>
                     <td>
 
-                        @Html.DisplayFor(modelItem =>item.Event.SignUpEndTime)
+                        @Html.DisplayFor(modelItem => item.Event.SignUpEndTime)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem =>item.Event.EventStartTime)
+                        @Html.DisplayFor(modelItem => item.Event.EventStartTime)
 
                     </td>
                     <td>
-                        <button> <a asp-action="DetailsForParticipants" asp-route-eventid="@item.EventId" asp-route-admid="@ViewData["Participant_Id"]">Details</a></button>
+                        <button> <a asp-action="DetailsForParticipants" asp-route-EventId="@item.EventId" asp-route-admid="@ViewData["Participant_Id"]">Details</a></button>
                     </td>
 
                 </tr>
             }
         }
     </tbody>
-        <thead>
+    <thead>
         <tr>
             <th>
                 @Html.DisplayName("被拒绝申请")
@@ -187,8 +130,6 @@
                 @Html.DisplayNameFor(model => model.Event.Rank)
             </th>
             <th>
-
-
                 @Html.DisplayNameFor(model => model.Event.SignUpEndTime)
             </th>
             <th>
@@ -216,13 +157,13 @@
                         @Html.DisplayFor(modelItem => item.Event.Rank)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem =>item.Event.SignUpEndTime)
+                        @Html.DisplayFor(modelItem => item.Event.SignUpEndTime)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem =>item.Event.EventStartTime)
+                        @Html.DisplayFor(modelItem => item.Event.EventStartTime)
                     </td>
                     <td>
-                        <button> <a asp-action="DetailsForParticipants" asp-route-eventid="@item.EventId" asp-route-admid="@ViewData["Participant_Id"]">Details</a></button>
+                        <button> <a asp-action="DetailsForParticipants" asp-route-EventId="@item.EventId" asp-route-admid="@ViewData["Participant_Id"]">Details</a></button>
                     </td>
 
                 </tr>
@@ -232,24 +173,24 @@
 
     <thead>
         <tr>
-               <th>
-                     @Html.DisplayName("已参加活动")
-               </th>
-               <th>
-                     @Html.DisplayNameFor(model => model.Event.Name)
-               </th>
-               <th>
-                     @Html.DisplayNameFor(model => model.Event.Rank)
-               </th>
-               <th>
-                     @Html.DisplayNameFor(model => model.Event.EventEndTime)
-               </th>
-               <th>
-                     @Html.DisplayNameFor(model => model.Grade)
-               </th>
-               <th>
-                     @Html.DisplayName("具体细节")
-               </th>
+            <th>
+                @Html.DisplayName("已参加活动")
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Event.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Event.Rank)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Event.EventEndTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Grade)
+            </th>
+            <th>
+                @Html.DisplayName("具体细节")
+            </th>
         </tr>
     </thead>
     <tbody>
@@ -274,7 +215,7 @@
                              @Html.DisplayFor(modelItem => item.Grade)
                        </td>
                        <td>
-                             <button> <a asp-action="Verify" asp-route-eventid="@item.Id" asp-route-admid="@ViewData["admid"]">具体细节</a></button>
+                             <button> <a asp-action="DetailsForParticipants" asp-route-EventId="@item.EventId" asp-route-admid="@ViewData["Participant_Id"]">Details</a></button>
                        </td>
                 </tr>
             }
