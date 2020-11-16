@@ -116,12 +116,8 @@ namespace EventPlatFormVer4.Service
             using (var db=_context)
             {
                 var eventParticipant = db.EventParticipants.Where(item => (item.Id == EPID)&&(item.ParticipantId==id)).FirstOrDefault();
-                if (eventParticipant.State == 1)
-                {
-                    eventParticipant.State = 3;
-                    await db.SaveChangesAsync();
-                }
-                else return;
+                eventParticipant.State = 3;
+                await db.SaveChangesAsync();
             }
         }
 
