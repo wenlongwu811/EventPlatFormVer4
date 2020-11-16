@@ -1,0 +1,46 @@
+﻿@model IEnumerable<EventPlatFormVer4.Models.EventParticipant>
+
+@{
+    ViewData["Title"] = "HaveApplied";
+}
+
+<h1>已参加活动</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayName("EventId")
+            </th>
+            <th>
+                @Html.DisplayName("Details")
+            </th>
+            <th>
+                @Html.DisplayName("State")
+            </th>
+            <th>
+                @Html.DisplayName("退赛")
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EventId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Details)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.State)
+                </td>
+                <td>
+                    <a asp-action="ExitEvent" asp-route-id="@ViewData["Pid"]" asp-route-EPID="@item.Id">ExitEvent</a> 
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

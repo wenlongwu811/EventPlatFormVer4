@@ -33,16 +33,16 @@ namespace EventPlatFormVer4.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<uint>(
+            migrationBuilder.AddColumn<string>(
                 name: "EventId",
                 table: "Participatants",
-                type: "int unsigned",
+                type: "string",
                 nullable: true);
 
-            migrationBuilder.AddColumn<uint>(
+            migrationBuilder.AddColumn<string>(
                 name: "SponsorId",
                 table: "Events",
-                type: "int unsigned",
+                type: "string",
                 nullable: true);
 
             migrationBuilder.CreateIndex(

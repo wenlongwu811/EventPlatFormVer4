@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace EventPlatFormVer4.Models
 {
-    public class Event : IComparable<Event>
+    public class Event
     {
         [Key]
         public string Id { get; set; }
@@ -110,10 +110,6 @@ namespace EventPlatFormVer4.Models
             hashCode = hashCode * -1561131293 + CreateTime.GetHashCode();
             return hashCode;
         }
-        int IComparable<Event>.CompareTo(Event other)
-        {
-            if (other == null) return 1;
-            return this.Id.CompareTo(other.Id);
-        }
+        
     }
 }

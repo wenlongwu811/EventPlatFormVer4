@@ -45,6 +45,7 @@ namespace EventPlatFormVer4.Service
                 {
                     if (participant.Equals(_participant)) throw new ApplicationException("用户已存在，添加失败");
                 }
+                participant.RoleID = "2";
                     db.Participants.Add(participant);
                     await db.SaveChangesAsync();
             }
@@ -78,26 +79,27 @@ namespace EventPlatFormVer4.Service
             }
         }
 
-        //报名，将对应的event添加到自己的List里面，并new 一个E-P对象，其的State改为0
-        public async Task Apply(string eventId,string participantId)
+
+        //报名，将对应的event添加到自己的List里面，并将EP的State改为0
+        public async Task Apply(string EventId,string id)
         {
+
             using (var db = _context)
             {
-                var ep = await db.EventParticipants.Where(item => item.ParticipantId == participantId && item.Event_Id == eventId).FirstOrDefaultAsync();
-                if(ep!=null)
-                    throw new ApplicationException("已经报名过");
-                try
-                {
-                    var participant = await db.Participants.Where(p => p.ID == participantId).FirstOrDefaultAsync();
-                    var @event = await db.Events.Where(ev => ev.Id == eventId).FirstOrDefaultAsync();
-                    EventParticipant eventParticipant = new EventParticipant(@event,participant);
-                    participant.PartiEvent.Add(eventParticipant);
-                    await db.SaveChangesAsync();
-                }
-                catch(Exception e)
-                {
-                    throw new ApplicationException($"{e.Message}");
-                }
+
+                var _event = db.Events.Where(item => item.Id == EventId).FirstOrDefault();
+                var _participant = db.Participants.Where(item => item.ID == id).FirstOrDefault();
+                EventParticipant eventParticipant=new EventParticipant(_event, _participant);
+                eventParticipant.Id= Guid.NewGuid().ToString();
+                eventParticipant.Grade = "";
+                //List<EventParticipant> @eventParticipants = ToListEP();
+                //foreach (EventParticipant ep in @eventParticipants)
+                //{
+                //    if (ep.Equals(eventParticipant)) return;
+                //}
+                eventParticipant.State = 0;
+                db.EventParticipants.Add(eventParticipant);
+                await db.SaveChangesAsync();
             }
         }
         //查找已参加的比赛
@@ -109,13 +111,11 @@ namespace EventPlatFormVer4.Service
             }
         }
         //退赛，将List中已经报名成功的event的PartiState改为3
-        public async Task ExistEvent(EventParticipant EP,string id)
+        public async Task ExitEvent(string EPID,string id)
         {
             using (var db=_context)
             {
-                var participant = (Participant)db.Participants.Where(item => item.ID == id);
-                var eventParticipant = (EventParticipant)db.EventParticipants.Where(item => (item.EventId == EP.Id)&&(item.ParticipantId==id)&&(item.State==1));
-
+                var eventParticipant = db.EventParticipants.Where(item => (item.Id == EPID)&&(item.ParticipantId==id)).FirstOrDefault();
                 eventParticipant.State = 3;
                 await db.SaveChangesAsync();
             }

@@ -80,10 +80,10 @@ namespace EventPlatFormVer4.Controllers
 
         //GET:Administrators/Verify:审核
         [HttpGet]
-        public async Task<IActionResult> Verify(string eventid,string admid)
+        public async Task<IActionResult> Verify(string EventId,string admid)
         {
             ViewData["aid"] = admid;
-           return View(await administratorService.EventInformation(eventid));
+           return View(await administratorService.EventInformation(EventId));
         }
 
         //:Administrators/Accept：接受未审核
