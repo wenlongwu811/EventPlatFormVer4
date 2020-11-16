@@ -6,6 +6,9 @@
 }
 
 <h2>报名者详细信息</h2>
+
+<button> <a asp-action="Info_Verify" asp-route-Id="@ViewData["eveid"]">返回</a></button>
+
 <table class="table">
     <thead>
         <tr>
@@ -37,8 +40,12 @@
                 @Html.DisplayFor(modelItem => item.Details)
             </td>
             <td>
-                <button> <a asp-action="P_Verify" asp-route-EventId="@ViewData["eveid"]" asp-route-sid="@ViewData["admid"]">详细信息</a></button>
+                <button> <a asp-action="Accept" asp-route-epid="@item.Id" asp-route-eid="@ViewData["eveid"]" asp-route-sid="@ViewData["sid"]">接受</a></button>
             </td>
+            <td>
+                <button> <a asp-action="Deny" asp-route-epid="@item.Id" asp-route-eid="@ViewData["eveid"]" asp-route-sid="@ViewData["sid"]">拒绝</a></button>
+            </td>
+            
         </tr>
         }
     </tbody>
