@@ -197,7 +197,7 @@ namespace EventPlatFormVer4.Controllers
             ViewData["EPID"] = EPID;
             await participantService.ExitEvent(EPID, id);
             _context.EventParticipants.UpdateRange();
-            return View(Info(id));
+            return View(_context.EventParticipants.Where(item=>item.ParticipantId==id).FirstOrDefault());
         }
 
     }
