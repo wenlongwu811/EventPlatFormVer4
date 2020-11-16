@@ -38,7 +38,9 @@
                     @Html.DisplayFor(modelItem => item.State)
                 </td>
                 <td>
-                    <a asp-action="ExitEvent" asp-route-id="@ViewData["Pid"]" asp-route-EPID="@item.Id">ExitEvent</a> 
+
+                    <a asp-action="ExitEvent" asp-route-id="@item.Id">已有的活动</a> |
+
                 </td>
             </tr>
         }
