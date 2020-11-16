@@ -1,0 +1,66 @@
+﻿@model IEnumerable<EventPlatFormVer4.Models.Event>
+
+@{
+    ViewData["Title"] = "AllEvents";
+}
+
+<h2>所有活动</h2>
+<button><a asp-action="Details" asp-route-participant="@ViewData["Participant_Id"]">返回</a></button>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Rank)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SignUpStartTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SignUpEndTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EventStartTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EventEndTime)
+            </th>
+            <th>
+                @Html.DisplayName("申请")
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            @if (item.State == 1)//申报成功的活动
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Rank)
+                    </td>
+                                <td>
+                @Html.DisplayFor(model => item.SignUpStartTime)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.SignUpEndTime)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.EventStartTime)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.EventEndTime)
+            </td>
+                    <td>
+                        <button> <a asp-action="Apply" asp-route-EventId="@item.Id" asp-route-participantId="@ViewData["Participant_Id"]">Apply</a></button>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
