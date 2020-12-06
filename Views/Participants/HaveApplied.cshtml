@@ -38,7 +38,7 @@
                     @Html.DisplayFor(modelItem => item.State)
                 </td>
                 <td>
-                    <a asp-action="ExitEvent" asp-route-id="@ViewData["Pid"]" asp-route-EPID="@item.Id">ExitEvent</a> 
+                    <button type="button" disabled="disabled">ExitEvent</button>
                 </td>
             </tr>
         }
